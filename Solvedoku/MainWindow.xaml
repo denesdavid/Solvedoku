@@ -1,0 +1,330 @@
+﻿<Window x:Class="Solvedoku.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpfx="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:classes="clr-namespace:Solvedoku.Classes"
+        xmlns:local="clr-namespace:Solvedoku"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Background="Gray"
+        Loaded="MainWindow_OnLoaded" Title="Solvedoku"
+        Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={classes:RatioConverter}, ConverterParameter='0.9' }"
+        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={classes:RatioConverter}, ConverterParameter='0.6' }"
+        MinHeight="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={classes:RatioConverter}, ConverterParameter='0.4' }"
+        MinWidth="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={classes:RatioConverter}, ConverterParameter='0.4' }">
+
+    <DockPanel>
+        <Viewbox HorizontalAlignment="Center">
+            <TabControl x:Name="TcSudokus" Margin="4,4,4,4" Background="Gray" HorizontalAlignment="Center">
+                <TabItem Header="Klasszikus">
+                    <wpfx:BusyIndicator x:Name="BusyIClassic">
+                        <DockPanel x:Name="ClassicDockPanel">
+                            <StackPanel DockPanel.Dock="Right">
+                                <Label Content="Válassz méretet:" Margin="4,4,4,0"></Label>
+                                <ComboBox x:Name="CboxClassicSizes" Margin="8,8,8,8" SelectedIndex="0" DockPanel.Dock="Right">
+                                    <ComboBoxItem x:Name="Cbi3399" Tag="9x9x3x3">3x3 (9x9)</ComboBoxItem>
+                                    <ComboBoxItem x:Name="Cbi2244" Tag="4x4x2x2">2x2 (4x4)</ComboBoxItem>
+                                    <ComboBoxItem x:Name="Cbi2366" Tag="6x6x2x3">2x3 (6x6)</ComboBoxItem>
+                                </ComboBox>
+                                <Button x:Name="BtDrawClassic" DockPanel.Dock="Right" Click="BtDrawClassic_OnClick"  Content="Rajzol" Style="{DynamicResource ButtonStyle}"></Button>
+                                <Button x:Name="BtSolveClassic" Click="BtSolveClassic_OnClick" Content="Megoldás" Style="{DynamicResource ButtonStyle}"></Button>
+                                <Button x:Name="BtSaveClassic" Content="Mentés..." Click="BtSaveClassic_OnClick" Style="{DynamicResource ButtonStyle}" ></Button>
+                                <Button x:Name="BtLoadClassic" Content="Betöltés..." Click="BtLoadClassic_OnClick" Style="{DynamicResource ButtonStyle}" ></Button>
+                                <Label x:Name="LbClassicSolvesCount" Content="Megoldások: 1/200" HorizontalAlignment="Center" FontSize="24" Foreground="AntiqueWhite" Margin="8,8,8,8" Visibility="Hidden"></Label>
+                            </StackPanel>
+
+                            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button  x:Name="BtClassicLeft" Click="BtClassicLeft_OnClick" Style="{DynamicResource ButtonStyle}" Width="50" IsEnabled="False">
+                                    <Image Width="45" Height="45" Source="Icons/left_arrow.png"/>
+                                </Button>
+                                <Button  x:Name="BtClassicRight" Click="BtClassicRight_OnClick" Style="{DynamicResource ButtonStyle}" Width="50" IsEnabled="False">
+                                    <Image Width="45" Height="45" Source="Icons/right_arrow.png"/>
+                                </Button>
+                            </StackPanel>
+
+                            <Grid x:Name="ClassicGrid" Margin="8,8,8,8" Width="400" Height="400">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+
+                                <TextBox x:Name="TbClassicCell00" Grid.Column="0" Grid.Row="0" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell10" Grid.Column="1" Grid.Row="0" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell20" Grid.Column="2" Grid.Row="0" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell30" Grid.Column="3" Grid.Row="0" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell40" Grid.Column="4" Grid.Row="0" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell50" Grid.Column="5" Grid.Row="0" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell60" Grid.Column="6" Grid.Row="0" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell70" Grid.Column="7" Grid.Row="0" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell80" Grid.Column="8" Grid.Row="0" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+
+
+                                <TextBox x:Name="TbClassicCell01" Grid.Column="0" Grid.Row="1" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell11" Grid.Column="1" Grid.Row="1" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell21" Grid.Column="2" Grid.Row="1" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell31" Grid.Column="3" Grid.Row="1" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell41" Grid.Column="4" Grid.Row="1" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell51" Grid.Column="5" Grid.Row="1" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell61" Grid.Column="6" Grid.Row="1" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell71" Grid.Column="7" Grid.Row="1" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell81" Grid.Column="8" Grid.Row="1" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+
+
+                                <TextBox x:Name="TbClassicCell02" Grid.Column="0" Grid.Row="2" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell12" Grid.Column="1" Grid.Row="2" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell22" Grid.Column="2" Grid.Row="2" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell32" Grid.Column="3" Grid.Row="2" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell42" Grid.Column="4" Grid.Row="2" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell52" Grid.Column="5" Grid.Row="2" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell62" Grid.Column="6" Grid.Row="2" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell72" Grid.Column="7" Grid.Row="2" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell82" Grid.Column="8" Grid.Row="2" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+
+
+                                <TextBox x:Name="TbClassicCell03" Grid.Column="0" Grid.Row="3" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell13" Grid.Column="1" Grid.Row="3" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell23" Grid.Column="2" Grid.Row="3" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell33" Grid.Column="3" Grid.Row="3" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell43" Grid.Column="4" Grid.Row="3" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell53" Grid.Column="5" Grid.Row="3" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell63" Grid.Column="6" Grid.Row="3" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell73" Grid.Column="7" Grid.Row="3" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell83" Grid.Column="8" Grid.Row="3" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+
+
+                                <TextBox x:Name="TbClassicCell04" Grid.Column="0" Grid.Row="4" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell14" Grid.Column="1" Grid.Row="4" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell24" Grid.Column="2" Grid.Row="4" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell34" Grid.Column="3" Grid.Row="4" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell44" Grid.Column="4" Grid.Row="4" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell54" Grid.Column="5" Grid.Row="4" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell64" Grid.Column="6" Grid.Row="4" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell74" Grid.Column="7" Grid.Row="4" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell84" Grid.Column="8" Grid.Row="4" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+
+
+                                <TextBox x:Name="TbClassicCell05" Grid.Column="0" Grid.Row="5" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell15" Grid.Column="1" Grid.Row="5" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell25" Grid.Column="2" Grid.Row="5" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell35" Grid.Column="3" Grid.Row="5" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell45" Grid.Column="4" Grid.Row="5" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell55" Grid.Column="5" Grid.Row="5" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell65" Grid.Column="6" Grid.Row="5" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell75" Grid.Column="7" Grid.Row="5" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell85" Grid.Column="8" Grid.Row="5" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+
+
+                                <TextBox x:Name="TbClassicCell06" Grid.Column="0" Grid.Row="6" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell16" Grid.Column="1" Grid.Row="6" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell26" Grid.Column="2" Grid.Row="6" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell36" Grid.Column="3" Grid.Row="6" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell46" Grid.Column="4" Grid.Row="6" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell56" Grid.Column="5" Grid.Row="6" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell66" Grid.Column="6" Grid.Row="6" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell76" Grid.Column="7" Grid.Row="6" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell86" Grid.Column="8" Grid.Row="6" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+
+
+                                <TextBox x:Name="TbClassicCell07" Grid.Column="0" Grid.Row="7" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell17" Grid.Column="1" Grid.Row="7" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell27" Grid.Column="2" Grid.Row="7" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell37" Grid.Column="3" Grid.Row="7" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell47" Grid.Column="4" Grid.Row="7" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell57" Grid.Column="5" Grid.Row="7" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell67" Grid.Column="6" Grid.Row="7" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell77" Grid.Column="7" Grid.Row="7" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell87" Grid.Column="8" Grid.Row="7" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+
+
+                                <TextBox x:Name="TbClassicCell08" Grid.Column="0" Grid.Row="8" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell18" Grid.Column="1" Grid.Row="8" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell28" Grid.Column="2" Grid.Row="8" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell38" Grid.Column="3" Grid.Row="8" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell48" Grid.Column="4" Grid.Row="8" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell58" Grid.Column="5" Grid.Row="8" Style="{DynamicResource TbSudokuEvenCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell68" Grid.Column="6" Grid.Row="8" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell78" Grid.Column="7" Grid.Row="8" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+                                <TextBox x:Name="TbClassicCell88" Grid.Column="8" Grid.Row="8" Style="{DynamicResource TbSudokuCellStyle}"></TextBox>
+
+                            </Grid>
+                        </DockPanel>
+                    </wpfx:BusyIndicator>
+                </TabItem>
+                <TabItem Header="Puzzle">
+                    <wpfx:BusyIndicator x:Name="BusyIPuzzle">
+                        <DockPanel x:Name="PuzzleDockPanel">
+                            <StackPanel DockPanel.Dock="Right">
+                                <Label Content="Színezd ki a feladatnak megfelelően:" Margin="4,4,4,0"></Label>
+                                <wpfx:ColorPicker x:Name="PuzzleColorPicker" Margin="8,8,8,8" StandardButtonHeader="Alap színek"
+                                              StandardColors="{Binding Path=PuzzleColorList}"
+                                              ShowTabHeaders="False" ShowAvailableColors="False"
+                                              SelectedColor="LightBlue"
+                                              StandardColorsHeader="Elérhető színek:"
+                                              AdvancedButtonHeader="Egyéb színek" Style="{DynamicResource PuzzleColorPickerStyle}"
+                                              ></wpfx:ColorPicker>
+                                <Button x:Name="BtDrawPuzzle" Content="Rajzol" Style="{DynamicResource ButtonStyle}" Click="BtDrawPuzzle_OnClickPuzzle_OnClick"></Button>
+                                <Button x:Name="BtSolvePuzzle" Content="Megoldás" Style="{DynamicResource ButtonStyle}" Click="BtSolvePuzzle_OnClick"></Button>
+                                <Button x:Name="BtSavePuzzle"  Content="Mentés..." Style="{DynamicResource ButtonStyle}" Click="BtSavePuzzle_OnClick"></Button>
+                                <Button x:Name="BtLoadPuzzle"  Content="Betöltés..." Style="{DynamicResource ButtonStyle}" Click="BtLoadPuzzle_OnClick"></Button>
+                                <Label x:Name="LbPuzzleSolvesCount" Content="Megoldások: 1/200" HorizontalAlignment="Center" FontSize="24" Foreground="AntiqueWhite" Margin="8,8,8,8" Visibility="Hidden"></Label>
+                            </StackPanel>
+                            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button  x:Name="BtPuzzleLeft" Style="{DynamicResource ButtonStyle}" Click="BtPuzzleLeft_OnClick" Width="50" IsEnabled="False">
+                                    <Image Width="45" Height="45" Source="Icons/left_arrow.png"/>
+                                </Button>
+                                <Button  x:Name="BtPuzzleRight" Style="{DynamicResource ButtonStyle}" Click="BtPuzzleRight_OnClick" Width="50" IsEnabled="False">
+                                    <Image Width="45" Height="45" Source="Icons/right_arrow.png"/>
+                                </Button>
+                            </StackPanel>
+                            <Grid x:Name="PuzzleGrid" Margin="8,8,8,8" Width="400" Height="400">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+
+                                <TextBox x:Name="TbPuzzleCell00" Grid.Column="0" Grid.Row="0" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell10" Grid.Column="1" Grid.Row="0" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell20" Grid.Column="2" Grid.Row="0" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell30" Grid.Column="3" Grid.Row="0" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell40" Grid.Column="4" Grid.Row="0" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell50" Grid.Column="5" Grid.Row="0" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell60" Grid.Column="6" Grid.Row="0" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell70" Grid.Column="7" Grid.Row="0" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell80" Grid.Column="8" Grid.Row="0" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+
+
+                                <TextBox x:Name="TbPuzzleCell01" Grid.Column="0" Grid.Row="1" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell11" Grid.Column="1" Grid.Row="1" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell21" Grid.Column="2" Grid.Row="1" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell31" Grid.Column="3" Grid.Row="1" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell41" Grid.Column="4" Grid.Row="1" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell51" Grid.Column="5" Grid.Row="1" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell61" Grid.Column="6" Grid.Row="1" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell71" Grid.Column="7" Grid.Row="1" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell81" Grid.Column="8" Grid.Row="1" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+
+
+                                <TextBox x:Name="TbPuzzleCell02" Grid.Column="0" Grid.Row="2" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell12" Grid.Column="1" Grid.Row="2" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell22" Grid.Column="2" Grid.Row="2" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell32" Grid.Column="3" Grid.Row="2" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell42" Grid.Column="4" Grid.Row="2" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell52" Grid.Column="5" Grid.Row="2" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell62" Grid.Column="6" Grid.Row="2" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell72" Grid.Column="7" Grid.Row="2" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell82" Grid.Column="8" Grid.Row="2" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+
+
+                                <TextBox x:Name="TbPuzzleCell03" Grid.Column="0" Grid.Row="3" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell13" Grid.Column="1" Grid.Row="3" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell23" Grid.Column="2" Grid.Row="3" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell33" Grid.Column="3" Grid.Row="3" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell43" Grid.Column="4" Grid.Row="3" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell53" Grid.Column="5" Grid.Row="3" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell63" Grid.Column="6" Grid.Row="3" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell73" Grid.Column="7" Grid.Row="3" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell83" Grid.Column="8" Grid.Row="3" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+
+
+                                <TextBox x:Name="TbPuzzleCell04" Grid.Column="0" Grid.Row="4" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell14" Grid.Column="1" Grid.Row="4" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell24" Grid.Column="2" Grid.Row="4" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell34" Grid.Column="3" Grid.Row="4" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell44" Grid.Column="4" Grid.Row="4" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell54" Grid.Column="5" Grid.Row="4" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell64" Grid.Column="6" Grid.Row="4" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell74" Grid.Column="7" Grid.Row="4" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell84" Grid.Column="8" Grid.Row="4" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+
+
+                                <TextBox x:Name="TbPuzzleCell05" Grid.Column="0" Grid.Row="5" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell15" Grid.Column="1" Grid.Row="5" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell25" Grid.Column="2" Grid.Row="5" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell35" Grid.Column="3" Grid.Row="5" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell45" Grid.Column="4" Grid.Row="5" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell55" Grid.Column="5" Grid.Row="5" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell65" Grid.Column="6" Grid.Row="5" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell75" Grid.Column="7" Grid.Row="5" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell85" Grid.Column="8" Grid.Row="5" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+
+
+                                <TextBox x:Name="TbPuzzleCell06" Grid.Column="0" Grid.Row="6" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell16" Grid.Column="1" Grid.Row="6" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell26" Grid.Column="2" Grid.Row="6" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell36" Grid.Column="3" Grid.Row="6" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell46" Grid.Column="4" Grid.Row="6" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell56" Grid.Column="5" Grid.Row="6" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell66" Grid.Column="6" Grid.Row="6" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell76" Grid.Column="7" Grid.Row="6" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell86" Grid.Column="8" Grid.Row="6" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+
+
+                                <TextBox x:Name="TbPuzzleCell07" Grid.Column="0" Grid.Row="7" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell17" Grid.Column="1" Grid.Row="7" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell27" Grid.Column="2" Grid.Row="7" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell37" Grid.Column="3" Grid.Row="7" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell47" Grid.Column="4" Grid.Row="7" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell57" Grid.Column="5" Grid.Row="7" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell67" Grid.Column="6" Grid.Row="7" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell77" Grid.Column="7" Grid.Row="7" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell87" Grid.Column="8" Grid.Row="7" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+
+
+                                <TextBox x:Name="TbPuzzleCell08" Grid.Column="0" Grid.Row="8" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell18" Grid.Column="1" Grid.Row="8" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell28" Grid.Column="2" Grid.Row="8" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell38" Grid.Column="3" Grid.Row="8" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell48" Grid.Column="4" Grid.Row="8" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell58" Grid.Column="5" Grid.Row="8" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell68" Grid.Column="6" Grid.Row="8" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell78" Grid.Column="7" Grid.Row="8" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+                                <TextBox x:Name="TbPuzzleCell88" Grid.Column="8" Grid.Row="8" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp"></TextBox>
+
+                            </Grid>
+                        </DockPanel>
+                    </wpfx:BusyIndicator>
+                </TabItem>
+            </TabControl>
+        </Viewbox>
+    </DockPanel>
+</Window>
