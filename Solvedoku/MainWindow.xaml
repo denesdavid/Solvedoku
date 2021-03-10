@@ -37,10 +37,10 @@
 
                             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Button  x:Name="BtClassicLeft" Click="BtClassicLeft_OnClick" Style="{DynamicResource ButtonStyle}" Width="50" IsEnabled="False">
-                                    <Image Width="45" Height="45" Source="Resources/Icons/left_arrow.png"/>
+                                    <Image Width="45" Height="45" Source="Resources/Icons/LeftArrow.png"/>
                                 </Button>
                                 <Button  x:Name="BtClassicRight" Click="BtClassicRight_OnClick" Style="{DynamicResource ButtonStyle}" Width="50" IsEnabled="False">
-                                    <Image Width="45" Height="45" Source="Resources/Icons/right_arrow.png"/>
+                                    <Image Width="45" Height="45" Source="Resources/Icons/RightArrow.png"/>
                                 </Button>
                             </StackPanel>
 
