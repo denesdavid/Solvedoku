@@ -7,8 +7,8 @@
     <Application.Resources>
 
         <!--#region ButtonStyle-->
-        
-            <!--#region Brushes-->
+
+        <!--#region Brushes-->
         <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
         <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
         <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD"/>
@@ -38,7 +38,7 @@
         </LinearGradientBrush>
         <!--#endregion-->
 
-            <!--#region Style-->
+        <!--#region Style-->
         <Style TargetType="{x:Type Button}" x:Key="ButtonStyle">
             <Setter Property="Background" Value="{StaticResource GelButtonBackground}"/>
             <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
@@ -88,18 +88,18 @@
             </Setter>
         </Style>
         <!--#endregion-->
-        
+
         <!--#endregion-->
 
         <!--#region TextBoxStyle-->
-        
-             <!--#region Brushes-->
+
+        <!--#region Brushes-->
         <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
         <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
         <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
         <!--#endregion-->
 
-             <!--#region Style-->
+        <!--#region Style-->
         <Style TargetType="{x:Type TextBox}">
             <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
             <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
@@ -142,7 +142,7 @@
                 </MultiTrigger>
             </Style.Triggers>
         </Style>
-        
+
         <Style x:Key="TbSudokuCellStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Background" Value="LightSteelBlue"/>
             <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
@@ -188,7 +188,7 @@
                 </MultiTrigger>
             </Style.Triggers>
         </Style>
-        
+
         <Style x:Key="TbSudokuEvenCellStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Background" Value="AntiqueWhite"/>
             <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
@@ -234,7 +234,7 @@
                 </MultiTrigger>
             </Style.Triggers>
         </Style>
-        
+
         <!--#endregion-->
 
         <!--#endregion-->
@@ -904,7 +904,7 @@
             </Style.Triggers>
         </Style>
         <!--#endregion-->
-           
+
         <!--#region MessageBoxStyle-->
 
         <Style x:Key="MessageBoxStyle" TargetType="{x:Type xctk:MessageBox}">
@@ -1105,7 +1105,7 @@
             </Setter>
         </Style>
         <!--#endregion-->
-            
+
         <!--#endregion-->
 
     </Application.Resources>
