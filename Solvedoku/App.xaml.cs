@@ -74,7 +74,7 @@ namespace Solvedoku
             var main = App.Current.MainWindow as MainWindow; // If not a static method, this.MainWindow would work
             if (main.TcSudokus.SelectedIndex == 0)
             {
-                main.CloseClassicBusyIndicator();
+                //main.CloseClassicBusyIndicator();
             }
             if (main.TcSudokus.SelectedIndex == 1)
             {

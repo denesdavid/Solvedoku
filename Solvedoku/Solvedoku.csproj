@@ -76,6 +76,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\ParameterizedCommand.cs" />
+    <Compile Include="Commands\ParameterlessCommand.cs" />
     <Compile Include="Services\MessageBox\IMessageBoxService.cs" />
     <Compile Include="Services\MessageBox\MessageBoxService.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku6x6TableViewModel.cs" />
