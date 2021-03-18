@@ -1,25 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
+using Solvedoku.Classes;
 
 namespace Solvedoku.Views.ClassicSudoku
 {
     /// <summary>
     /// Interaction logic for UcClassicSudoku4x4Table.xaml
     /// </summary>
-    public partial class UcClassicSudoku4x4Table : UserControl
+    public partial class UcClassicSudoku4x4Table : UserControl, IClassicSudokuControl
     {
+        public SudokuBoardSize BoardSize 
+        {
+            get => new SudokuBoardSize { Height = 4, Width = 4, BoxCountX = 2, BoxCountY = 2 };
+        }
         public UcClassicSudoku4x4Table()
         {
             InitializeComponent();

@@ -29,7 +29,7 @@ namespace Solvedoku
         private int _classicSolutionIndex = 0;
         private int _actualClassicSizeIndex = 0;     
         private List<SudokuBoard> _classicSolutions = new List<SudokuBoard>();
-        private SudokuClassicHandler _classicHandler = new SudokuClassicHandler();
+        private ClassicSudokuFile _classicHandler = new ClassicSudokuFile();
 
         private Thread _puzzleSolverThread;
         private int _puzzleSolutionIndex = 0;
@@ -40,7 +40,7 @@ namespace Solvedoku
             set { _puzzleColorList = value; }
         }
         private List<SudokuBoard> _puzzleSolutions = new List<SudokuBoard>();
-        private SudokuPuzzleHandler _puzzleHandler = new SudokuPuzzleHandler();
+        private PuzzleSudokuFile _puzzleHandler = new PuzzleSudokuFile();
 
 
         #endregion
@@ -56,465 +56,465 @@ namespace Solvedoku
 
         #endregion
 
-        #region ClassicSudoku
+        //#region ClassicSudoku
 
-        #region Events
-        private void BtSolveClassic_OnClick(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                MessageBoxResult msgBoxResult = Xceed.Wpf.Toolkit.MessageBox.Show(this,
-          "Kérlek válaszd ki, hogy az összes megoldást (feltéve ha van egynél több, illetve ez időigényes is lehet), vagy csak egy lehetségeset szeretnél megkapni.",
-          "Kérdés!",
-          MessageBoxButton.YesNo, MessageBoxImage.Question,
-          (Style)Application.Current.Resources["MessageBoxStyleForClassicSolve"]);
+        //#region Events
+        //private void BtSolveClassic_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        MessageBoxResult msgBoxResult = Xceed.Wpf.Toolkit.MessageBox.Show(this,
+        //  "Kérlek válaszd ki, hogy az összes megoldást (feltéve ha van egynél több, illetve ez időigényes is lehet), vagy csak egy lehetségeset szeretnél megkapni.",
+        //  "Kérdés!",
+        //  MessageBoxButton.YesNo, MessageBoxImage.Question,
+        //  (Style)Application.Current.Resources["MessageBoxStyleForClassicSolve"]);
 
-                if (msgBoxResult != MessageBoxResult.Cancel)
-                {
+        //        if (msgBoxResult != MessageBoxResult.Cancel)
+        //        {
 
-                    Grid actClassicGrid = (Grid)this.FindName("ClassicGrid");
+        //            Grid actClassicGrid = (Grid)this.FindName("ClassicGrid");
 
-                    BtClassicRight.IsEnabled = false;
-                    BtClassicLeft.IsEnabled = false;
-                    var board = CreateClassicBoard(actClassicGrid.RowDefinitions.Count, actClassicGrid.ColumnDefinitions.Count, CountBlockSize(actClassicGrid.RowDefinitions.Count).Item1, CountBlockSize(actClassicGrid.RowDefinitions.Count).Item2);
-                    _classicSolutions.Clear();
-                    _puzzleSolutionIndex = 0;
-                    LbClassicSolvesCount.Content = "";
+        //            BtClassicRight.IsEnabled = false;
+        //            BtClassicLeft.IsEnabled = false;
+        //            var board = CreateClassicBoard(actClassicGrid.RowDefinitions.Count, actClassicGrid.ColumnDefinitions.Count, CountBlockSize(actClassicGrid.RowDefinitions.Count).Item1, CountBlockSize(actClassicGrid.RowDefinitions.Count).Item2);
+        //            _classicSolutions.Clear();
+        //            _puzzleSolutionIndex = 0;
+        //            LbClassicSolvesCount.Content = "";
 
-                    if (msgBoxResult == MessageBoxResult.Yes)
-                    {
+        //            if (msgBoxResult == MessageBoxResult.Yes)
+        //            {
 
-                        _sudokuSolverThread = new Thread(() =>
-                        {
-                            _classicSolutions = Sudoku_SolverThread(board, true);
-                            Action action = DisplayClassicSolutionAndMessage;
-                            Dispatcher.BeginInvoke(action);
-                        });
-                        _sudokuSolverThread.Start();
+        //                _sudokuSolverThread = new Thread(() =>
+        //                {
+        //                    _classicSolutions = Sudoku_SolverThread(board, true);
+        //                    Action action = DisplayClassicSolutionAndMessage;
+        //                    Dispatcher.BeginInvoke(action);
+        //                });
+        //                _sudokuSolverThread.Start();
 
-                    }
-                    else
-                    {
-                        _sudokuSolverThread = new Thread(() =>
-                        {
-                            _classicSolutions = Sudoku_SolverThread(board, false);
-                            Action action = DisplayClassicSolutionAndMessage;
-                            Dispatcher.BeginInvoke(action);
-                        });
-                        _sudokuSolverThread.Start();
+        //            }
+        //            else
+        //            {
+        //                _sudokuSolverThread = new Thread(() =>
+        //                {
+        //                    _classicSolutions = Sudoku_SolverThread(board, false);
+        //                    Action action = DisplayClassicSolutionAndMessage;
+        //                    Dispatcher.BeginInvoke(action);
+        //                });
+        //                _sudokuSolverThread.Start();
 
-                    }
-                    BusyIClassic.IsBusy = true;
-                }
-            }
-            catch
-            {
-                Xceed.Wpf.Toolkit.MessageBox.Show(this, "A klasszikus feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot.",
-                    "Hiba!",
-                    MessageBoxButton.OK, MessageBoxImage.Error,
-                    (Style)Application.Current.Resources["MessageBoxStyle"]);
-            }
+        //            }
+        //            BusyIClassic.IsBusy = true;
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        Xceed.Wpf.Toolkit.MessageBox.Show(this, "A klasszikus feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot.",
+        //            "Hiba!",
+        //            MessageBoxButton.OK, MessageBoxImage.Error,
+        //            (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //    }
 
-        }
-        private void BtSaveClassic_OnClick(object sender, RoutedEventArgs e)
-        {
-            SaveFile.Title = "Klasszikus SUDOKU mentése..";
-            SaveFile.RestoreDirectory = true;
-            SaveFile.DefaultExt = "csu";
-            SaveFile.Filter = "Klasszikus SUDOKU fájlok (*.csu)|*.csu";
-            SaveFile.FilterIndex = 1;
-            SaveFile.CheckPathExists = true;
-            SaveFile.OverwritePrompt = true;
+        //}
+        //private void BtSaveClassic_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    SaveFile.Title = "Klasszikus SUDOKU mentése..";
+        //    SaveFile.RestoreDirectory = true;
+        //    SaveFile.DefaultExt = "csu";
+        //    SaveFile.Filter = "Klasszikus SUDOKU fájlok (*.csu)|*.csu";
+        //    SaveFile.FilterIndex = 1;
+        //    SaveFile.CheckPathExists = true;
+        //    SaveFile.OverwritePrompt = true;
 
-            if (SaveFile.ShowDialog().GetValueOrDefault())
-            {
-                try
-                {
-                    SudokuClassicHandler scHandler = new SudokuClassicHandler();
-                    Grid actClassicGrid = (Grid)this.FindName("ClassicGrid");
-                    scHandler.ActClassicBoard = CreateClassicBoard(actClassicGrid.RowDefinitions.Count, actClassicGrid.ColumnDefinitions.Count, CountBlockSize(actClassicGrid.RowDefinitions.Count).Item1, CountBlockSize(actClassicGrid.RowDefinitions.Count).Item2);
-                    scHandler.ActClassicSolutions = _classicSolutions;
-                    scHandler.SelectedSizeIndex = _actualClassicSizeIndex;
+        //    if (SaveFile.ShowDialog().GetValueOrDefault())
+        //    {
+        //        try
+        //        {
+        //            SudokuClassicHandler scHandler = new SudokuClassicHandler();
+        //            Grid actClassicGrid = (Grid)this.FindName("ClassicGrid");
+        //            scHandler.ActClassicBoard = CreateClassicBoard(actClassicGrid.RowDefinitions.Count, actClassicGrid.ColumnDefinitions.Count, CountBlockSize(actClassicGrid.RowDefinitions.Count).Item1, CountBlockSize(actClassicGrid.RowDefinitions.Count).Item2);
+        //            scHandler.ActClassicSolutions = _classicSolutions;
+        //            scHandler.SelectedSizeIndex = _actualClassicSizeIndex;
 
-                    using (Stream stream = File.Open(SaveFile.FileName, FileMode.Create))
-                    {
-                        var bformatter = new BinaryFormatter();
-                        bformatter.Serialize(stream, scHandler);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Xceed.Wpf.Toolkit.MessageBox messageBox = new Xceed.Wpf.Toolkit.MessageBox();
-                    messageBox.Background = Brushes.Gray;
-                    messageBox.Caption = "Hiba!";
-                    messageBox.Text = "A SUDOKU mentése során hiba lépett fel.";
-                    messageBox.ButtonRegionBackground = Brushes.Gray;
-                    Xceed.Wpf.Toolkit.MessageBox.Show(this, messageBox.Text, messageBox.Caption, MessageBoxButton.OK,
-                        MessageBoxImage.Error, (Style)Application.Current.Resources["MessageBoxStyle"]);
-                }
-            }
-            SaveFile.Reset();
-        }
-        private void BtDrawClassic_OnClick(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (Xceed.Wpf.Toolkit.MessageBox.Show(this, "Új sudoku rajzolásánál minden szám törlődik. Biztos, hogy ezt szeretnéd?", "Figyelmeztetés!", MessageBoxButton.YesNo, MessageBoxImage.Warning, (Style)Application.Current.Resources["MessageBoxStyle"]) == MessageBoxResult.Yes)
-                {
-                    LbClassicSolvesCount.Content = "";
+        //            using (Stream stream = File.Open(SaveFile.FileName, FileMode.Create))
+        //            {
+        //                var bformatter = new BinaryFormatter();
+        //                bformatter.Serialize(stream, scHandler);
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Xceed.Wpf.Toolkit.MessageBox messageBox = new Xceed.Wpf.Toolkit.MessageBox();
+        //            messageBox.Background = Brushes.Gray;
+        //            messageBox.Caption = "Hiba!";
+        //            messageBox.Text = "A SUDOKU mentése során hiba lépett fel.";
+        //            messageBox.ButtonRegionBackground = Brushes.Gray;
+        //            Xceed.Wpf.Toolkit.MessageBox.Show(this, messageBox.Text, messageBox.Caption, MessageBoxButton.OK,
+        //                MessageBoxImage.Error, (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //        }
+        //    }
+        //    SaveFile.Reset();
+        //}
+        //private void BtDrawClassic_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (Xceed.Wpf.Toolkit.MessageBox.Show(this, "Új sudoku rajzolásánál minden szám törlődik. Biztos, hogy ezt szeretnéd?", "Figyelmeztetés!", MessageBoxButton.YesNo, MessageBoxImage.Warning, (Style)Application.Current.Resources["MessageBoxStyle"]) == MessageBoxResult.Yes)
+        //        {
+        //            LbClassicSolvesCount.Content = "";
 
-                    UnregisterClassicControls();
+        //            UnregisterClassicControls();
 
-                    ComboBoxItem currentSize = (ComboBoxItem)CboxClassicSizes.SelectedItem;
-                    string[] parameters = currentSize.Tag.ToString().Split('x');
+        //            ComboBoxItem currentSize = (ComboBoxItem)CboxClassicSizes.SelectedItem;
+        //            string[] parameters = currentSize.Tag.ToString().Split('x');
 
-                    int actHeight = Convert.ToInt32(parameters[0]);
-                    int actWidth = Convert.ToInt32(parameters[1]);
-                    int actBlockHeight = Convert.ToInt32(parameters[2]);
-                    int actBlockWidth = Convert.ToInt32(parameters[3]);
+        //            int actHeight = Convert.ToInt32(parameters[0]);
+        //            int actWidth = Convert.ToInt32(parameters[1]);
+        //            int actBlockHeight = Convert.ToInt32(parameters[2]);
+        //            int actBlockWidth = Convert.ToInt32(parameters[3]);
 
-                    DrawClassic(actHeight, actWidth, actBlockHeight, actBlockWidth);
-                    _actualClassicSizeIndex = CboxClassicSizes.SelectedIndex;
-                }
-            }
-            catch
-            {
-                Xceed.Wpf.Toolkit.MessageBox.Show(this, "A klasszikus SUDOKU rajzolása során hiba lépett fel. Kérlek lépj kapcsolatba a program készítőjével.",
-                    "Hiba!",
-                    MessageBoxButton.OK, MessageBoxImage.Error,
-                    (Style)Application.Current.Resources["MessageBoxStyle"]);
-            }       
-        }
-        private void BtClassicRight_OnClick(object sender, RoutedEventArgs e)
-        {
-            _classicSolutionIndex++;
-            BtClassicLeft.IsEnabled = true;
-            string[,] actSolution = _classicSolutions[_classicSolutionIndex].OutputAsMatrix();
-            DisplayBoard(actSolution, "TbClassicCell");
-            LbClassicSolvesCount.Content = "Megoldások: " + (_classicSolutionIndex + 1) + "/" + _classicSolutions.Count;
-            if (_classicSolutionIndex == (_classicSolutions.Count - 1))
-            {
-                BtClassicRight.IsEnabled = false;
-            }
-        }
-        private void BtClassicLeft_OnClick(object sender, RoutedEventArgs e)
-        {
-            _classicSolutionIndex--;
-            BtClassicRight.IsEnabled = true;
-            string[,] actSolution = _classicSolutions[_classicSolutionIndex].OutputAsMatrix();
-            DisplayBoard(actSolution, "TbClassicCell");
-            LbClassicSolvesCount.Content = "Megoldások: " + (_classicSolutionIndex + 1) + "/" + _classicSolutions.Count;
-            if (_classicSolutionIndex == 0)
-            {
-                BtClassicLeft.IsEnabled = false;
-            }
-        }
-        private void BtLoadClassic_OnClick(object sender, RoutedEventArgs e)
-        {
-            LoadFile.Title = "Klasszikus SUDOKU betöltése..";
-            LoadFile.RestoreDirectory = true;
-            LoadFile.DefaultExt = "csu";
-            LoadFile.Filter = "Klasszikus SUDOKU fájlok (*.csu)|*.csu";
-            LoadFile.FilterIndex = 1;
-            LoadFile.CheckPathExists = true;
-            LoadFile.CheckFileExists = true;
-
-
-            if (LoadFile.ShowDialog().GetValueOrDefault())
-            {
-                try
-                {
-                    using (Stream stream = File.Open(LoadFile.FileName, FileMode.Open))
-                    {
-                        var bformatter = new BinaryFormatter();
-                        _classicHandler = (SudokuClassicHandler)bformatter.Deserialize(stream);
-
-                    }
-
-                    Tuple<int, int> blockSize = CountBlockSize(_classicHandler.ActClassicBoard.Height);
-                    CboxClassicSizes.SelectedIndex = _classicHandler.SelectedSizeIndex;
-                    _actualClassicSizeIndex = _classicHandler.SelectedSizeIndex;
-
-                    UnregisterClassicControls();
-                    LbClassicSolvesCount.Content = "";
-                    DrawClassic(_classicHandler.ActClassicBoard.Height, _classicHandler.ActClassicBoard.Width, blockSize.Item1, blockSize.Item2);
-                    DisplayBoard(_classicHandler.ActClassicBoard.OutputAsMatrix(), "TbClassicCell");
-
-                    _classicSolutions = _classicHandler.ActClassicSolutions;
-                    if (_classicSolutions.Count > 1)
-                    {
-                        Xceed.Wpf.Toolkit.MessageBox.Show(this, "A betöltött klasszikus feladványnak több megoldása is van (összesen " + _classicSolutions.Count + "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
-                            MessageBoxButton.OK, MessageBoxImage.Information,
-                            (Style)Application.Current.Resources["MessageBoxStyle"]);
-
-                        LbClassicSolvesCount.Content = "Megoldások: 1/" + _classicSolutions.Count;
-                        LbClassicSolvesCount.Visibility = Visibility.Visible;
-                        BtClassicRight.IsEnabled = true;
-                        BtClassicLeft.IsEnabled = false;
-                    }
-                    else if (_classicSolutions.Count == 1)
-                    {
-                        Xceed.Wpf.Toolkit.MessageBox.Show(this, "A betöltött klasszikus feladványnak egy megoldása van.", "Információ!",
-                            MessageBoxButton.OK, MessageBoxImage.Information,
-                            (Style)Application.Current.Resources["MessageBoxStyle"]);
-                        LbClassicSolvesCount.Content = "";
-                    }
+        //            DrawClassic(actHeight, actWidth, actBlockHeight, actBlockWidth);
+        //            _actualClassicSizeIndex = CboxClassicSizes.SelectedIndex;
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        Xceed.Wpf.Toolkit.MessageBox.Show(this, "A klasszikus SUDOKU rajzolása során hiba lépett fel. Kérlek lépj kapcsolatba a program készítőjével.",
+        //            "Hiba!",
+        //            MessageBoxButton.OK, MessageBoxImage.Error,
+        //            (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //    }       
+        //}
+        //private void BtClassicRight_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    _classicSolutionIndex++;
+        //    BtClassicLeft.IsEnabled = true;
+        //    string[,] actSolution = _classicSolutions[_classicSolutionIndex].OutputAsMatrix();
+        //    DisplayBoard(actSolution, "TbClassicCell");
+        //    LbClassicSolvesCount.Content = "Megoldások: " + (_classicSolutionIndex + 1) + "/" + _classicSolutions.Count;
+        //    if (_classicSolutionIndex == (_classicSolutions.Count - 1))
+        //    {
+        //        BtClassicRight.IsEnabled = false;
+        //    }
+        //}
+        //private void BtClassicLeft_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    _classicSolutionIndex--;
+        //    BtClassicRight.IsEnabled = true;
+        //    string[,] actSolution = _classicSolutions[_classicSolutionIndex].OutputAsMatrix();
+        //    DisplayBoard(actSolution, "TbClassicCell");
+        //    LbClassicSolvesCount.Content = "Megoldások: " + (_classicSolutionIndex + 1) + "/" + _classicSolutions.Count;
+        //    if (_classicSolutionIndex == 0)
+        //    {
+        //        BtClassicLeft.IsEnabled = false;
+        //    }
+        //}
+        //private void BtLoadClassic_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    LoadFile.Title = "Klasszikus SUDOKU betöltése..";
+        //    LoadFile.RestoreDirectory = true;
+        //    LoadFile.DefaultExt = "csu";
+        //    LoadFile.Filter = "Klasszikus SUDOKU fájlok (*.csu)|*.csu";
+        //    LoadFile.FilterIndex = 1;
+        //    LoadFile.CheckPathExists = true;
+        //    LoadFile.CheckFileExists = true;
 
 
-                }
-                catch (Exception ex)
-                {
-                    Xceed.Wpf.Toolkit.MessageBox messageBox = new Xceed.Wpf.Toolkit.MessageBox();
-                    messageBox.Background = Brushes.Gray;
-                    messageBox.Caption = "Hiba!";
-                    messageBox.Text = "A klasszikus SUDOKU betöltése során hiba lépett fel. " + ex.Message;
-                    messageBox.ButtonRegionBackground = Brushes.Gray;
-                    Xceed.Wpf.Toolkit.MessageBox.Show(this, messageBox.Text, messageBox.Caption, MessageBoxButton.OK,
-                        MessageBoxImage.Error, (Style)Application.Current.Resources["MessageBoxStyle"]);
-                }
-            }
-            LoadFile.Reset();
-        }
-        private void TbClassicCell_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            Grid actClassicGrid = (Grid)this.FindName("ClassicGrid");
-            string maxNumber = actClassicGrid.RowDefinitions.Count.ToString();
+        //    if (LoadFile.ShowDialog().GetValueOrDefault())
+        //    {
+        //        try
+        //        {
+        //            using (Stream stream = File.Open(LoadFile.FileName, FileMode.Open))
+        //            {
+        //                var bformatter = new BinaryFormatter();
+        //                _classicHandler = (SudokuClassicHandler)bformatter.Deserialize(stream);
 
-            if (System.Text.RegularExpressions.Regex.IsMatch(((TextBox)sender).Text, "[^1-" + maxNumber + "]") || ((TextBox)sender).Text.Length >= 2)
-            {
-                Xceed.Wpf.Toolkit.MessageBox.Show(this, "Csak egyjegyű számokat üthetsz be 1-től " + maxNumber + "-ig.", "Információ!",
-                    MessageBoxButton.OK, MessageBoxImage.Information,
-                    (Style)Application.Current.Resources["MessageBoxStyle"]);
-                ((TextBox)sender).Clear();
-            }
-        }
+        //            }
 
-        #endregion
+        //            Tuple<int, int> blockSize = CountBlockSize(_classicHandler.ActClassicBoard.Height);
+        //            CboxClassicSizes.SelectedIndex = _classicHandler.SelectedSizeIndex;
+        //            _actualClassicSizeIndex = _classicHandler.SelectedSizeIndex;
 
-        #region Methods
-        public void CloseClassicBusyIndicator()
-        {
-            if (Xceed.Wpf.Toolkit.MessageBox.Show(this,
-                    "Biztos, hogy meg szeretnéd szakítani a megoldást?", "Figyelmeztetés!",
-                    MessageBoxButton.YesNo, MessageBoxImage.Warning,
-                    (Style)Application.Current.Resources["MessageBoxStyle"]) == MessageBoxResult.Yes)
-            {
-                _sudokuSolverThread.Abort();
-                BusyIClassic.IsBusy = false;
-            }
-        }
-        private void DisplayClassicSolutionAndMessage()
-        {
-            BusyIClassic.IsBusy = false;
-            if (_sudokuSolverThread.ThreadState != ThreadState.Aborted)
-            {
-                if (_classicSolutions.Count > 0 && _classicSolutions[0] != null)
-                {
-                    if (_classicSolutions.Count > 1)
-                    {
-                        Xceed.Wpf.Toolkit.MessageBox.Show(this, "A klasszikus feladványnak több megoldása is van (összesen " + _classicSolutions.Count + "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
-                            MessageBoxButton.OK, MessageBoxImage.Information,
-                            (Style)Application.Current.Resources["MessageBoxStyle"]);
-                        BtClassicRight.IsEnabled = true;
-                        LbClassicSolvesCount.Content = "Megoldások: 1/" + _classicSolutions.Count;
-                        LbClassicSolvesCount.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        Xceed.Wpf.Toolkit.MessageBox.Show(this, "A klasszikus feladványnak egy megoldása van.", "Információ!",
-                            MessageBoxButton.OK, MessageBoxImage.Information,
-                            (Style)Application.Current.Resources["MessageBoxStyle"]);
-                    }
+        //            UnregisterClassicControls();
+        //            LbClassicSolvesCount.Content = "";
+        //            DrawClassic(_classicHandler.ActClassicBoard.Height, _classicHandler.ActClassicBoard.Width, blockSize.Item1, blockSize.Item2);
+        //            DisplayBoard(_classicHandler.ActClassicBoard.OutputAsMatrix(), "TbClassicCell");
 
-                    string[,] actSolution = _classicSolutions[0].OutputAsMatrix();
-                    DisplayBoard(actSolution, "TbClassicCell");
+        //            _classicSolutions = _classicHandler.ActClassicSolutions;
+        //            if (_classicSolutions.Count > 1)
+        //            {
+        //                Xceed.Wpf.Toolkit.MessageBox.Show(this, "A betöltött klasszikus feladványnak több megoldása is van (összesen " + _classicSolutions.Count + "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
+        //                    MessageBoxButton.OK, MessageBoxImage.Information,
+        //                    (Style)Application.Current.Resources["MessageBoxStyle"]);
 
-                }
-                else
-                {
-                    Xceed.Wpf.Toolkit.MessageBox.Show(this, "A klasszikus feladványnak sajnos nincs megoldása.", "Információ!",
-                        MessageBoxButton.OK, MessageBoxImage.Information,
-                        (Style)Application.Current.Resources["MessageBoxStyle"]);
-                }
-            }
-        }
-        private SudokuBoard CreateClassicBoard(int height, int width, int blockHeight, int blockWidth)
-        {
-            SudokuBoard board;
-
-            if (blockHeight == 3 && blockWidth == 3)
-            {
-                board = SudokuFactory.ClassicWith3x3Boxes();
-
-                for (int row = 0; row < 9; row++)
-                {
-                    string actRow = "";
-                    for (int column = 0; column < 9; column++)
-                    {
-                        TextBox actCell = (TextBox)this.FindName("TbClassicCell" + column + row);
-                        if (actCell.Text == String.Empty)
-                        {
-                            actRow += ".";
-                        }
-                        else
-                        {
-                            // actCell.FontWeight = FontWeights.Bold;
-                            actRow += actCell.Text;
-                        }
-                    }
-                    board.AddRow(actRow);
-                }
-            }
-            else
-            {
-                board = SudokuFactory.SizeAndBoxes(width, height, blockHeight, blockWidth);
-                for (int row = 0; row < height; row++)
-                {
-                    string actRow = "";
-                    for (int column = 0; column < width; column++)
-                    {
-                        TextBox actCell = (TextBox)this.FindName("TbClassicCell" + column + row);
-                        if (actCell.Text == String.Empty)
-                        {
-                            actRow += "0";
-                        }
-                        else
-                        {
-                            //actCell.FontWeight = FontWeights.Bold;
-                            actRow += actCell.Text;
-                        }
-                    }
-                    board.AddRow(actRow);
-                }
-            }
+        //                LbClassicSolvesCount.Content = "Megoldások: 1/" + _classicSolutions.Count;
+        //                LbClassicSolvesCount.Visibility = Visibility.Visible;
+        //                BtClassicRight.IsEnabled = true;
+        //                BtClassicLeft.IsEnabled = false;
+        //            }
+        //            else if (_classicSolutions.Count == 1)
+        //            {
+        //                Xceed.Wpf.Toolkit.MessageBox.Show(this, "A betöltött klasszikus feladványnak egy megoldása van.", "Információ!",
+        //                    MessageBoxButton.OK, MessageBoxImage.Information,
+        //                    (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //                LbClassicSolvesCount.Content = "";
+        //            }
 
 
-            return board;
-        }
-        private void UnregisterClassicControls()
-        {
-            Grid classicGridToDelete = (Grid)LogicalTreeHelper.FindLogicalNode(ClassicDockPanel, "ClassicGrid");
-            for (int row = 0; row < classicGridToDelete.RowDefinitions.Count; row++)
-            {
-                for (int column = 0; column < classicGridToDelete.ColumnDefinitions.Count; column++)
-                {
-                    TextBox oldCell =
-                        (TextBox)LogicalTreeHelper.FindLogicalNode(classicGridToDelete, "TbClassicCell" + column + row);
-                    classicGridToDelete.UnregisterName(oldCell.Name);
-                    classicGridToDelete.Children.Remove(oldCell);
-                }
-            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Xceed.Wpf.Toolkit.MessageBox messageBox = new Xceed.Wpf.Toolkit.MessageBox();
+        //            messageBox.Background = Brushes.Gray;
+        //            messageBox.Caption = "Hiba!";
+        //            messageBox.Text = "A klasszikus SUDOKU betöltése során hiba lépett fel. " + ex.Message;
+        //            messageBox.ButtonRegionBackground = Brushes.Gray;
+        //            Xceed.Wpf.Toolkit.MessageBox.Show(this, messageBox.Text, messageBox.Caption, MessageBoxButton.OK,
+        //                MessageBoxImage.Error, (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //        }
+        //    }
+        //    LoadFile.Reset();
+        //}
+        //private void TbClassicCell_OnTextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    Grid actClassicGrid = (Grid)this.FindName("ClassicGrid");
+        //    string maxNumber = actClassicGrid.RowDefinitions.Count.ToString();
 
-            ClassicDockPanel.Children.Remove(classicGridToDelete);
-            ClassicDockPanel.UnregisterName(ClassicGrid.Name);
+        //    if (System.Text.RegularExpressions.Regex.IsMatch(((TextBox)sender).Text, "[^1-" + maxNumber + "]") || ((TextBox)sender).Text.Length >= 2)
+        //    {
+        //        Xceed.Wpf.Toolkit.MessageBox.Show(this, "Csak egyjegyű számokat üthetsz be 1-től " + maxNumber + "-ig.", "Információ!",
+        //            MessageBoxButton.OK, MessageBoxImage.Information,
+        //            (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //        ((TextBox)sender).Clear();
+        //    }
+        //}
 
-        }
-        private void DrawClassic(int height, int width, int blockHeight, int blockWidth) //9x9(3x3) 4x4(2x2) 6x6(2x3)
-        {
+        //#endregion
 
-            _classicSolutions.Clear();
-            _classicSolutionIndex = 0;
-            bool areEvenBlocks = blockHeight % 2 != 0;
-            BtClassicRight.IsEnabled = false;
-            BtClassicLeft.IsEnabled = false;
+        //#region Methods
+        //public void CloseClassicBusyIndicator()
+        //{
+        //    if (Xceed.Wpf.Toolkit.MessageBox.Show(this,
+        //            "Biztos, hogy meg szeretnéd szakítani a megoldást?", "Figyelmeztetés!",
+        //            MessageBoxButton.YesNo, MessageBoxImage.Warning,
+        //            (Style)Application.Current.Resources["MessageBoxStyle"]) == MessageBoxResult.Yes)
+        //    {
+        //        _sudokuSolverThread.Abort();
+        //        BusyIClassic.IsBusy = false;
+        //    }
+        //}
+        //private void DisplayClassicSolutionAndMessage()
+        //{
+        //    BusyIClassic.IsBusy = false;
+        //    if (_sudokuSolverThread.ThreadState != ThreadState.Aborted)
+        //    {
+        //        if (_classicSolutions.Count > 0 && _classicSolutions[0] != null)
+        //        {
+        //            if (_classicSolutions.Count > 1)
+        //            {
+        //                Xceed.Wpf.Toolkit.MessageBox.Show(this, "A klasszikus feladványnak több megoldása is van (összesen " + _classicSolutions.Count + "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
+        //                    MessageBoxButton.OK, MessageBoxImage.Information,
+        //                    (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //                BtClassicRight.IsEnabled = true;
+        //                LbClassicSolvesCount.Content = "Megoldások: 1/" + _classicSolutions.Count;
+        //                LbClassicSolvesCount.Visibility = Visibility.Visible;
+        //            }
+        //            else
+        //            {
+        //                Xceed.Wpf.Toolkit.MessageBox.Show(this, "A klasszikus feladványnak egy megoldása van.", "Információ!",
+        //                    MessageBoxButton.OK, MessageBoxImage.Information,
+        //                    (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //            }
 
-            Grid classicGrid = new Grid();
-            classicGrid.Name = "ClassicGrid";
-            classicGrid.SetValue(NameProperty, "ClassicGrid");
-            classicGrid.Margin = new Thickness(8);
-            classicGrid.HorizontalAlignment = HorizontalAlignment.Center;
-            classicGrid.VerticalAlignment = VerticalAlignment.Center;
-            classicGrid.Width = 400;
-            classicGrid.Height = 400;
-            ClassicDockPanel.Children.Add(classicGrid);
-            ClassicDockPanel.RegisterName(classicGrid.Name, classicGrid);
+        //            string[,] actSolution = _classicSolutions[0].OutputAsMatrix();
+        //            DisplayBoard(actSolution, "TbClassicCell");
 
-            Style evenCellStyle = Application.Current.FindResource("TbSudokuEvenCellStyle") as Style;
-            Style oddCellStyle = Application.Current.FindResource("TbSudokuCellStyle") as Style;
+        //        }
+        //        else
+        //        {
+        //            Xceed.Wpf.Toolkit.MessageBox.Show(this, "A klasszikus feladványnak sajnos nincs megoldása.", "Információ!",
+        //                MessageBoxButton.OK, MessageBoxImage.Information,
+        //                (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //        }
+        //    }
+        //}
+        //private SudokuBoard CreateClassicBoard(int height, int width, int blockHeight, int blockWidth)
+        //{
+        //    SudokuBoard board;
 
-            Style actCellStyle = oddCellStyle;
+        //    if (blockHeight == 3 && blockWidth == 3)
+        //    {
+        //        board = SudokuFactory.ClassicWith3x3Boxes();
 
-            for (int i = 0; i < width; i++)
-            {
-                ColumnDefinition classicColumn = new ColumnDefinition();
-                RowDefinition classicRow = new RowDefinition();
-                classicGrid.ColumnDefinitions.Add(classicColumn);
-                classicGrid.RowDefinitions.Add(classicRow);
-            }
-
-            for (int row = 0; row < height; row++)
-            {
-                if (row % blockHeight == 0 && row > 0)
-                {
-                    if (actCellStyle == oddCellStyle)
-                    {
-                        actCellStyle = evenCellStyle;
-                    }
-                    else
-                    {
-                        actCellStyle = oddCellStyle;
-                    }
-                }
-
-                for (int column = 0; column < width; column++)
-                {
-
-                    TextBox cell = new TextBox();
-                    cell.Style = actCellStyle;
-                    cell.TextChanged += TbClassicCell_OnTextChanged;
-
-                    cell.SetValue(NameProperty, "TbClassicCell" + column + row);
-                    cell.Name = "TbClassicCell" + column + row;
-                    classicGrid.RegisterName(cell.Name, cell);
-                    classicGrid.Children.Add(cell);
-
-
-                    Grid.SetRow(cell, row);
-                    Grid.SetColumn(cell, column);
-                    int nextColumn = column + 1;
-
-
-                    if (areEvenBlocks)
-                    {
-                        if (nextColumn % blockWidth == 0 && nextColumn != width)
-                        {
-                            if (actCellStyle == oddCellStyle)
-                            {
-                                actCellStyle = evenCellStyle;
-                            }
-                            else
-                            {
-                                actCellStyle = oddCellStyle;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (nextColumn % blockWidth == 0)
-                        {
-                            if (actCellStyle == oddCellStyle)
-                            {
-                                actCellStyle = evenCellStyle;
-                            }
-                            else
-                            {
-                                actCellStyle = oddCellStyle;
-                            }
-                        }
-                    }
-
-                }
-            }
+        //        for (int row = 0; row < 9; row++)
+        //        {
+        //            string actRow = "";
+        //            for (int column = 0; column < 9; column++)
+        //            {
+        //                TextBox actCell = (TextBox)this.FindName("TbClassicCell" + column + row);
+        //                if (actCell.Text == String.Empty)
+        //                {
+        //                    actRow += ".";
+        //                }
+        //                else
+        //                {
+        //                    // actCell.FontWeight = FontWeights.Bold;
+        //                    actRow += actCell.Text;
+        //                }
+        //            }
+        //            board.AddRow(actRow);
+        //        }
+        //    }
+        //    else
+        //    {
+        //        board = SudokuFactory.SizeAndBoxes(width, height, blockHeight, blockWidth);
+        //        for (int row = 0; row < height; row++)
+        //        {
+        //            string actRow = "";
+        //            for (int column = 0; column < width; column++)
+        //            {
+        //                TextBox actCell = (TextBox)this.FindName("TbClassicCell" + column + row);
+        //                if (actCell.Text == String.Empty)
+        //                {
+        //                    actRow += "0";
+        //                }
+        //                else
+        //                {
+        //                    //actCell.FontWeight = FontWeights.Bold;
+        //                    actRow += actCell.Text;
+        //                }
+        //            }
+        //            board.AddRow(actRow);
+        //        }
+        //    }
 
 
+        //    return board;
+        //}
+        //private void UnregisterClassicControls()
+        //{
+        //    Grid classicGridToDelete = (Grid)LogicalTreeHelper.FindLogicalNode(ClassicDockPanel, "ClassicGrid");
+        //    for (int row = 0; row < classicGridToDelete.RowDefinitions.Count; row++)
+        //    {
+        //        for (int column = 0; column < classicGridToDelete.ColumnDefinitions.Count; column++)
+        //        {
+        //            TextBox oldCell =
+        //                (TextBox)LogicalTreeHelper.FindLogicalNode(classicGridToDelete, "TbClassicCell" + column + row);
+        //            classicGridToDelete.UnregisterName(oldCell.Name);
+        //            classicGridToDelete.Children.Remove(oldCell);
+        //        }
+        //    }
+
+        //    ClassicDockPanel.Children.Remove(classicGridToDelete);
+        //    ClassicDockPanel.UnregisterName(ClassicGrid.Name);
+
+        //}
+        //private void DrawClassic(int height, int width, int blockHeight, int blockWidth) //9x9(3x3) 4x4(2x2) 6x6(2x3)
+        //{
+
+        //    _classicSolutions.Clear();
+        //    _classicSolutionIndex = 0;
+        //    bool areEvenBlocks = blockHeight % 2 != 0;
+        //    BtClassicRight.IsEnabled = false;
+        //    BtClassicLeft.IsEnabled = false;
+
+        //    Grid classicGrid = new Grid();
+        //    classicGrid.Name = "ClassicGrid";
+        //    classicGrid.SetValue(NameProperty, "ClassicGrid");
+        //    classicGrid.Margin = new Thickness(8);
+        //    classicGrid.HorizontalAlignment = HorizontalAlignment.Center;
+        //    classicGrid.VerticalAlignment = VerticalAlignment.Center;
+        //    classicGrid.Width = 400;
+        //    classicGrid.Height = 400;
+        //    ClassicDockPanel.Children.Add(classicGrid);
+        //    ClassicDockPanel.RegisterName(classicGrid.Name, classicGrid);
+
+        //    Style evenCellStyle = Application.Current.FindResource("TbSudokuEvenCellStyle") as Style;
+        //    Style oddCellStyle = Application.Current.FindResource("TbSudokuCellStyle") as Style;
+
+        //    Style actCellStyle = oddCellStyle;
+
+        //    for (int i = 0; i < width; i++)
+        //    {
+        //        ColumnDefinition classicColumn = new ColumnDefinition();
+        //        RowDefinition classicRow = new RowDefinition();
+        //        classicGrid.ColumnDefinitions.Add(classicColumn);
+        //        classicGrid.RowDefinitions.Add(classicRow);
+        //    }
+
+        //    for (int row = 0; row < height; row++)
+        //    {
+        //        if (row % blockHeight == 0 && row > 0)
+        //        {
+        //            if (actCellStyle == oddCellStyle)
+        //            {
+        //                actCellStyle = evenCellStyle;
+        //            }
+        //            else
+        //            {
+        //                actCellStyle = oddCellStyle;
+        //            }
+        //        }
+
+        //        for (int column = 0; column < width; column++)
+        //        {
+
+        //            TextBox cell = new TextBox();
+        //            cell.Style = actCellStyle;
+        //            cell.TextChanged += TbClassicCell_OnTextChanged;
+
+        //            cell.SetValue(NameProperty, "TbClassicCell" + column + row);
+        //            cell.Name = "TbClassicCell" + column + row;
+        //            classicGrid.RegisterName(cell.Name, cell);
+        //            classicGrid.Children.Add(cell);
+
+
+        //            Grid.SetRow(cell, row);
+        //            Grid.SetColumn(cell, column);
+        //            int nextColumn = column + 1;
+
+
+        //            if (areEvenBlocks)
+        //            {
+        //                if (nextColumn % blockWidth == 0 && nextColumn != width)
+        //                {
+        //                    if (actCellStyle == oddCellStyle)
+        //                    {
+        //                        actCellStyle = evenCellStyle;
+        //                    }
+        //                    else
+        //                    {
+        //                        actCellStyle = oddCellStyle;
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                if (nextColumn % blockWidth == 0)
+        //                {
+        //                    if (actCellStyle == oddCellStyle)
+        //                    {
+        //                        actCellStyle = evenCellStyle;
+        //                    }
+        //                    else
+        //                    {
+        //                        actCellStyle = oddCellStyle;
+        //                    }
+        //                }
+        //            }
+
+        //        }
+        //    }
 
 
 
-        }
 
-        #endregion
 
-        #endregion
+        //}
+
+        //#endregion
+
+        //#endregion
 
         #region PuzzleSudoku
 
@@ -606,7 +606,7 @@ namespace Solvedoku
             {
                 try
                 {
-                    SudokuPuzzleHandler spHandler = new SudokuPuzzleHandler();
+                    PuzzleSudokuFile spHandler = new PuzzleSudokuFile();
 
                     spHandler.ActPuzzleBoard = CreatePuzzleBoard(GetPuzzleAreas());
                     spHandler.ActAreas = GetPuzzleAreas();
@@ -647,7 +647,7 @@ namespace Solvedoku
                     using (Stream stream = File.Open(LoadFile.FileName, FileMode.Open))
                     {
                         var bformatter = new BinaryFormatter();
-                        _puzzleHandler = (SudokuPuzzleHandler)bformatter.Deserialize(stream);
+                        _puzzleHandler = (PuzzleSudokuFile)bformatter.Deserialize(stream);
 
                     }
                     UnregisterPuzzleControls();
@@ -992,29 +992,29 @@ namespace Solvedoku
         #endregion
 
         #region Events
-        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                LbClassicSolvesCount.Content = "";
-                LbPuzzleSolvesCount.Content = "";
-                ComboBoxItem currentSize = (ComboBoxItem)CboxClassicSizes.SelectedItem;
-                string[] parameters = currentSize.Tag.ToString().Split('x');
+        //private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        LbClassicSolvesCount.Content = "";
+        //        LbPuzzleSolvesCount.Content = "";
+        //        ComboBoxItem currentSize = (ComboBoxItem)CboxClassicSizes.SelectedItem;
+        //        string[] parameters = currentSize.Tag.ToString().Split('x');
 
-                int actHeight = Convert.ToInt32(parameters[0]);
-                int actWidth = Convert.ToInt32(parameters[1]);
-                int actBlockHeight = Convert.ToInt32(parameters[2]);
-                int actBlockWidth = Convert.ToInt32(parameters[3]);
+        //        int actHeight = Convert.ToInt32(parameters[0]);
+        //        int actWidth = Convert.ToInt32(parameters[1]);
+        //        int actBlockHeight = Convert.ToInt32(parameters[2]);
+        //        int actBlockWidth = Convert.ToInt32(parameters[3]);
 
-                UnregisterClassicControls( /*actHeight, actWidth*/);
-                DrawClassic(actHeight, actWidth, actBlockHeight, actBlockWidth);
-                DrawPuzzle(9, 9);
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show(ex.Message);
-            }
-        }
+        //        UnregisterClassicControls( /*actHeight, actWidth*/);
+        //        DrawClassic(actHeight, actWidth, actBlockHeight, actBlockWidth);
+        //        DrawPuzzle(9, 9);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        System.Windows.MessageBox.Show(ex.Message);
+        //    }
+        //}
         private List<SudokuBoard> Sudoku_SolverThread(object classicBoard, bool findAllSolutions)
         {
             List<SudokuBoard> solutions = new List<SudokuBoard>();

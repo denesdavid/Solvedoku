@@ -67,16 +67,23 @@ namespace Solvedoku.Classes
             return board;
         }
 
-        public static SudokuBoard SizeAndBoxes(int width, int height, int boxCountX, int boxCountY)
+        public static SudokuBoard SizeAndBoxes(SudokuBoardSize sudokuBoardSize)
         {
-            SudokuBoard board = new SudokuBoard(width, height);
-            board.AddBoxesCount(boxCountX, boxCountY);
+            SudokuBoard board = new SudokuBoard(sudokuBoardSize.Width, sudokuBoardSize.Height);
+            board.AddBoxesCount(sudokuBoardSize.BoxCountX, sudokuBoardSize.BoxCountY);
             return board;
         }
 
         public static SudokuBoard ClassicWith3x3Boxes()
         {
-            return SizeAndBoxes(DefaultSize, DefaultSize, DefaultSize / BoxSize, DefaultSize / BoxSize);
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize
+            {
+                Width = DefaultSize,
+                Height = DefaultSize,
+                BoxCountX = DefaultSize / BoxSize,
+                BoxCountY = DefaultSize / BoxSize
+            };
+            return SizeAndBoxes(sudokuBoardSize);
         }
 
         public static SudokuBoard ClassicWith3x3BoxesAndHyperRegions()

@@ -76,6 +76,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\SudokuBoardSize.cs" />
+    <Compile Include="Commands\ParameterizedCommand.cs" />
+    <Compile Include="Commands\ParameterlessCommand.cs" />
     <Compile Include="Services\MessageBox\IMessageBoxService.cs" />
     <Compile Include="Services\MessageBox\MessageBoxService.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku6x6TableViewModel.cs" />
@@ -85,6 +88,7 @@
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudoku9x9TableViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudokuViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\ClassicSudoku\IClassicSudokuControl.cs" />
     <Compile Include="Views\ClassicSudoku\UcClassicSudoku.xaml.cs">
       <DependentUpon>UcClassicSudoku.xaml</DependentUpon>
     </Compile>
@@ -113,9 +117,9 @@
     </Compile>
     <Compile Include="Classes\RatioConverter.cs" />
     <Compile Include="Classes\SudokuBoard.cs" />
-    <Compile Include="Classes\SudokuClassicHandler.cs" />
+    <Compile Include="Classes\ClassicSudokuFile.cs" />
     <Compile Include="Classes\SudokuFactory.cs" />
-    <Compile Include="Classes\SudokuPuzzleHandler.cs" />
+    <Compile Include="Classes\PuzzleSudokuFile.cs" />
     <Compile Include="Classes\SudokuRule.cs" />
     <Compile Include="Classes\SudokuTile.cs" />
     <Compile Include="MainWindow.xaml.cs">

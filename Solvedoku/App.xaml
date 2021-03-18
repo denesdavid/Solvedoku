@@ -39,7 +39,7 @@
         <!--#endregion-->
 
         <!--#region Style-->
-        <Style TargetType="{x:Type Button}" x:Key="ButtonStyle">
+        <Style TargetType="{x:Type Button}">
             <Setter Property="Background" Value="{StaticResource GelButtonBackground}"/>
             <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
@@ -1089,10 +1089,7 @@
                                                             </ProgressBar.Width>
                                                         </ProgressBar>
                                                     </Border>
-
-                                                    <Button x:Name="BtCancelSolve" Content="Mégse" Grid.Row="2" Style="{DynamicResource ButtonStyle}" Click="BtCancelSolve_OnClick"  IsCancel="True"></Button>
-
-
+                                                    <Button x:Name="BtCancelSolve" Content="Mégse" Grid.Row="2" Click="BtCancelSolve_OnClick"  IsCancel="True"></Button>
                                                 </Grid>
                                             </Border>
                                         </Border>

@@ -266,7 +266,6 @@ namespace Solvedoku.Classes
                     IEnumerable<SudokuTile> boxTiles = TileBox(pos.Item1 * sizeX, pos.Item2 * sizeY, sizeX, sizeY);
                     CreateRule("Box at (" + pos.Item1.ToString() + ", " + pos.Item2.ToString() + ")", boxTiles);
                 }
-
             }
         }
     }
