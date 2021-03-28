@@ -5,12 +5,16 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:wpfx="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:Solvedoku.Views.ClassicSudoku"
+             xmlns:Converters="clr-namespace:Solvedoku.Converters"
              xmlns:ClassicSudokuViewModels="clr-namespace:Solvedoku.ViewModels.ClassicSudoku"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="800">
     <UserControl.DataContext>
         <ClassicSudokuViewModels:ClassicSudokuViewModel/>
     </UserControl.DataContext>
+    <UserControl.Resources>
+        <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+    </UserControl.Resources>
     <wpfx:BusyIndicator IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}">
         <DockPanel>
             <StackPanel DockPanel.Dock="Right">
@@ -23,11 +27,14 @@
                     <ComboBoxItem x:Name="Cbi2366" Tag="6x6x2x3" Content="6x6 (2x3)"/>
                     <ComboBoxItem x:Name="Cbi2244" Tag="4x4x2x2" Content="4x4 (2x2)"/>-->
                 </ComboBox>
-                <Button Content="Rajzol" Command="{Binding DrawClassicSudokuCommand}"/>
+                <Button Content="Rajzol" Command="{Binding DrawClassicSudokuCommand}"
+                        CommandParameter="{Binding SelectedSudokuBoardSize}"/>
                 <Button Content="Megoldás" Command="{Binding SolveClassicSudokuCommand}"/>
                 <Button Content="Mentés..." Command="{Binding SaveClassicSudokuCommand}"/>
                 <Button Content="Betöltés..." Command="{Binding LoadClassicSudokuCommand}"/>
-                <Label Content="Megoldások: 1/200" HorizontalAlignment="Center" FontSize="24" Foreground="AntiqueWhite" Margin="8,8,8,8" Visibility="Hidden"/>
+                <Label Content="Megoldások: 1/200" HorizontalAlignment="Center"
+                       FontSize="24" Foreground="AntiqueWhite" Margin="8,8,8,8"
+                       Visibility="{Binding IsSolutionsCountVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityConverter}}"/>
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Width="50" IsEnabled="False">
@@ -37,7 +44,7 @@
                     <Image Width="45" Height="45" Source="../../Resources/Icons/RightArrow.png"/>
                 </Button>
             </StackPanel>
-            <ContentControl Content="{Binding SudokuTable, UpdateSourceTrigger=PropertyChanged}"/>
+            <ContentControl Content="{Binding SudokuBoardControl, UpdateSourceTrigger=PropertyChanged}"/>
         </DockPanel>
     </wpfx:BusyIndicator>
 </UserControl>

@@ -40,7 +40,7 @@ namespace Solvedoku
             set { _puzzleColorList = value; }
         }
         private List<SudokuBoard> _puzzleSolutions = new List<SudokuBoard>();
-        private PuzzleSudokuFile _puzzleHandler = new PuzzleSudokuFile();
+        private PuzzleSudokuFile _puzzleSudokuFile = new PuzzleSudokuFile();
 
 
         #endregion
@@ -606,16 +606,16 @@ namespace Solvedoku
             {
                 try
                 {
-                    PuzzleSudokuFile spHandler = new PuzzleSudokuFile();
+                    PuzzleSudokuFile puzzleSudokuFile = new PuzzleSudokuFile();
 
-                    spHandler.ActPuzzleBoard = CreatePuzzleBoard(GetPuzzleAreas());
-                    spHandler.ActAreas = GetPuzzleAreas();
-                    spHandler.ActPuzzleSolutions = _puzzleSolutions;
+                    puzzleSudokuFile.Board = CreatePuzzleBoard(GetPuzzleAreas());
+                    puzzleSudokuFile.Areas = GetPuzzleAreas();
+                    puzzleSudokuFile.Solutions = _puzzleSolutions;
 
                     using (Stream stream = File.Open(SaveFile.FileName, FileMode.Create))
                     {
                         var bformatter = new BinaryFormatter();
-                        bformatter.Serialize(stream, spHandler);
+                        bformatter.Serialize(stream, puzzleSudokuFile);
                     }
                 }
                 catch (Exception ex)
@@ -647,15 +647,15 @@ namespace Solvedoku
                     using (Stream stream = File.Open(LoadFile.FileName, FileMode.Open))
                     {
                         var bformatter = new BinaryFormatter();
-                        _puzzleHandler = (PuzzleSudokuFile)bformatter.Deserialize(stream);
+                        _puzzleSudokuFile = (PuzzleSudokuFile)bformatter.Deserialize(stream);
 
                     }
                     UnregisterPuzzleControls();
                     LbPuzzleSolvesCount.Content = "";
-                    DrawPuzzle(_puzzleHandler.ActPuzzleBoard.Height, _puzzleHandler.ActPuzzleBoard.Width);
-                    DrawPuzzleAreas(_puzzleHandler.ActAreas);
-                    DisplayBoard(_puzzleHandler.ActPuzzleBoard.OutputAsMatrix(), "TbPuzzleCell");
-                    _puzzleSolutions = _puzzleHandler.ActPuzzleSolutions;
+                    DrawPuzzle(_puzzleSudokuFile.Board.Height, _puzzleSudokuFile.Board.Width);
+                    DrawPuzzleAreas(_puzzleSudokuFile.Areas);
+                    DisplayBoard(_puzzleSudokuFile.Board.OutputAsMatrix(), "TbPuzzleCell");
+                    _puzzleSolutions = _puzzleSudokuFile.Solutions;
                     if (_puzzleSolutions.Count > 1)
                     {
                         Xceed.Wpf.Toolkit.MessageBox.Show(this, "A betöltött puzzle feladványnak több megoldása is van (összesen " + _puzzleSolutions.Count + "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",

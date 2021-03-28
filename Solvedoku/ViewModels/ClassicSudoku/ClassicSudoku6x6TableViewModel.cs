@@ -1,12 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Solvedoku.ViewModels.ClassicSudoku
+﻿namespace Solvedoku.ViewModels.ClassicSudoku
 {
-    class ClassicSudoku6x6TableViewModel : ViewModelBase
+    class ClassicSudoku6x6TableViewModel : ViewModelBase, IClassicSudokuTableViewModel
     {
+        #region Fields
+        string[][] _cells = new string[6][]
+        {
+            new string[6] { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
+            new string[6] { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
+            new string[6] { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
+            new string[6] { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
+            new string[6] { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
+            new string[6] { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
+        };
+        #endregion
+
+        #region Properties
+        public string[][] Cells
+        {
+            get => _cells;
+            set
+            {
+                _cells = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
     }
 }

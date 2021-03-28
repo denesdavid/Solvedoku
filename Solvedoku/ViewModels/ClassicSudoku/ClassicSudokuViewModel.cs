@@ -1,7 +1,6 @@
 ﻿using Microsoft.Win32;
 using Solvedoku.Classes;
 using Solvedoku.Commands;
-using Solvedoku.Services.MessageBox;
 using Solvedoku.Views.ClassicSudoku;
 using System;
 using System.Collections.Generic;
@@ -22,6 +21,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
     {
         #region Fields
         bool _isBusy;
+        bool _isSolutionsCountVisible;
         bool _isNextSolutionEnabled;
         bool _isPreviousSolutionEnabled;
         string _solutionsCount = string.Empty;
@@ -118,6 +118,16 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             }
         }
 
+        public bool IsSolutionsCountVisible 
+        {
+            get => _isSolutionsCountVisible;
+            set
+            {
+                _isSolutionsCountVisible = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string SolutionsCount
         {
             get => _solutionsCount;
@@ -145,18 +155,19 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// Determines if drawing a classic sudoku is possible.
         /// </summary>
         /// <returns>Bool (currently always true)</returns>
-        bool CanDraw() => true;
+        bool CanDraw(object o) => true;
 
         /// <summary>
         /// Draws the classic sudoku table with the given size.
         /// </summary>
-        void Draw()
+        void Draw(object o)
         {
-            if (SelectedSudokuBoardSize.Height == 9 && SelectedSudokuBoardSize.Width == 9)
+            SudokuBoardSize sudokuBoardSize = (SudokuBoardSize)o;
+            if (sudokuBoardSize.Height == 9 && sudokuBoardSize.Width == 9)
             {
                 SudokuBoardControl = new UcClassicSudoku9x9Table();
             }
-            else if (SelectedSudokuBoardSize.Height == 6 && SelectedSudokuBoardSize.Width == 6)
+            else if (sudokuBoardSize.Height == 6 && sudokuBoardSize.Width == 6)
             {
                 SudokuBoardControl = new UcClassicSudoku6x6Table();
             }
@@ -183,7 +194,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     "Kérlek válaszd ki, hogy az összes megoldást (feltéve ha van egynél több, illetve ez időigényes is lehet), vagy csak egy lehetségeset szeretnél megkapni.",
                     "Kérdés", MessageBoxButton.YesNo, MessageBoxImage.Question ,(Style)Application.Current.Resources["MessageBoxStyleForClassicSolve"]);
 
-                if (msgBoxResult == MessageBoxResult.Yes)
+                if (msgBoxResult != MessageBoxResult.Cancel)
                 {
                     IsNextSolutionEnabled = false;
                     IsPreviousSolutionEnabled = false;
@@ -249,7 +260,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 {
                     var classicSudokuFile = new ClassicSudokuFile();
                     classicSudokuFile.Board = _sudokuBoard;
-                    //classicSudokuFile.Solutions = _classicSolutions;
+                    classicSudokuFile.Solutions = _classicSolutions;
                     classicSudokuFile.BoardSize = SelectedSudokuBoardSize;
 
                     using (Stream stream = File.Open(_saveFileDialog.FileName, FileMode.Create))
@@ -263,7 +274,6 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     MessageBoxService.Show($"A Sudoku mentése során hiba lépett fel. {ex.Message}", "Hiba!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-            _saveFileDialog.Reset();
         }
 
         /// <summary>
@@ -277,7 +287,56 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// </summary>
         void Load()
         {
+            _openFileDialog.Title = "Klasszikus SUDOKU betöltése..";
+            _openFileDialog.RestoreDirectory = true;
+            _openFileDialog.DefaultExt = "csu";
+            _openFileDialog.Filter = "Klasszikus SUDOKU fájlok (*.csu)|*.csu";
+            _openFileDialog.FilterIndex = 1;
+            _openFileDialog.CheckPathExists = true;
+            _openFileDialog.CheckFileExists = true;
 
+
+            if (_openFileDialog.ShowDialog().GetValueOrDefault())
+            {
+                try
+                {
+                    ClassicSudokuFile _classicSudokuFile = null;
+                    using (Stream stream = File.Open(_openFileDialog.FileName, FileMode.Open))
+                    {
+                        var bformatter = new BinaryFormatter();
+                        _classicSudokuFile = (ClassicSudokuFile)bformatter.Deserialize(stream);
+                    }
+
+                    _sudokuBoard = _classicSudokuFile.Board;
+                    SelectedSudokuBoardSize = _sudokuBoard.BoardSize;
+                    Draw(_sudokuBoard.BoardSize);
+                    DisplayMatrixBoard(_classicSudokuFile.Board.OutputAsMatrix());
+                    SolutionsCount = string.Empty;
+
+                    _classicSolutions = _classicSudokuFile.Solutions;
+                    if (_classicSolutions.Count > 1)
+                    {
+                        MessageBoxService.Show($"A betöltött klasszikus feladványnak több megoldása is van (összesen {_classicSolutions.Count}). " +
+                            $"A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+
+                        SolutionsCount = "Megoldások: 1/" + _classicSolutions.Count;
+                        IsSolutionsCountVisible = true;
+                        IsNextSolutionEnabled = true;
+                        IsPreviousSolutionEnabled = true;
+                    }
+                    else if (_classicSolutions.Count == 1)
+                    {
+                        MessageBoxService.Show("A betöltött klasszikus feladványnak egy megoldása van.", "Információ!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        SolutionsCount = string.Empty;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBoxService.Show($"A klasszikus Sudoku betöltése során hiba lépett fel. {ex.Message}",
+                        "Hiba!",MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
         }
         #endregion
 
@@ -288,7 +347,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// </summary>
         private void LoadCommands()
         {
-            DrawClassicSudokuCommand = new ParameterlessCommand(Draw, CanDraw);
+            DrawClassicSudokuCommand = new ParameterizedCommand(Draw, CanDraw);
             SolveClassicSudokuCommand = new ParameterlessCommand(Solve, CanSolve);
             SaveClassicSudokuCommand = new ParameterlessCommand(Save, CanSave);
             LoadClassicSudokuCommand = new ParameterlessCommand(Load, CanLoad);
@@ -302,9 +361,10 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         SudokuBoard CreateClassicBoard(SudokuBoardSize sudokuBoardSize)
         {
             var sudokuBoard = SudokuFactory.ClassicWith3x3Boxes();
-            var boardControlViewModel = (ClassicSudoku9x9TableViewModel)SudokuBoardControl.DataContext;
+            var boardControlViewModel = (IClassicSudokuTableViewModel)SudokuBoardControl.DataContext;
             if (sudokuBoardSize.BoxCountX == 3 && sudokuBoardSize.BoxCountY == 3)
             {
+                
                 for (int row = 0; row < sudokuBoardSize.Height; row++)
                 {
                     string actRow = "";
@@ -320,7 +380,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                             actRow += boardControlViewModel.Cells[row][column];
                         }
                     }
-                    _sudokuBoard.AddRow(actRow);
+                    sudokuBoard.AddRow(actRow);
                 }
             }
             else
@@ -341,12 +401,12 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                             actRow += boardControlViewModel.Cells[row][column];
                         }
                     }
-                    _sudokuBoard.AddRow(actRow);
+                    sudokuBoard.AddRow(actRow);
                 }
             }
             return sudokuBoard;
-            #endregion
         }
+        #endregion
 
         List<SudokuBoard> Sudoku_SolverThread(SudokuBoard classicBoard, bool findAllSolutions)
         {
@@ -377,7 +437,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                             MessageBoxButton.OK, MessageBoxImage.Information);
                         IsNextSolutionEnabled = true;
                         SolutionsCount = "Megoldások: 1/" + _classicSolutions.Count;
-                        //LbClassicSolvesCount.Visibility = Visibility.Visible;
+                        IsSolutionsCountVisible = true;
                     }
                     else
                     {
@@ -385,8 +445,8 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                             MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
-                    string[,] actSolution = _classicSolutions[0].OutputAsMatrix();
-                    DisplayBoard(actSolution, "TbClassicCell");
+                    string[,] solution = _classicSolutions[0].OutputAsMatrix();
+                    DisplayMatrixBoard(solution);
 
                 }
                 else
@@ -397,7 +457,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             }
         }
 
-        private void DisplaySolution(string[,] board)
+        private void DisplayMatrixBoard(string[,] board)
         {
             var boardControlViewModel = (ClassicSudoku9x9TableViewModel)SudokuBoardControl.DataContext;
             for (int column = 0; column < board.GetLength(0); column++)

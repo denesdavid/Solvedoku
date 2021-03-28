@@ -89,8 +89,35 @@ namespace Solvedoku.Classes
             }
         }
 
+        private Tuple<int, int> CountBlockSize(int size)
+        {
+            Tuple<int, int> blockSize = new Tuple<int, int>(0, 0);
+            double sqrtSize = Math.Sqrt(size);
+
+            if (sqrtSize % 1 == 0)
+            {
+                blockSize = new Tuple<int, int>((int)sqrtSize, (int)sqrtSize);
+            }
+            else
+            {
+                blockSize = new Tuple<int, int>((int)sqrtSize + 1, (int)sqrtSize);
+            }
+            return blockSize;
+        }
+
         private ISet<SudokuRule> rules = new HashSet<SudokuRule>();
         private SudokuTile[,] tiles;
+
+        public SudokuBoardSize BoardSize
+        {
+            get => new SudokuBoardSize
+            {
+                Height = Height,
+                Width = Width,
+                BoxCountX = CountBlockSize(Height).Item1,
+                BoxCountY = CountBlockSize(Height).Item2
+            };
+        }
 
         public int Width
         {
