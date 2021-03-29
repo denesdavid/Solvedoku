@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using Solvedoku.Classes;
 using Solvedoku.Commands;
+using Solvedoku.Views.BusyWindow;
 using Solvedoku.Views.ClassicSudoku;
 using System;
 using System.Collections.Generic;
@@ -162,6 +163,8 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// </summary>
         void Draw(object o)
         {
+            var bw = new BusyWindowControl();
+            bw.ShowDialog();
             SudokuBoardSize sudokuBoardSize = (SudokuBoardSize)o;
             if (sudokuBoardSize.Height == 9 && sudokuBoardSize.Width == 9)
             {

@@ -82,6 +82,7 @@
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Services\MessageBox\IMessageBoxService.cs" />
     <Compile Include="Services\MessageBox\MessageBoxService.cs" />
+    <Compile Include="ViewModels\BusyWindow\BusyWindowViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku6x6TableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku4x4TableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku9x9TableViewModel.cs" />
@@ -90,9 +91,10 @@
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudoku9x9TableViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudokuViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="Views\BusyWindow\BusyWindow.xaml.cs">
-      <DependentUpon>BusyWindow.xaml</DependentUpon>
+    <Compile Include="Views\BusyWindow\BusyWindowControl.xaml.cs">
+      <DependentUpon>BusyWindowControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\BusyWindow\WindowExtensions.cs" />
     <Compile Include="Views\ClassicSudoku\IClassicSudokuControl.cs" />
     <Compile Include="Views\ClassicSudoku\UcClassicSudoku.xaml.cs">
       <DependentUpon>UcClassicSudoku.xaml</DependentUpon>
@@ -131,7 +133,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\BusyWindow\BusyWindow.xaml">
+    <Page Include="Views\BusyWindow\BusyWindowControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
