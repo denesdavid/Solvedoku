@@ -12,10 +12,17 @@
     <UserControl.DataContext>
         <ClassicSudokuViewModels:ClassicSudokuViewModel/>
     </UserControl.DataContext>
+
     <UserControl.Resources>
-        <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../BusyIndicatorContent/BusyIndicatorContentResource.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        </ResourceDictionary>
     </UserControl.Resources>
-    <wpfx:BusyIndicator IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}">
+    <wpfx:BusyIndicator IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}" BusyContentTemplate="{StaticResource BusyContentTemplate}">
+        <ContentControl
         <DockPanel>
             <StackPanel DockPanel.Dock="Right">
                 <Label Content="Válassz méretet:" Margin="4,4,4,0"/>

@@ -955,6 +955,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        
         <Style x:Key="MessageBoxStyle" TargetType="{x:Type xctk:MessageBox}">
             <Setter Property="Background" Value="Gray" />
             <Setter Property="ButtonRegionBackground" Value="Gray" />
@@ -995,18 +996,9 @@
             <Setter Property="CancelButtonStyle" Value="{StaticResource MessageBoxButtonStyle}"/>
         </Style>
         
-        
-       
         <!--#endregion-->
 
-        
-        
-        
-        
-        
-        
-        
-        
+       
 
     </Application.Resources>
 </Application>
