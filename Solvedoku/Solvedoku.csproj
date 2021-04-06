@@ -132,6 +132,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\BusyIndicatorContent\BusyIndicatorResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ClassicSudoku\UcClassicSudoku.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

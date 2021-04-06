@@ -1,5 +1,4 @@
-﻿<Application
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Application xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Solvedoku"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:Themes="clr-namespace:Xceed.Wpf.Toolkit.Themes;assembly=Xceed.Wpf.Toolkit" xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:Converters="clr-namespace:Xceed.Wpf.Toolkit.Converters;assembly=Xceed.Wpf.Toolkit" x:Class="Solvedoku.App"
@@ -240,6 +239,7 @@
         <!--#endregion-->
 
         <!--#region PuzzleColorPickerStyle-->
+        
         <Style x:Key="PuzzleColorPickerStyle" TargetType="{x:Type xctk:ColorPicker}">
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey ResourceId=ControlNormalBorderKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}"/>
@@ -903,6 +903,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
         <!--#endregion-->
 
         <!--#region MessageBoxStyle-->
@@ -997,8 +998,6 @@
         </Style>
         
         <!--#endregion-->
-
-       
 
     </Application.Resources>
 </Application>
