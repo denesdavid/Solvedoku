@@ -4,8 +4,7 @@
                     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
                     xmlns:Converters="clr-namespace:Xceed.Wpf.Toolkit.Converters;assembly=Xceed.Wpf.Toolkit"
                     xmlns:System="clr-namespace:System;assembly=mscorlib">
-    
-    <Converters:ProgressBarWidthConverter x:Key="ProgressBarWidthConverter" />
+    <Converters:ProgressBarWidthConverter x:Key="ProgressBarWidthConverter"/>
     
     <LinearGradientBrush x:Key="BorderBackground" EndPoint="0,1" StartPoint="0,0">
         <GradientStop Color="DarkGray" Offset="0"/>

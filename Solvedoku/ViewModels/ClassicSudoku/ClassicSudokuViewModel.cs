@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using Solvedoku.Classes;
 using Solvedoku.Commands;
+using Solvedoku.ViewModels.BusyIndicatorContent;
 using Solvedoku.Views.ClassicSudoku;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ using System.Windows.Input;
 
 namespace Solvedoku.ViewModels.ClassicSudoku
 {
-    class ClassicSudokuViewModel : ViewModelBase
+    class ClassicSudokuViewModel : ViewModelBase, ISudokuViewModel
     {
         #region Fields
         bool _isBusy;
@@ -43,6 +44,9 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         public ICommand SaveClassicSudokuCommand { get; set; }
 
         public ICommand LoadClassicSudokuCommand { get; set; }
+        public ICommand BusyIndicatorLoadedCommand { get; set; }
+
+        public Thread SudokuSolverThread { get => _sudokuSolverThread; }
 
         public UserControl SudokuBoardControl
         {
@@ -225,6 +229,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 
                     }
                     IsBusy = true;
+                    //BusyIndicatorContentViewModel.Instance.SudokuViewModel = this;
                 }
             }
             catch
@@ -338,6 +343,20 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 }
             }
         }
+
+        /// <summary>
+        /// Determines if the BusyInicatorLoaded command can be executed.
+        /// </summary>
+        /// <returns>Bool (currently always true)</returns>
+        bool CanBusyIndicatorLoad() => true;
+
+        /// <summary>
+        /// Sets the ISudokuViewModel type field in the BusyIndicator viewmodel when its fully loaded .
+        /// </summary>
+        void BusyIndicatorLoaded()
+        {
+            BusyIndicatorContentViewModel.Instance.SudokuViewModel = this;
+        }
         #endregion
 
         #region Methods
@@ -351,6 +370,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             SolveClassicSudokuCommand = new ParameterlessCommand(Solve, CanSolve);
             SaveClassicSudokuCommand = new ParameterlessCommand(Save, CanSave);
             LoadClassicSudokuCommand = new ParameterlessCommand(Load, CanLoad);
+            BusyIndicatorLoadedCommand = new ParameterlessCommand(BusyIndicatorLoaded, CanBusyIndicatorLoad);
         }
 
         /// <summary>
