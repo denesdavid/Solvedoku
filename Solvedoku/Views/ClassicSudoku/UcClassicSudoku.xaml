@@ -36,24 +36,23 @@
                           ItemsSource="{Binding SudokuBoardSizes, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedSudokuBoardSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           Margin="8,8,8,8" SelectedIndex="0" DockPanel.Dock="Right">
-                    <!--<ComboBoxItem x:Name="Cbi3399" Tag="9x9x3x3" Content="9x9 (3x3)"/>
-                    <ComboBoxItem x:Name="Cbi2366" Tag="6x6x2x3" Content="6x6 (2x3)"/>
-                    <ComboBoxItem x:Name="Cbi2244" Tag="4x4x2x2" Content="4x4 (2x2)"/>-->
                 </ComboBox>
                 <Button Content="Rajzol" Command="{Binding DrawClassicSudokuCommand}"
                         CommandParameter="{Binding SelectedSudokuBoardSize}"/>
                 <Button Content="Megoldás" Command="{Binding SolveClassicSudokuCommand}"/>
                 <Button Content="Mentés..." Command="{Binding SaveClassicSudokuCommand}"/>
                 <Button Content="Betöltés..." Command="{Binding LoadClassicSudokuCommand}"/>
-                <Label Content="Megoldások: 1/200" HorizontalAlignment="Center"
-                       FontSize="24" Foreground="AntiqueWhite" Margin="8,8,8,8"
+                <Label Content ="{Binding SolutionsCount}"  HorizontalAlignment="Center"
+                       FontSize="18" Foreground="AntiqueWhite" Margin="8,8,8,8"
                        Visibility="{Binding IsSolutionsCountVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityConverter}}"/>
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Width="50" IsEnabled="False" Command="{Binding LoadPreviousSolutionCommand}">
+                <Button Width="50"
+                        Command="{Binding LoadPreviousSolutionCommand}">
                     <Image Width="45" Height="45" Source="../../Resources/Icons/LeftArrow.png"/>
                 </Button>
-                <Button Width="50" IsEnabled="False" Command="{Binding LoadNextSolutionCommand}">
+                <Button Width="50"
+                        Command="{Binding LoadNextSolutionCommand}">
                     <Image Width="45" Height="45" Source="../../Resources/Icons/RightArrow.png"/>
                 </Button>
             </StackPanel>

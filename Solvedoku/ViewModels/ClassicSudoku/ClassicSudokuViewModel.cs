@@ -21,8 +21,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         #region Fields
         bool _isBusy;
         bool _isSolutionsCountVisible;
-        bool _isNextSolutionEnabled;
-        bool _isPreviousSolutionEnabled;
+        int _solutionIndex = -1;
         string _solutionsCount = string.Empty;
         Thread _sudokuSolverThread;
         UserControl _sudokuBoardControl;
@@ -94,26 +93,6 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             }
         }
 
-        public bool IsNextSolutionEnabled 
-        {
-            get => _isNextSolutionEnabled;
-            set
-            {
-                _isNextSolutionEnabled = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool IsPreviousSolutionEnabled 
-        {
-            get => _isPreviousSolutionEnabled;
-            set
-            {
-                _isPreviousSolutionEnabled = value;
-                OnPropertyChanged();
-            }
-        }
-
         public bool IsBusy
         {
             get => _isBusy;
@@ -181,6 +160,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             {
                 SudokuBoardControl = new UcClassicSudoku4x4Table();
             }
+            SolutionsCount = string.Empty;
         }
 
         /// <summary>
@@ -202,8 +182,6 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 
                 if (msgBoxResult != MessageBoxResult.Cancel)
                 {
-                    IsNextSolutionEnabled = false;
-                    IsPreviousSolutionEnabled = false;
                     _classicSolutions.Clear();
                     SolutionsCount = string.Empty;
                     var board = CreateClassicBoard(((IClassicSudokuControl)SudokuBoardControl).BoardSize);
@@ -216,8 +194,6 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                             _classicSolutions = (List<SudokuBoard>)Sudoku_SolverThread(board, true);
                             Action action = DisplayClassicSolutionAndMessage;
                             Application.Current.Dispatcher.Invoke(action);
-
-
                         });
                         _sudokuSolverThread.Start();
                     }
@@ -230,7 +206,6 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                             Application.Current.Dispatcher.Invoke(action);
                         });
                         _sudokuSolverThread.Start();
-
                     }
                     IsBusy = true;
                 }
@@ -325,8 +300,6 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 
                         SolutionsCount = "Megoldások: 1/" + _classicSolutions.Count;
                         IsSolutionsCountVisible = true;
-                        IsNextSolutionEnabled = true;
-                        IsPreviousSolutionEnabled = true;
                     }
                     else if (_classicSolutions.Count == 1)
                     {
@@ -346,28 +319,32 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// Determines if loading the previous solution is possible.
         /// </summary>
         /// <returns>Bool (currently always true)</returns>
-        bool CanLoadPreviousSolution() => true;
+        bool CanLoadPreviousSolution() => _classicSolutions.Count > 1 && _solutionIndex > 0;
 
         /// <summary>
         /// Loads the next possible solution.
         /// </summary>
         void LoadPreviousSolution()
         {
-
+            _solutionIndex -= 1;
+            DisplayMatrixBoard(_classicSolutions[_solutionIndex].OutputAsMatrix());
+            SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _classicSolutions.Count }";
         }
 
         /// <summary>
         /// Determines if loading the next solution is possible.
         /// </summary>
         /// <returns>Bool (currently always true)</returns>
-        bool CanLoadNextSolution() => true;
+        bool CanLoadNextSolution() => _classicSolutions.Count > 1 && _solutionIndex < _classicSolutions.Count - 1;
 
         /// <summary>
         /// Loads the next possible solution.
         /// </summary>
         void LoadNextSolution()
         {
-            
+            _solutionIndex += 1;
+            DisplayMatrixBoard(_classicSolutions[_solutionIndex].OutputAsMatrix());
+            SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _classicSolutions.Count }";
         }
        
         /// <summary>
@@ -491,8 +468,8 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     {
                         MessageBoxService.Show("A klasszikus feladványnak több megoldása is van (összesen " + _classicSolutions.Count + "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
                              MessageBoxButton.OK, MessageBoxImage.Information);
-                        IsNextSolutionEnabled = true;
-                        SolutionsCount = "Megoldások: 1/" + _classicSolutions.Count;
+                        _solutionIndex = 0;
+                        SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _classicSolutions.Count }";
                         IsSolutionsCountVisible = true;
                     }
                     else
