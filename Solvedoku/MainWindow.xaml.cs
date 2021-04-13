@@ -29,7 +29,7 @@ namespace Solvedoku
         private int _classicSolutionIndex = 0;
         private int _actualClassicSizeIndex = 0;     
         private List<SudokuBoard> _classicSolutions = new List<SudokuBoard>();
-        private ClassicSudokuFile _classicHandler = new ClassicSudokuFile();
+        private ClassicSudokuFile _classicHandler = new ClassicSudokuFile(null,null);
 
         private Thread _puzzleSolverThread;
         private int _puzzleSolutionIndex = 0;

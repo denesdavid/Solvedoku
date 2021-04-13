@@ -1,19 +1,21 @@
-﻿namespace Solvedoku.ViewModels.ClassicSudoku
+﻿using System.Collections.ObjectModel;
+
+namespace Solvedoku.ViewModels.ClassicSudoku
 {
     class ClassicSudoku4x4TableViewModel : ViewModelBase, IClassicSudokuTableViewModel
     {
         #region Fields
-        string[][] _cells = new string[4][]
+        ObservableCollection<ObservableCollection<string>>_cells = new ObservableCollection<ObservableCollection<string>>()
         {
-            new string[4] {  string.Empty, string.Empty, string.Empty, string.Empty},
-            new string[4] {  string.Empty, string.Empty, string.Empty, string.Empty},
-            new string[4] {  string.Empty, string.Empty, string.Empty, string.Empty},
-            new string[4] {  string.Empty, string.Empty, string.Empty, string.Empty},
+            new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty},
+            new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty},
+            new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty},
+            new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty},
         };
         #endregion
 
         #region Properties
-        public string[][] Cells
+        public ObservableCollection<ObservableCollection<string>> Cells
         {
             get => _cells;
             set

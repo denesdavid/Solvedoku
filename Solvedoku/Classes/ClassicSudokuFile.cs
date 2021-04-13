@@ -8,17 +8,17 @@ namespace Solvedoku.Classes
     {
         #region Fields
 
-        private SudokuBoardSize _sudokuBoardSize;
-        private SudokuBoard _actBoard;
-        private List<SudokuBoard> _classicSolutions = new List<SudokuBoard>();
+        private SudokuBoard _sudokuBoard;
+        private IEnumerable<SudokuBoard> _solutions = new List<SudokuBoard>();
 
         #endregion
 
         #region Constructor
 
-        public ClassicSudokuFile()
+        public ClassicSudokuFile(SudokuBoard sudokuBoard, IEnumerable<SudokuBoard> solutions)
         {
-            
+            _sudokuBoard = sudokuBoard;
+            _solutions = solutions;
         }
 
         #endregion
@@ -27,22 +27,15 @@ namespace Solvedoku.Classes
 
         public SudokuBoard Board
         {
-            get { return _actBoard; }
-            set { _actBoard = value; }
+            get { return _sudokuBoard; }
+            set { _sudokuBoard = value; }
         }
 
-        public List<SudokuBoard> Solutions
+        public IEnumerable<SudokuBoard> Solutions
         {
-            get { return _classicSolutions; }
-            set { _classicSolutions = value; }
+            get { return _solutions; }
+            set { _solutions = value; }
         }
-
-        public SudokuBoardSize BoardSize
-        {
-            get { return _sudokuBoardSize; }
-            set { _sudokuBoardSize = value; }
-        }
-
         #endregion
     }
 }
