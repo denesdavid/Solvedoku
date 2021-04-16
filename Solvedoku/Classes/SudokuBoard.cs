@@ -222,8 +222,6 @@ namespace Solvedoku.Classes
             return null;
         }
 
-       
-
         public string[,] OutputAsMatrix()
         {
             string[,] output = new string[tiles.GetLength(0), tiles.GetLength(1)];
@@ -281,7 +279,6 @@ namespace Solvedoku.Classes
 
         internal void AddBoxesCount(int boxesX, int boxesY)
         {
-
             int sizeX = Width / boxesX;
             int sizeY = Height / boxesY;
 

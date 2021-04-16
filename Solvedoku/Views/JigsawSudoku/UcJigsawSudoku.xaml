@@ -3,10 +3,35 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wpfx="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:Solvedoku.Views.JigsawSudoku"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-
-    </Grid>
+    <wpfx:BusyIndicator x:Name="BusyIPuzzle">
+        <DockPanel x:Name="PuzzleDockPanel">
+            <StackPanel DockPanel.Dock="Right">
+                <Label Content="Színezd ki a feladatnak megfelelően:" Margin="4,4,4,0"/>
+                <wpfx:ColorPicker Margin="8,8,8,8" StandardButtonHeader="Alap színek"
+                                              StandardColors="{Binding Path=PuzzleColorList}"
+                                              ShowTabHeaders="False" ShowAvailableColors="False"
+                                              SelectedColor="LightBlue"
+                                              StandardColorsHeader="Elérhető színek:"
+                                              AdvancedButtonHeader="Egyéb színek" Style="{DynamicResource PuzzleColorPickerStyle}"/>
+                <Button x:Name="BtDrawPuzzle" Content="Rajzol"/>
+                <Button x:Name="BtSolvePuzzle" Content="Megoldás"/>
+                <Button x:Name="BtSavePuzzle"  Content="Mentés..."/>
+                <Button x:Name="BtLoadPuzzle"  Content="Betöltés..."/>
+                <Label x:Name="LbPuzzleSolvesCount" Content="Megoldások: 1/200" HorizontalAlignment="Center" FontSize="24" Foreground="AntiqueWhite" Margin="8,8,8,8" Visibility="Hidden"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Width="50" IsEnabled="False">
+                    <Image Width="45" Height="45" Source="../../Resources/Icons/LeftArrow.png"/>
+                </Button>
+                <Button Width="50" IsEnabled="False">
+                    <Image Width="45" Height="45" Source="../../Resources/Icons/RightArrow.png"/>
+                </Button>
+            </StackPanel>
+            <ContentControl Content="{Binding SudokuBoardControl, UpdateSourceTrigger=PropertyChanged}"/>
+        </DockPanel>
+    </wpfx:BusyIndicator>
 </UserControl>

@@ -210,10 +210,10 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     IsBusy = true;
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 MessageBoxService.Show(
-                    "A klasszikus feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot.",
+                    $"A klasszikus feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot. {ex.Message}",
                     "Hiba!", MessageBoxButton.OK, MessageBoxImage.Question);
             }
         }
@@ -385,11 +385,11 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// <returns></returns>
         SudokuBoard CreateClassicBoard(SudokuBoardSize sudokuBoardSize)
         {
-            var sudokuBoard = SudokuFactory.ClassicWith3x3Boxes();
+            SudokuBoard sudokuBoard;
             var boardControlViewModel = (IClassicSudokuTableViewModel)SudokuBoardControl.DataContext;
             if (sudokuBoardSize.BoxCountX == 3 && sudokuBoardSize.BoxCountY == 3)
             {
-                
+                sudokuBoard = SudokuFactory.ClassicWith3x3Boxes();
                 for (int row = 0; row < sudokuBoardSize.Height; row++)
                 {
                     string actRow = "";

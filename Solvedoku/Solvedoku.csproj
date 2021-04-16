@@ -95,6 +95,7 @@
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudokuViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\IClassicSudokuTableViewModel.cs" />
     <Compile Include="ViewModels\ISudokuViewModel.cs" />
+    <Compile Include="ViewModels\JigsawSudoku\IJigsawSudokuTableViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudoku9x9TableViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudokuViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Views\ClassicSudoku\UcClassicSudoku9x9Table.xaml.cs">
       <DependentUpon>UcClassicSudoku9x9Table.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\JigsawSudoku\IJigsawSudokuControl.cs" />
     <Compile Include="Views\JigsawSudoku\UcJigsawSudoku.xaml.cs">
       <DependentUpon>UcJigsawSudoku.xaml</DependentUpon>
     </Compile>

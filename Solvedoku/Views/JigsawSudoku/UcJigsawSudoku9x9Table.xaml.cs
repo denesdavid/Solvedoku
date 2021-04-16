@@ -24,5 +24,10 @@ namespace Solvedoku.Views.JigsawSudoku
         {
             InitializeComponent();
         }
+
+        private void PuzzleCell_OnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
 }

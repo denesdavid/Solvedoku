@@ -915,10 +915,11 @@
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
-            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="FontSize" Value="18"/>
             <Setter Property="Margin" Value="8,8,8,8"/>
-            <Setter Property="Height" Value="50"/>
-            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="Auto"/>
+            <Setter Property="Width" Value="300"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
@@ -966,6 +967,7 @@
             <Setter Property="WindowBackground" Value="#FF2D2D30" />
             <Setter Property="WindowOpacity" Value="1" />
             <Setter Property="Foreground" Value="AntiqueWhite"/>
+            <Setter Property="FontSize" Value="18"/>
 
             <Setter Property="YesButtonContent" Value="Igen"/>
             <Setter Property="NoButtonContent" Value="Nem"/>
@@ -986,6 +988,7 @@
             <Setter Property="WindowBackground" Value="#FF2D2D30" />
             <Setter Property="WindowOpacity" Value="1" />
             <Setter Property="Foreground" Value="AntiqueWhite"/>
+            <Setter Property="FontSize" Value="16"/>
 
             <Setter Property="YesButtonContent" Value="Összes megoldás kiszámítása."/>
             <Setter Property="NoButtonContent" Value="Egy megoldást szeretnék."/>

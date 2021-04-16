@@ -12,7 +12,7 @@
         <ClassicSudokuViewModels:ClassicSudoku9x9TableViewModel/>
     </UserControl.DataContext>
     
-    <Grid x:Name="ClassicGrid" Margin="8,8,8,8" Width="400" Height="400">
+    <Grid Margin="8,8,8,8" Width="400" Height="400">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>

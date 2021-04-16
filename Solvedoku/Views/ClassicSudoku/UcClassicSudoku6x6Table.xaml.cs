@@ -10,7 +10,7 @@ namespace Solvedoku.Views.ClassicSudoku
     {
         public SudokuBoardSize BoardSize
         {
-            get => new SudokuBoardSize { Height = 6, Width = 6, BoxCountX = 3, BoxCountY = 2 };
+            get => new SudokuBoardSize { Height = 6, Width = 6, BoxCountX = 2, BoxCountY = 3 };
         }
         public UcClassicSudoku6x6Table()
         {
