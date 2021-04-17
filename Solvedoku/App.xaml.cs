@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Reflection;
 
@@ -71,15 +68,15 @@ namespace Solvedoku
         private void BtCancelSolve_OnClick(object sender, RoutedEventArgs e)
         {
           
-            var main = App.Current.MainWindow as MainWindow; // If not a static method, this.MainWindow would work
-            if (main.TcSudokus.SelectedIndex == 0)
-            {
-                //main.CloseClassicBusyIndicator();
-            }
-            if (main.TcSudokus.SelectedIndex == 1)
-            {
-                main.ClosePuzzleBusyIndicator();
-            }
+            //var main = App.Current.MainWindow as MainWindow; // If not a static method, this.MainWindow would work
+            //if (main.TcSudokus.SelectedIndex == 0)
+            //{
+            //    //main.CloseClassicBusyIndicator();
+            //}
+            //if (main.TcSudokus.SelectedIndex == 1)
+            //{
+            //    main.ClosePuzzleBusyIndicator();
+            //}
         }
     }
 }

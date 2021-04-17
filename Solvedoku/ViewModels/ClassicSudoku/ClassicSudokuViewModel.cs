@@ -401,7 +401,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                         }
                         else
                         {
-                            // actCell.FontWeight = FontWeights.Bold;
+                            boardControlViewModel.BoldCells[row][column] = true;
                             actRow += boardControlViewModel.Cells[row][column];
                         }
                     }
@@ -422,7 +422,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                         }
                         else
                         {
-                            //actCell.FontWeight = FontWeights.Bold;
+                            boardControlViewModel.BoldCells[row][column] = true;
                             actRow += boardControlViewModel.Cells[row][column];
                         }
                     }

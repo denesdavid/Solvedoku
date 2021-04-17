@@ -85,6 +85,7 @@
     <Compile Include="Classes\SudokuBoardSize.cs" />
     <Compile Include="Commands\ParameterizedCommand.cs" />
     <Compile Include="Commands\ParameterlessCommand.cs" />
+    <Compile Include="Converters\BoolToFontWeightConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Services\MessageBox\IMessageBoxService.cs" />
     <Compile Include="Services\MessageBox\MessageBoxService.cs" />

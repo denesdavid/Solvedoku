@@ -12,6 +12,14 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty},
             new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty},
         };
+
+        ObservableCollection<ObservableCollection<bool>> _boldCells = new ObservableCollection<ObservableCollection<bool>>()
+        {
+            new ObservableCollection<bool> {  false, false, false, false },
+            new ObservableCollection<bool> {  false, false, false, false },
+            new ObservableCollection<bool> {  false, false, false, false },
+            new ObservableCollection<bool> {  false, false, false, false },
+        };
         #endregion
 
         #region Properties
@@ -21,6 +29,16 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             set
             {
                 _cells = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ObservableCollection<ObservableCollection<bool>> BoldCells
+        {
+            get => _boldCells;
+            set
+            {
+                _boldCells = value;
                 OnPropertyChanged();
             }
         }

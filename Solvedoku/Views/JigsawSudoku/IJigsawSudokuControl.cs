@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Solvedoku.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace Solvedoku.Views.JigsawSudoku
 {
     interface IJigsawSudokuControl
     {
+        SudokuBoardSize BoardSize { get; set; }
     }
 }

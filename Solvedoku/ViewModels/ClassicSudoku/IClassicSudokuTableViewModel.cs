@@ -10,5 +10,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
     interface IClassicSudokuTableViewModel
     {
         ObservableCollection<ObservableCollection<string>> Cells { get; set; }
+
+        ObservableCollection<ObservableCollection<bool>> BoldCells { get; set; }
     }
 }

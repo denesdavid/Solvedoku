@@ -44,7 +44,7 @@ namespace Solvedoku
         public MainWindow()
         {
             InitializeComponent();
-            PopulatePuzzleColorList();
+            //PopulatePuzzleColorList();
             DataContext = this;
         }
 
@@ -514,472 +514,472 @@ namespace Solvedoku
 
         #region Events
 
-        private void BtSolvePuzzle_OnClick(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                MessageBoxResult msgBoxResult = Xceed.Wpf.Toolkit.MessageBox.Show(this,
-                    "Kérlek válaszd ki, hogy az összes megoldást (feltéve ha van egynél több, illetve ez időigényes is lehet), vagy csak egy lehetségeset szeretnél megkapni.",
-                    "Kérdés!",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question,
-                    (Style)Application.Current.Resources["MessageBoxStyleForClassicSolve"]);
+        //private void BtSolvePuzzle_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        MessageBoxResult msgBoxResult = Xceed.Wpf.Toolkit.MessageBox.Show(this,
+        //            "Kérlek válaszd ki, hogy az összes megoldást (feltéve ha van egynél több, illetve ez időigényes is lehet), vagy csak egy lehetségeset szeretnél megkapni.",
+        //            "Kérdés!",
+        //            MessageBoxButton.YesNo, MessageBoxImage.Question,
+        //            (Style)Application.Current.Resources["MessageBoxStyleForClassicSolve"]);
 
-                if (msgBoxResult != MessageBoxResult.Cancel)
-                {
-                    BtPuzzleRight.IsEnabled = false;
-                    BtPuzzleLeft.IsEnabled = false;
-                    LbPuzzleSolvesCount.Content = "";
+        //        if (msgBoxResult != MessageBoxResult.Cancel)
+        //        {
+        //            BtPuzzleRight.IsEnabled = false;
+        //            BtPuzzleLeft.IsEnabled = false;
+        //            LbPuzzleSolvesCount.Content = "";
 
-                    string[] areas = GetPuzzleAreas();
-                    var board = CreatePuzzleBoard(areas);
+        //            string[] areas = GetPuzzleAreas();
+        //            var board = CreatePuzzleBoard(areas);
 
-                    _puzzleSolutionIndex = 0;
+        //            _puzzleSolutionIndex = 0;
 
-                    if (msgBoxResult == MessageBoxResult.Yes)
-                    {
-                        _puzzleSolverThread = new Thread(() =>
-                        {
-                            _puzzleSolutions = Sudoku_SolverThread(board, true);
-                            Action action = DisplayPuzzleSolutionAndMessage;
-                            Dispatcher.BeginInvoke(action);
-                        });
-                        _puzzleSolverThread.Start();
-                    }
-                    else
-                    {
-                        _puzzleSolverThread = new Thread(() =>
-                        {
-                            _puzzleSolutions = Sudoku_SolverThread(board, false);
-                            Action action = DisplayPuzzleSolutionAndMessage;
-                            Dispatcher.BeginInvoke(action);
-                        });
-                        _puzzleSolverThread.Start();
-                    }
-                    BusyIPuzzle.IsBusy = true;
-                }
-            }
-            catch
-            {
-                Xceed.Wpf.Toolkit.MessageBox.Show(this, "A puzzle feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot.",
-                    "Hiba!",
-                    MessageBoxButton.OK, MessageBoxImage.Error,
-                    (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //            if (msgBoxResult == MessageBoxResult.Yes)
+        //            {
+        //                _puzzleSolverThread = new Thread(() =>
+        //                {
+        //                    _puzzleSolutions = Sudoku_SolverThread(board, true);
+        //                    Action action = DisplayPuzzleSolutionAndMessage;
+        //                    Dispatcher.BeginInvoke(action);
+        //                });
+        //                _puzzleSolverThread.Start();
+        //            }
+        //            else
+        //            {
+        //                _puzzleSolverThread = new Thread(() =>
+        //                {
+        //                    _puzzleSolutions = Sudoku_SolverThread(board, false);
+        //                    Action action = DisplayPuzzleSolutionAndMessage;
+        //                    Dispatcher.BeginInvoke(action);
+        //                });
+        //                _puzzleSolverThread.Start();
+        //            }
+        //            BusyIPuzzle.IsBusy = true;
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        Xceed.Wpf.Toolkit.MessageBox.Show(this, "A puzzle feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot.",
+        //            "Hiba!",
+        //            MessageBoxButton.OK, MessageBoxImage.Error,
+        //            (Style)Application.Current.Resources["MessageBoxStyle"]);
 
-            }
+        //    }
 
-        }
-        private void BtDrawPuzzle_OnClickPuzzle_OnClick(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                if (Xceed.Wpf.Toolkit.MessageBox.Show(this, "Új sudoku rajzolásánál minden szám törlődik. Biztos, hogy ezt szeretnéd?", "Figyelmeztetés!", MessageBoxButton.YesNo, MessageBoxImage.Warning, (Style)Application.Current.Resources["MessageBoxStyle"]) == MessageBoxResult.Yes)
-                {
-                    LbPuzzleSolvesCount.Content = "";
-                    DrawPuzzle(9, 9);
-                }
-            }
-            catch
-            {
-                Xceed.Wpf.Toolkit.MessageBox.Show(this, "A puzzle SUDOKU rajzolása során hiba lépett fel. Kérlek lépj kapcsolatba a program készítőjével.",
-                    "Hiba!",
-                    MessageBoxButton.OK, MessageBoxImage.Error,
-                    (Style)Application.Current.Resources["MessageBoxStyle"]);
-            }        
-        }
-        private void BtSavePuzzle_OnClick(object sender, RoutedEventArgs e)
-        {
-            SaveFile.Title = "Puzzle SUDOKU mentése..";
-            SaveFile.RestoreDirectory = true;
-            SaveFile.DefaultExt = "psu";
-            SaveFile.Filter = "Puzzle SUDOKU fájlok (*.psu)|*.psu";
-            SaveFile.FilterIndex = 1;
-            SaveFile.CheckPathExists = true;
-            SaveFile.OverwritePrompt = true;
+        //}
+        //private void BtDrawPuzzle_OnClickPuzzle_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (Xceed.Wpf.Toolkit.MessageBox.Show(this, "Új sudoku rajzolásánál minden szám törlődik. Biztos, hogy ezt szeretnéd?", "Figyelmeztetés!", MessageBoxButton.YesNo, MessageBoxImage.Warning, (Style)Application.Current.Resources["MessageBoxStyle"]) == MessageBoxResult.Yes)
+        //        {
+        //            LbPuzzleSolvesCount.Content = "";
+        //            DrawPuzzle(9, 9);
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        Xceed.Wpf.Toolkit.MessageBox.Show(this, "A puzzle SUDOKU rajzolása során hiba lépett fel. Kérlek lépj kapcsolatba a program készítőjével.",
+        //            "Hiba!",
+        //            MessageBoxButton.OK, MessageBoxImage.Error,
+        //            (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //    }        
+        //}
+        //private void BtSavePuzzle_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    SaveFile.Title = "Puzzle SUDOKU mentése..";
+        //    SaveFile.RestoreDirectory = true;
+        //    SaveFile.DefaultExt = "psu";
+        //    SaveFile.Filter = "Puzzle SUDOKU fájlok (*.psu)|*.psu";
+        //    SaveFile.FilterIndex = 1;
+        //    SaveFile.CheckPathExists = true;
+        //    SaveFile.OverwritePrompt = true;
 
-            if (SaveFile.ShowDialog().GetValueOrDefault())
-            {
-                try
-                {
-                    PuzzleSudokuFile puzzleSudokuFile = new PuzzleSudokuFile();
+        //    if (SaveFile.ShowDialog().GetValueOrDefault())
+        //    {
+        //        try
+        //        {
+        //            PuzzleSudokuFile puzzleSudokuFile = new PuzzleSudokuFile();
 
-                    puzzleSudokuFile.Board = CreatePuzzleBoard(GetPuzzleAreas());
-                    puzzleSudokuFile.Areas = GetPuzzleAreas();
-                    puzzleSudokuFile.Solutions = _puzzleSolutions;
+        //            puzzleSudokuFile.Board = CreatePuzzleBoard(GetPuzzleAreas());
+        //            puzzleSudokuFile.Areas = GetPuzzleAreas();
+        //            puzzleSudokuFile.Solutions = _puzzleSolutions;
 
-                    using (Stream stream = File.Open(SaveFile.FileName, FileMode.Create))
-                    {
-                        var bformatter = new BinaryFormatter();
-                        bformatter.Serialize(stream, puzzleSudokuFile);
-                    }
-                }
-                catch (Exception)
-                {
-                    Xceed.Wpf.Toolkit.MessageBox messageBox = new Xceed.Wpf.Toolkit.MessageBox();
-                    messageBox.Background = Brushes.Gray;
-                    messageBox.Caption = "Hiba!";
-                    messageBox.Text = "A SUDOKU mentése során hiba lépett fel.";
-                    messageBox.ButtonRegionBackground = Brushes.Gray;
-                    Xceed.Wpf.Toolkit.MessageBox.Show(this, messageBox.Text, messageBox.Caption, MessageBoxButton.OK,
-                        MessageBoxImage.Error, (Style)Application.Current.Resources["MessageBoxStyle"]);
-                }
-            }
-            SaveFile.Reset();
-        }
-        private void BtLoadPuzzle_OnClick(object sender, RoutedEventArgs e)
-        {
-            LoadFile.Title = "Puzzle SUDOKU betöltése..";
-            LoadFile.RestoreDirectory = true;
-            LoadFile.DefaultExt = "psu";
-            LoadFile.Filter = "Puzzle SUDOKU fájlok (*.psu)|*.psu";
-            LoadFile.FilterIndex = 1;
-            LoadFile.CheckPathExists = true;
+        //            using (Stream stream = File.Open(SaveFile.FileName, FileMode.Create))
+        //            {
+        //                var bformatter = new BinaryFormatter();
+        //                bformatter.Serialize(stream, puzzleSudokuFile);
+        //            }
+        //        }
+        //        catch (Exception)
+        //        {
+        //            Xceed.Wpf.Toolkit.MessageBox messageBox = new Xceed.Wpf.Toolkit.MessageBox();
+        //            messageBox.Background = Brushes.Gray;
+        //            messageBox.Caption = "Hiba!";
+        //            messageBox.Text = "A SUDOKU mentése során hiba lépett fel.";
+        //            messageBox.ButtonRegionBackground = Brushes.Gray;
+        //            Xceed.Wpf.Toolkit.MessageBox.Show(this, messageBox.Text, messageBox.Caption, MessageBoxButton.OK,
+        //                MessageBoxImage.Error, (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //        }
+        //    }
+        //    SaveFile.Reset();
+        //}
+        //private void BtLoadPuzzle_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    LoadFile.Title = "Puzzle SUDOKU betöltése..";
+        //    LoadFile.RestoreDirectory = true;
+        //    LoadFile.DefaultExt = "psu";
+        //    LoadFile.Filter = "Puzzle SUDOKU fájlok (*.psu)|*.psu";
+        //    LoadFile.FilterIndex = 1;
+        //    LoadFile.CheckPathExists = true;
 
-            if (LoadFile.ShowDialog().GetValueOrDefault())
-            {
-                try
-                {
-                    using (Stream stream = File.Open(LoadFile.FileName, FileMode.Open))
-                    {
-                        var bformatter = new BinaryFormatter();
-                        _puzzleSudokuFile = (PuzzleSudokuFile)bformatter.Deserialize(stream);
+        //    if (LoadFile.ShowDialog().GetValueOrDefault())
+        //    {
+        //        try
+        //        {
+        //            using (Stream stream = File.Open(LoadFile.FileName, FileMode.Open))
+        //            {
+        //                var bformatter = new BinaryFormatter();
+        //                _puzzleSudokuFile = (PuzzleSudokuFile)bformatter.Deserialize(stream);
 
-                    }
-                    UnregisterPuzzleControls();
-                    LbPuzzleSolvesCount.Content = "";
-                    DrawPuzzle(_puzzleSudokuFile.Board.Height, _puzzleSudokuFile.Board.Width);
-                    DrawPuzzleAreas(_puzzleSudokuFile.Areas);
-                    DisplayBoard(_puzzleSudokuFile.Board.OutputAsMatrix(), "TbPuzzleCell");
-                    _puzzleSolutions = _puzzleSudokuFile.Solutions;
-                    if (_puzzleSolutions.Count > 1)
-                    {
-                        Xceed.Wpf.Toolkit.MessageBox.Show(this, "A betöltött puzzle feladványnak több megoldása is van (összesen " + _puzzleSolutions.Count + "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
-                            MessageBoxButton.OK, MessageBoxImage.Information,
-                            (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //            }
+        //            UnregisterPuzzleControls();
+        //            LbPuzzleSolvesCount.Content = "";
+        //            DrawPuzzle(_puzzleSudokuFile.Board.Height, _puzzleSudokuFile.Board.Width);
+        //            DrawPuzzleAreas(_puzzleSudokuFile.Areas);
+        //            DisplayBoard(_puzzleSudokuFile.Board.OutputAsMatrix(), "TbPuzzleCell");
+        //            _puzzleSolutions = _puzzleSudokuFile.Solutions;
+        //            if (_puzzleSolutions.Count > 1)
+        //            {
+        //                Xceed.Wpf.Toolkit.MessageBox.Show(this, "A betöltött puzzle feladványnak több megoldása is van (összesen " + _puzzleSolutions.Count + "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
+        //                    MessageBoxButton.OK, MessageBoxImage.Information,
+        //                    (Style)Application.Current.Resources["MessageBoxStyle"]);
 
-                        LbPuzzleSolvesCount.Content = "Megoldások: 1/" + _puzzleSolutions.Count;
-                        LbPuzzleSolvesCount.Visibility = Visibility.Visible;
-                        BtPuzzleRight.IsEnabled = true;
-                        BtPuzzleLeft.IsEnabled = false;
-                    }
-                    else if (_puzzleSolutions.Count == 1)
-                    {
-                        Xceed.Wpf.Toolkit.MessageBox.Show(this, "A betöltött puzzle feladványnak egy megoldása van.", "Információ!",
-                            MessageBoxButton.OK, MessageBoxImage.Information,
-                            (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //                LbPuzzleSolvesCount.Content = "Megoldások: 1/" + _puzzleSolutions.Count;
+        //                LbPuzzleSolvesCount.Visibility = Visibility.Visible;
+        //                BtPuzzleRight.IsEnabled = true;
+        //                BtPuzzleLeft.IsEnabled = false;
+        //            }
+        //            else if (_puzzleSolutions.Count == 1)
+        //            {
+        //                Xceed.Wpf.Toolkit.MessageBox.Show(this, "A betöltött puzzle feladványnak egy megoldása van.", "Információ!",
+        //                    MessageBoxButton.OK, MessageBoxImage.Information,
+        //                    (Style)Application.Current.Resources["MessageBoxStyle"]);
 
-                        LbPuzzleSolvesCount.Content = "";
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Xceed.Wpf.Toolkit.MessageBox messageBox = new Xceed.Wpf.Toolkit.MessageBox();
-                    messageBox.Background = Brushes.Gray;
-                    messageBox.Caption = "Hiba!";
-                    messageBox.Text = "A SUDOKU betöltése során hiba lépett fel. " + ex.Message;
-                    messageBox.ButtonRegionBackground = Brushes.Gray;
-                    Xceed.Wpf.Toolkit.MessageBox.Show(this, messageBox.Text, messageBox.Caption, MessageBoxButton.OK,
-                        MessageBoxImage.Error, (Style)Application.Current.Resources["MessageBoxStyle"]);
-                }
-                LoadFile.Reset();
-            }
-        }
-        private void BtPuzzleLeft_OnClick(object sender, RoutedEventArgs e)
-        {
-            _puzzleSolutionIndex--;
-            BtPuzzleRight.IsEnabled = true;
-            string[,] actSolution = _puzzleSolutions[_puzzleSolutionIndex].OutputAsMatrix();
-            DisplayBoard(actSolution, "TbPuzzleCell");
-            LbPuzzleSolvesCount.Content = "Megoldások: " + (_puzzleSolutionIndex + 1) + "/" + _puzzleSolutions.Count;
-            if (_puzzleSolutionIndex == 0)
-            {
-                BtPuzzleLeft.IsEnabled = false;
-            }
-        }
-        private void BtPuzzleRight_OnClick(object sender, RoutedEventArgs e)
-        {
-            _puzzleSolutionIndex++;
-            BtPuzzleLeft.IsEnabled = true;
-            string[,] actSolution = _puzzleSolutions[_puzzleSolutionIndex].OutputAsMatrix();
-            DisplayBoard(actSolution, "TbPuzzleCell");
-            LbPuzzleSolvesCount.Content = "Megoldások: " + (_puzzleSolutionIndex + 1) + "/" + _puzzleSolutions.Count;
-            if (_puzzleSolutionIndex == (_puzzleSolutions.Count - 1))
-            {
-                BtPuzzleRight.IsEnabled = false;
-            }
-        }
-        private void PuzzleCell_OnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            SolidColorBrush scBrush = new SolidColorBrush(PuzzleColorPicker.SelectedColor.GetValueOrDefault());
-            ((TextBox)sender).Background = scBrush;
-        }
-        private void PuzzleCell_OnMouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.RightButton == MouseButtonState.Pressed)
-            {
-                SolidColorBrush scBrush = new SolidColorBrush(PuzzleColorPicker.SelectedColor.GetValueOrDefault());
-                ((TextBox)sender).Background = scBrush;
-            }
+        //                LbPuzzleSolvesCount.Content = "";
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            Xceed.Wpf.Toolkit.MessageBox messageBox = new Xceed.Wpf.Toolkit.MessageBox();
+        //            messageBox.Background = Brushes.Gray;
+        //            messageBox.Caption = "Hiba!";
+        //            messageBox.Text = "A SUDOKU betöltése során hiba lépett fel. " + ex.Message;
+        //            messageBox.ButtonRegionBackground = Brushes.Gray;
+        //            Xceed.Wpf.Toolkit.MessageBox.Show(this, messageBox.Text, messageBox.Caption, MessageBoxButton.OK,
+        //                MessageBoxImage.Error, (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //        }
+        //        LoadFile.Reset();
+        //    }
+        //}
+        //private void BtPuzzleLeft_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    _puzzleSolutionIndex--;
+        //    BtPuzzleRight.IsEnabled = true;
+        //    string[,] actSolution = _puzzleSolutions[_puzzleSolutionIndex].OutputAsMatrix();
+        //    DisplayBoard(actSolution, "TbPuzzleCell");
+        //    LbPuzzleSolvesCount.Content = "Megoldások: " + (_puzzleSolutionIndex + 1) + "/" + _puzzleSolutions.Count;
+        //    if (_puzzleSolutionIndex == 0)
+        //    {
+        //        BtPuzzleLeft.IsEnabled = false;
+        //    }
+        //}
+        //private void BtPuzzleRight_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    _puzzleSolutionIndex++;
+        //    BtPuzzleLeft.IsEnabled = true;
+        //    string[,] actSolution = _puzzleSolutions[_puzzleSolutionIndex].OutputAsMatrix();
+        //    DisplayBoard(actSolution, "TbPuzzleCell");
+        //    LbPuzzleSolvesCount.Content = "Megoldások: " + (_puzzleSolutionIndex + 1) + "/" + _puzzleSolutions.Count;
+        //    if (_puzzleSolutionIndex == (_puzzleSolutions.Count - 1))
+        //    {
+        //        BtPuzzleRight.IsEnabled = false;
+        //    }
+        //}
+        //private void PuzzleCell_OnMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    SolidColorBrush scBrush = new SolidColorBrush(PuzzleColorPicker.SelectedColor.GetValueOrDefault());
+        //    ((TextBox)sender).Background = scBrush;
+        //}
+        //private void PuzzleCell_OnMouseMove(object sender, MouseEventArgs e)
+        //{
+        //    if (e.RightButton == MouseButtonState.Pressed)
+        //    {
+        //        SolidColorBrush scBrush = new SolidColorBrush(PuzzleColorPicker.SelectedColor.GetValueOrDefault());
+        //        ((TextBox)sender).Background = scBrush;
+        //    }
 
-        }
-        private void TbPuzzleCell_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            Grid actPuzzleGrid = (Grid)this.FindName("PuzzleGrid");
-            string maxNumber = actPuzzleGrid.RowDefinitions.Count.ToString();
+        //}
+        //private void TbPuzzleCell_OnTextChanged(object sender, TextChangedEventArgs e)
+        //{
+        //    Grid actPuzzleGrid = (Grid)this.FindName("PuzzleGrid");
+        //    string maxNumber = actPuzzleGrid.RowDefinitions.Count.ToString();
 
-            if (System.Text.RegularExpressions.Regex.IsMatch(((TextBox)sender).Text, "[^1-" + maxNumber + "]") || ((TextBox)sender).Text.Length >= 2)
-            {
-                Xceed.Wpf.Toolkit.MessageBox.Show(this, "Csak egyjegyű számokat üthetsz be 1-től " + maxNumber + "-ig.", "Információ!",
-                    MessageBoxButton.OK, MessageBoxImage.Information,
-                    (Style)Application.Current.Resources["MessageBoxStyle"]);
-                ((TextBox)sender).Clear();
-            }
-        }
+        //    if (System.Text.RegularExpressions.Regex.IsMatch(((TextBox)sender).Text, "[^1-" + maxNumber + "]") || ((TextBox)sender).Text.Length >= 2)
+        //    {
+        //        Xceed.Wpf.Toolkit.MessageBox.Show(this, "Csak egyjegyű számokat üthetsz be 1-től " + maxNumber + "-ig.", "Információ!",
+        //            MessageBoxButton.OK, MessageBoxImage.Information,
+        //            (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //        ((TextBox)sender).Clear();
+        //    }
+        //}
         #endregion
 
         #region Methods
 
 
-        private void PopulatePuzzleColorList()
-        {
-            _puzzleColorList = new ObservableCollection<ColorItem>();
-            _puzzleColorList.Add(new ColorItem(Colors.LightBlue, "Világoskék"));
-            _puzzleColorList.Add(new ColorItem(Colors.CornflowerBlue, "Égkék"));
-            _puzzleColorList.Add(new ColorItem(Colors.Magenta, "Rózsaszín"));
-            _puzzleColorList.Add(new ColorItem(Colors.Red, "Piros"));
-            _puzzleColorList.Add(new ColorItem(Colors.Green, "Zöld"));
-            _puzzleColorList.Add(new ColorItem(Colors.Yellow, "Sárga"));
-            _puzzleColorList.Add(new ColorItem(Colors.RosyBrown, "Barna"));
-            _puzzleColorList.Add(new ColorItem(Colors.Orange, "Narancssárga"));
-            _puzzleColorList.Add(new ColorItem(Colors.MediumPurple, "Lila"));
-            _puzzleColorList.Add(new ColorItem(Colors.LightGray, "Szürke"));
-        }
-        public void ClosePuzzleBusyIndicator()
-        {
-            if (Xceed.Wpf.Toolkit.MessageBox.Show(this,
-                    "Biztos, hogy meg szeretnéd szakítani a megoldást?", "Figyelmeztetés!",
-                    MessageBoxButton.YesNo, MessageBoxImage.Warning,
-                    (Style)Application.Current.Resources["MessageBoxStyle"]) == MessageBoxResult.Yes)
-            {
-                _puzzleSolverThread.Abort();
-                BusyIPuzzle.IsBusy = false;
-            }
-        }
-        private void DisplayPuzzleSolutionAndMessage()
-        {
-            BusyIPuzzle.IsBusy = false;
-            if (_puzzleSolverThread.ThreadState != ThreadState.Aborted)
-            {
-                if (_puzzleSolutions.Count > 0 && _puzzleSolutions[0] != null)
-                {
-                    if (_puzzleSolutions.Count > 1)
-                    {
-                        Xceed.Wpf.Toolkit.MessageBox.Show(this,
-                            "A puzzle feladványnak több megoldása is van (összesen " + _puzzleSolutions.Count +
-                            "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
-                            MessageBoxButton.OK, MessageBoxImage.Information,
-                            (Style)Application.Current.Resources["MessageBoxStyle"]);
-                        BtPuzzleRight.IsEnabled = true;
-                        LbPuzzleSolvesCount.Content = "Megoldások: 1/" + _puzzleSolutions.Count;
-                        LbPuzzleSolvesCount.Visibility = Visibility.Visible;
-                    }
-                    else
-                    {
-                        Xceed.Wpf.Toolkit.MessageBox.Show(this, "A puzzle feladványnak egy megoldása van.",
-                            "Információ!",
-                            MessageBoxButton.OK, MessageBoxImage.Information,
-                            (Style)Application.Current.Resources["MessageBoxStyle"]);
-                    }
+        //private void PopulatePuzzleColorList()
+        //{
+        //    _puzzleColorList = new ObservableCollection<ColorItem>();
+        //    _puzzleColorList.Add(new ColorItem(Colors.LightBlue, "Világoskék"));
+        //    _puzzleColorList.Add(new ColorItem(Colors.CornflowerBlue, "Égkék"));
+        //    _puzzleColorList.Add(new ColorItem(Colors.Magenta, "Rózsaszín"));
+        //    _puzzleColorList.Add(new ColorItem(Colors.Red, "Piros"));
+        //    _puzzleColorList.Add(new ColorItem(Colors.Green, "Zöld"));
+        //    _puzzleColorList.Add(new ColorItem(Colors.Yellow, "Sárga"));
+        //    _puzzleColorList.Add(new ColorItem(Colors.RosyBrown, "Barna"));
+        //    _puzzleColorList.Add(new ColorItem(Colors.Orange, "Narancssárga"));
+        //    _puzzleColorList.Add(new ColorItem(Colors.MediumPurple, "Lila"));
+        //    _puzzleColorList.Add(new ColorItem(Colors.LightGray, "Szürke"));
+        //}
+        //public void ClosePuzzleBusyIndicator()
+        //{
+        //    if (Xceed.Wpf.Toolkit.MessageBox.Show(this,
+        //            "Biztos, hogy meg szeretnéd szakítani a megoldást?", "Figyelmeztetés!",
+        //            MessageBoxButton.YesNo, MessageBoxImage.Warning,
+        //            (Style)Application.Current.Resources["MessageBoxStyle"]) == MessageBoxResult.Yes)
+        //    {
+        //        _puzzleSolverThread.Abort();
+        //        BusyIPuzzle.IsBusy = false;
+        //    }
+        //}
+        //private void DisplayPuzzleSolutionAndMessage()
+        //{
+        //    BusyIPuzzle.IsBusy = false;
+        //    if (_puzzleSolverThread.ThreadState != ThreadState.Aborted)
+        //    {
+        //        if (_puzzleSolutions.Count > 0 && _puzzleSolutions[0] != null)
+        //        {
+        //            if (_puzzleSolutions.Count > 1)
+        //            {
+        //                Xceed.Wpf.Toolkit.MessageBox.Show(this,
+        //                    "A puzzle feladványnak több megoldása is van (összesen " + _puzzleSolutions.Count +
+        //                    "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
+        //                    MessageBoxButton.OK, MessageBoxImage.Information,
+        //                    (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //                BtPuzzleRight.IsEnabled = true;
+        //                LbPuzzleSolvesCount.Content = "Megoldások: 1/" + _puzzleSolutions.Count;
+        //                LbPuzzleSolvesCount.Visibility = Visibility.Visible;
+        //            }
+        //            else
+        //            {
+        //                Xceed.Wpf.Toolkit.MessageBox.Show(this, "A puzzle feladványnak egy megoldása van.",
+        //                    "Információ!",
+        //                    MessageBoxButton.OK, MessageBoxImage.Information,
+        //                    (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //            }
 
-                    string[,] actSolution = _puzzleSolutions[0].OutputAsMatrix();
-                    DisplayBoard(actSolution, "TbPuzzleCell");
+        //            string[,] actSolution = _puzzleSolutions[0].OutputAsMatrix();
+        //            DisplayBoard(actSolution, "TbPuzzleCell");
 
-                }
-                else
-                {
-                    Xceed.Wpf.Toolkit.MessageBox.Show(this, "A puzzle feladványnak sajnos nincs megoldása.",
-                        "Információ!",
-                        MessageBoxButton.OK, MessageBoxImage.Information,
-                        (Style)Application.Current.Resources["MessageBoxStyle"]);
-                }
-            }
-        }
-        private string[] GetPuzzleAreas()
-        {
-            Grid puzzleGrid = (Grid)LogicalTreeHelper.FindLogicalNode(PuzzleDockPanel, "PuzzleGrid");
-            List<string> colorInfos = new List<string>();
-            List<SolidColorBrush> puzzleBrushes = new List<SolidColorBrush>();
-            foreach (ColorItem cItem in PuzzleColorPicker.StandardColors)
-            {
-                puzzleBrushes.Add(new SolidColorBrush(cItem.Color.GetValueOrDefault()));
-            }
+        //        }
+        //        else
+        //        {
+        //            Xceed.Wpf.Toolkit.MessageBox.Show(this, "A puzzle feladványnak sajnos nincs megoldása.",
+        //                "Információ!",
+        //                MessageBoxButton.OK, MessageBoxImage.Information,
+        //                (Style)Application.Current.Resources["MessageBoxStyle"]);
+        //        }
+        //    }
+        //}
+        //private string[] GetPuzzleAreas()
+        //{
+        //    Grid puzzleGrid = (Grid)LogicalTreeHelper.FindLogicalNode(PuzzleDockPanel, "PuzzleGrid");
+        //    List<string> colorInfos = new List<string>();
+        //    List<SolidColorBrush> puzzleBrushes = new List<SolidColorBrush>();
+        //    foreach (ColorItem cItem in PuzzleColorPicker.StandardColors)
+        //    {
+        //        puzzleBrushes.Add(new SolidColorBrush(cItem.Color.GetValueOrDefault()));
+        //    }
 
-            for (int row = 0; row < puzzleGrid.RowDefinitions.Count; row++)
-            {
-                string actRow = "";
-                for (int column = 0; column < puzzleGrid.ColumnDefinitions.Count; column++)
-                {
+        //    for (int row = 0; row < puzzleGrid.RowDefinitions.Count; row++)
+        //    {
+        //        string actRow = "";
+        //        for (int column = 0; column < puzzleGrid.ColumnDefinitions.Count; column++)
+        //        {
 
-                    TextBox actCell = (TextBox)this.FindName("TbPuzzleCell" + column + row);
-                    int index = -1;
-                    for (int i = 0; i < puzzleBrushes.Count; i++)
-                    {
-                        if (puzzleBrushes[i].Color == ((SolidColorBrush)actCell.Background).Color)
-                        {
-                            index = i;
-                        }
-                    }
-                    if (index != -1)
-                    {
-                        actRow += index;
-                    }
-
-
-                }
-                colorInfos.Add(actRow);
-            }
-
-            return colorInfos.ToArray();
-        }
-        private int[,] ConvertPuzzleAreasToMatrix(string[] areas)
-        {
-            int[,] areaMatrix = new int[9, 9];
-            for (int row = 0; row < areas.Length; row++)
-            {
-                int column = 0;
-                foreach (Char number in areas[row])
-                {
-                    areaMatrix[row, column] = Convert.ToInt32(number.ToString());
-                    column++;
-                }
-            }
-            return areaMatrix;
-        }
-        private void DrawPuzzleAreas(string[] areas)
-        {
-            Grid puzzleGrid = (Grid)LogicalTreeHelper.FindLogicalNode(PuzzleDockPanel, "PuzzleGrid");
-            List<SolidColorBrush> puzzleBrushes = new List<SolidColorBrush>();
-            int[,] areaMatrix = ConvertPuzzleAreasToMatrix(areas);
-
-            foreach (ColorItem cItem in PuzzleColorPicker.StandardColors)
-            {
-                puzzleBrushes.Add(new SolidColorBrush(cItem.Color.GetValueOrDefault()));
-            }
-
-            for (int row = 0; row < puzzleGrid.RowDefinitions.Count; row++)
-            {
-                for (int column = 0; column < puzzleGrid.ColumnDefinitions.Count; column++)
-                {
-
-                    TextBox actCell = (TextBox)this.FindName("TbPuzzleCell" + column + row);
-                    actCell.Background = puzzleBrushes[areaMatrix[row, column]];
-
-                }
-            }
-        }
-        private void UnregisterPuzzleControls()
-        {
-            Grid puzzleGridToDelete = (Grid)LogicalTreeHelper.FindLogicalNode(PuzzleDockPanel, "PuzzleGrid");
-            for (int row = 0; row < puzzleGridToDelete.RowDefinitions.Count; row++)
-            {
-                for (int column = 0; column < puzzleGridToDelete.ColumnDefinitions.Count; column++)
-                {
-                    TextBox oldCell =
-                        (TextBox)LogicalTreeHelper.FindLogicalNode(puzzleGridToDelete, "TbPuzzleCell" + column + row);
-                    puzzleGridToDelete.UnregisterName(oldCell.Name);
-                    puzzleGridToDelete.Children.Remove(oldCell);
-                }
-            }
-
-            PuzzleDockPanel.Children.Remove(puzzleGridToDelete);
-            PuzzleDockPanel.UnregisterName(PuzzleGrid.Name);
-
-        }
-        private void DrawPuzzle(int height, int width) //9x9(3x3) 4x4(2x2) 6x6(2x3)
-        {
-            Grid puzzleGridToDelete = (Grid)LogicalTreeHelper.FindLogicalNode(PuzzleDockPanel, "PuzzleGrid");
-            if (puzzleGridToDelete != null)
-            {
-                UnregisterPuzzleControls();
-            }
-
-            _puzzleSolutions.Clear();
-            _puzzleSolutionIndex = 0;
-
-            BtPuzzleRight.IsEnabled = false;
-            BtPuzzleLeft.IsEnabled = false;
-
-            Grid puzzleGrid = new Grid();
-            puzzleGrid.Name = "PuzzleGrid";
-            puzzleGrid.SetValue(NameProperty, "PuzzleGrid");
-            puzzleGrid.Margin = new Thickness(8);
-            puzzleGrid.HorizontalAlignment = HorizontalAlignment.Center;
-            puzzleGrid.VerticalAlignment = VerticalAlignment.Center;
-            puzzleGrid.Width = 400;
-            puzzleGrid.Height = 400;
-            PuzzleDockPanel.Children.Add(puzzleGrid);
-            PuzzleDockPanel.RegisterName(puzzleGrid.Name, puzzleGrid);
-
-            Style evenCellStyle = Application.Current.FindResource("TbSudokuEvenCellStyle") as Style;
-
-            for (int i = 0; i < width; i++)
-            {
-                ColumnDefinition puzzleColumn = new ColumnDefinition();
-                RowDefinition puzzleRow = new RowDefinition();
-                puzzleGrid.ColumnDefinitions.Add(puzzleColumn);
-                puzzleGrid.RowDefinitions.Add(puzzleRow);
-            }
-
-            for (int row = 0; row < height; row++)
-            {
-
-                for (int column = 0; column < width; column++)
-                {
-
-                    TextBox cell = new TextBox();
-                    cell.Style = evenCellStyle;
-                    cell.TextChanged += TbPuzzleCell_OnTextChanged;
-                    cell.MouseRightButtonUp += PuzzleCell_OnMouseRightButtonUp;
-                    cell.MouseMove += PuzzleCell_OnMouseMove;
-                    cell.ContextMenu = null;
-
-                    cell.SetValue(NameProperty, "TbPuzzleCell" + column + row);
-                    cell.Name = "TbPuzzleCell" + column + row;
-                    puzzleGrid.RegisterName(cell.Name, cell);
-                    puzzleGrid.Children.Add(cell);
+        //            TextBox actCell = (TextBox)this.FindName("TbPuzzleCell" + column + row);
+        //            int index = -1;
+        //            for (int i = 0; i < puzzleBrushes.Count; i++)
+        //            {
+        //                if (puzzleBrushes[i].Color == ((SolidColorBrush)actCell.Background).Color)
+        //                {
+        //                    index = i;
+        //                }
+        //            }
+        //            if (index != -1)
+        //            {
+        //                actRow += index;
+        //            }
 
 
-                    Grid.SetRow(cell, row);
-                    Grid.SetColumn(cell, column);
+        //        }
+        //        colorInfos.Add(actRow);
+        //    }
+
+        //    return colorInfos.ToArray();
+        //}
+        //private int[,] ConvertPuzzleAreasToMatrix(string[] areas)
+        //{
+        //    int[,] areaMatrix = new int[9, 9];
+        //    for (int row = 0; row < areas.Length; row++)
+        //    {
+        //        int column = 0;
+        //        foreach (Char number in areas[row])
+        //        {
+        //            areaMatrix[row, column] = Convert.ToInt32(number.ToString());
+        //            column++;
+        //        }
+        //    }
+        //    return areaMatrix;
+        //}
+        //private void DrawPuzzleAreas(string[] areas)
+        //{
+        //    Grid puzzleGrid = (Grid)LogicalTreeHelper.FindLogicalNode(PuzzleDockPanel, "PuzzleGrid");
+        //    List<SolidColorBrush> puzzleBrushes = new List<SolidColorBrush>();
+        //    int[,] areaMatrix = ConvertPuzzleAreasToMatrix(areas);
+
+        //    foreach (ColorItem cItem in PuzzleColorPicker.StandardColors)
+        //    {
+        //        puzzleBrushes.Add(new SolidColorBrush(cItem.Color.GetValueOrDefault()));
+        //    }
+
+        //    for (int row = 0; row < puzzleGrid.RowDefinitions.Count; row++)
+        //    {
+        //        for (int column = 0; column < puzzleGrid.ColumnDefinitions.Count; column++)
+        //        {
+
+        //            TextBox actCell = (TextBox)this.FindName("TbPuzzleCell" + column + row);
+        //            actCell.Background = puzzleBrushes[areaMatrix[row, column]];
+
+        //        }
+        //    }
+        //}
+        //private void UnregisterPuzzleControls()
+        //{
+        //    Grid puzzleGridToDelete = (Grid)LogicalTreeHelper.FindLogicalNode(PuzzleDockPanel, "PuzzleGrid");
+        //    for (int row = 0; row < puzzleGridToDelete.RowDefinitions.Count; row++)
+        //    {
+        //        for (int column = 0; column < puzzleGridToDelete.ColumnDefinitions.Count; column++)
+        //        {
+        //            TextBox oldCell =
+        //                (TextBox)LogicalTreeHelper.FindLogicalNode(puzzleGridToDelete, "TbPuzzleCell" + column + row);
+        //            puzzleGridToDelete.UnregisterName(oldCell.Name);
+        //            puzzleGridToDelete.Children.Remove(oldCell);
+        //        }
+        //    }
+
+        //    PuzzleDockPanel.Children.Remove(puzzleGridToDelete);
+        //    PuzzleDockPanel.UnregisterName(PuzzleGrid.Name);
+
+        //}
+        //private void DrawPuzzle(int height, int width) //9x9(3x3) 4x4(2x2) 6x6(2x3)
+        //{
+        //    Grid puzzleGridToDelete = (Grid)LogicalTreeHelper.FindLogicalNode(PuzzleDockPanel, "PuzzleGrid");
+        //    if (puzzleGridToDelete != null)
+        //    {
+        //        UnregisterPuzzleControls();
+        //    }
+
+        //    _puzzleSolutions.Clear();
+        //    _puzzleSolutionIndex = 0;
+
+        //    BtPuzzleRight.IsEnabled = false;
+        //    BtPuzzleLeft.IsEnabled = false;
+
+        //    Grid puzzleGrid = new Grid();
+        //    puzzleGrid.Name = "PuzzleGrid";
+        //    puzzleGrid.SetValue(NameProperty, "PuzzleGrid");
+        //    puzzleGrid.Margin = new Thickness(8);
+        //    puzzleGrid.HorizontalAlignment = HorizontalAlignment.Center;
+        //    puzzleGrid.VerticalAlignment = VerticalAlignment.Center;
+        //    puzzleGrid.Width = 400;
+        //    puzzleGrid.Height = 400;
+        //    PuzzleDockPanel.Children.Add(puzzleGrid);
+        //    PuzzleDockPanel.RegisterName(puzzleGrid.Name, puzzleGrid);
+
+        //    Style evenCellStyle = Application.Current.FindResource("TbSudokuEvenCellStyle") as Style;
+
+        //    for (int i = 0; i < width; i++)
+        //    {
+        //        ColumnDefinition puzzleColumn = new ColumnDefinition();
+        //        RowDefinition puzzleRow = new RowDefinition();
+        //        puzzleGrid.ColumnDefinitions.Add(puzzleColumn);
+        //        puzzleGrid.RowDefinitions.Add(puzzleRow);
+        //    }
+
+        //    for (int row = 0; row < height; row++)
+        //    {
+
+        //        for (int column = 0; column < width; column++)
+        //        {
+
+        //            TextBox cell = new TextBox();
+        //            cell.Style = evenCellStyle;
+        //            cell.TextChanged += TbPuzzleCell_OnTextChanged;
+        //            cell.MouseRightButtonUp += PuzzleCell_OnMouseRightButtonUp;
+        //            cell.MouseMove += PuzzleCell_OnMouseMove;
+        //            cell.ContextMenu = null;
+
+        //            cell.SetValue(NameProperty, "TbPuzzleCell" + column + row);
+        //            cell.Name = "TbPuzzleCell" + column + row;
+        //            puzzleGrid.RegisterName(cell.Name, cell);
+        //            puzzleGrid.Children.Add(cell);
 
 
-                }
-            }
-        }
-        private SudokuBoard CreatePuzzleBoard(string[] areas)
-        {
-            SudokuBoard board;
-            board = SudokuFactory.ClassicWithSpecialBoxes(areas);
+        //            Grid.SetRow(cell, row);
+        //            Grid.SetColumn(cell, column);
 
-            for (int row = 0; row < 9; row++)
-            {
-                string actRow = "";
-                for (int column = 0; column < 9; column++)
-                {
-                    TextBox actCell = (TextBox)this.FindName("TbPuzzleCell" + column + row);
-                    if (actCell.Text == String.Empty)
-                    {
-                        actRow += ".";
-                    }
-                    else
-                    {
-                        //actCell.FontWeight = FontWeights.Bold;
-                        actRow += actCell.Text;
-                    }
-                }
-                board.AddRow(actRow);
-            }
-            return board;
-        }
+
+        //        }
+        //    }
+        //}
+        //private SudokuBoard CreatePuzzleBoard(string[] areas)
+        //{
+        //    SudokuBoard board;
+        //    board = SudokuFactory.ClassicWithSpecialBoxes(areas);
+
+        //    for (int row = 0; row < 9; row++)
+        //    {
+        //        string actRow = "";
+        //        for (int column = 0; column < 9; column++)
+        //        {
+        //            TextBox actCell = (TextBox)this.FindName("TbPuzzleCell" + column + row);
+        //            if (actCell.Text == String.Empty)
+        //            {
+        //                actRow += ".";
+        //            }
+        //            else
+        //            {
+        //                //actCell.FontWeight = FontWeights.Bold;
+        //                actRow += actCell.Text;
+        //            }
+        //        }
+        //        board.AddRow(actRow);
+        //    }
+        //    return board;
+        //}
 
         #endregion
 

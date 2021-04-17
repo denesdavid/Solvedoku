@@ -10,5 +10,6 @@ namespace Solvedoku.ViewModels.JigsawSudoku
     interface IJigsawSudokuTableViewModel
     {
         ObservableCollection<ObservableCollection<string>> Cells { get; set; }
+        ObservableCollection<ObservableCollection<int>> PuzzleAreas { get; set; }
     }
 }

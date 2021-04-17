@@ -2,8 +2,10 @@
 using Solvedoku.Classes;
 using Solvedoku.Commands;
 using Solvedoku.ViewModels.BusyIndicatorContent;
+using Solvedoku.Views.JigsawSudoku;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -12,6 +14,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using Xceed.Wpf.Toolkit;
 
 namespace Solvedoku.ViewModels.JigsawSudoku
 {
@@ -32,13 +37,13 @@ namespace Solvedoku.ViewModels.JigsawSudoku
 
         #region Properties
 
-        public ICommand DrawClassicSudokuCommand { get; set; }
+        public ICommand DrawJigsawSudokuCommand { get; set; }
 
-        public ICommand SolveClassicSudokuCommand { get; set; }
+        public ICommand SolveJigsawSudokuCommand { get; set; }
 
-        public ICommand SaveClassicSudokuCommand { get; set; }
+        public ICommand SaveJigsawSudokuCommand { get; set; }
 
-        public ICommand LoadClassicSudokuCommand { get; set; }
+        public ICommand LoadJigsawSudokuCommand { get; set; }
 
         public ICommand LoadPreviousSolutionCommand { get; set; }
 
@@ -58,27 +63,19 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             }
         }
 
-        public ObservableCollection<SudokuBoardSize> SudokuBoardSizes
+        public ObservableCollection<ColorItem> PuzzleColors
         {
-            get => new ObservableCollection<SudokuBoardSize> {
-                new SudokuBoardSize{
-                    Width = 9,
-                    Height = 9,
-                    BoxCountX = 3,
-                    BoxCountY = 3
-                },
-                new SudokuBoardSize{
-                    Width = 6,
-                    Height = 6,
-                    BoxCountX = 3,
-                    BoxCountY = 2
-                },
-                new SudokuBoardSize{
-                    Width = 4,
-                    Height = 4,
-                    BoxCountX = 2,
-                    BoxCountY = 2
-                }
+            get => new ObservableCollection<ColorItem> {
+                new ColorItem(Colors.LightBlue, "Világoskék"),
+                new ColorItem(Colors.CornflowerBlue, "Égkék"),
+                new ColorItem(Colors.Magenta, "Rózsaszín"),
+                new ColorItem(Colors.Red, "Piros"),
+                new ColorItem(Colors.Green, "Zöld"),
+                new ColorItem(Colors.Yellow, "Sárga"),
+                new ColorItem(Colors.RosyBrown, "Barna"),
+                new ColorItem(Colors.Orange, "Narancssárga"),
+                new ColorItem(Colors.MediumPurple, "Lila"),
+                new ColorItem(Colors.LightGray, "Szürke")
             };
         }
 
@@ -125,10 +122,10 @@ namespace Solvedoku.ViewModels.JigsawSudoku
 
         #region Constructor
 
-        public ClassicSudokuViewModel()
+        public JigsawSudokuViewModel()
         {
             LoadCommands();
-            SudokuBoardControl = new UcClassicSudoku9x9Table();
+            SudokuBoardControl = new UcJigsawSudoku9x9Table();
         }
 
         #endregion
@@ -149,15 +146,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             SudokuBoardSize sudokuBoardSize = (SudokuBoardSize)o;
             if (sudokuBoardSize.Height == 9 && sudokuBoardSize.Width == 9)
             {
-                SudokuBoardControl = new UcClassicSudoku9x9Table();
-            }
-            else if (sudokuBoardSize.Height == 6 && sudokuBoardSize.Width == 6)
-            {
-                SudokuBoardControl = new UcClassicSudoku6x6Table();
-            }
-            else
-            {
-                SudokuBoardControl = new UcClassicSudoku4x4Table();
+                SudokuBoardControl = new UcJigsawSudoku9x9Table();
             }
             SolutionsCount = string.Empty;
         }
@@ -173,25 +162,27 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         /// </summary>
         void Solve()
         {
-            try
+            /*try
             {
-                MessageBoxResult msgBoxResult = MessageBoxService.Show(
-                    "Kérlek válaszd ki, hogy az összes megoldást (feltéve ha van egynél több, illetve ez időigényes is lehet), vagy csak egy lehetségeset szeretnél megkapni.",
-                    "Kérdés", MessageBoxButton.YesNo, MessageBoxImage.Question, (Style)Application.Current.Resources["MessageBoxStyleForClassicSolve"]);
-
-                if (msgBoxResult != MessageBoxResult.Cancel)
+                var messageBoxResult = MessageBoxService.Show("Kérlek válaszd ki, hogy az összes megoldást (feltéve ha van egynél több, illetve ez időigényes is lehet), vagy csak egy lehetségeset szeretnél megkapni.",
+                    "Kérdés!",
+                    MessageBoxButton.YesNo, MessageBoxImage.Question);
+                
+                if (messageBoxResult != MessageBoxResult.Cancel)
                 {
-                    _solutions.Clear();
                     SolutionsCount = string.Empty;
-                    var board = CreateClassicBoard(((IClassicSudokuControl)SudokuBoardControl).BoardSize);
 
-                    if (msgBoxResult == MessageBoxResult.Yes)
+                    string[] areas = GetPuzzleAreas();
+                    var board = CreatePuzzleBoard(areas);
+
+                    _solutionIndex= 0;
+
+                    if (messageBoxResult == MessageBoxResult.Yes)
                     {
-
                         _sudokuSolverThread = new Thread(() =>
                         {
-                            _solutions = (List<SudokuBoard>)Sudoku_SolverThread(board, true);
-                            Action action = DisplayClassicSolutionAndMessage;
+                            _solutions = Sudoku_SolverThread(board, true);
+                            Action action = DisplayPuzzleSolutionAndMessage;
                             Application.Current.Dispatcher.Invoke(action);
                         });
                         _sudokuSolverThread.Start();
@@ -200,38 +191,38 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                     {
                         _sudokuSolverThread = new Thread(() =>
                         {
-                            _solutions = (List<SudokuBoard>)Sudoku_SolverThread(board, false);
-                            Action action = DisplayClassicSolutionAndMessage;
+                            _solutions = Sudoku_SolverThread(board, false);
+                            Action action = DisplayPuzzleSolutionAndMessage;
                             Application.Current.Dispatcher.Invoke(action);
                         });
                         _sudokuSolverThread.Start();
                     }
-                    IsBusy = true;
+                   IsBusy = true;
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                MessageBoxService.Show(
-                    $"A klasszikus feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot. {ex.Message}",
-                    "Hiba!", MessageBoxButton.OK, MessageBoxImage.Question);
-            }
+                MessageBoxService.Show("A puzzle feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot.",
+                    "Hiba!",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }*/
         }
 
         /// <summary>
-        /// Determines if saving a classic sudoku is possible.
+        /// Determines if saving the sudoku is possible.
         /// </summary>
         /// <returns>Bool (currently always true)</returns>
         bool CanSave() => true;
 
         /// <summary>
-        /// Saves a classic sudoku to a file.
+        /// Saves the sudoku to a file.
         /// </summary>
         void Save()
         {
-            _saveFileDialog.Title = "Klasszikus SUDOKU mentése..";
+            /*_saveFileDialog.Title = "Puzzle SUDOKU mentése..";
             _saveFileDialog.RestoreDirectory = true;
-            _saveFileDialog.DefaultExt = "csu";
-            _saveFileDialog.Filter = "Klasszikus SUDOKU fájlok (*.csu)|*.csu";
+            _saveFileDialog.DefaultExt = "jsu";
+            _saveFileDialog.Filter = "Puzzle SUDOKU fájlok (*.jsu)|*.jsu";
             _saveFileDialog.FilterIndex = 1;
             _saveFileDialog.CheckPathExists = true;
             _saveFileDialog.OverwritePrompt = true;
@@ -253,17 +244,17 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                 {
                     MessageBoxService.Show($"A Sudoku mentése során hiba lépett fel. {ex.Message}", "Hiba!", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
-            }
+            }*/
         }
 
         /// <summary>
-        /// Determines if loading a classic sudoku is possible.
+        /// Determines if loading a sudoku is possible.
         /// </summary>
         /// <returns>Bool (currently always true)</returns>
         bool CanLoad() => true;
 
         /// <summary>
-        /// Loads a classic sudoku from a file.
+        /// Loads a sudoku from a file.
         /// </summary>
         void Load()
         {
@@ -327,14 +318,14 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         {
             _solutionIndex -= 1;
             DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsMatrix());
-            SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _classicSolutions.Count }";
+            SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _solutions.Count }";
         }
 
         /// <summary>
         /// Determines if loading the next solution is possible.
         /// </summary>
         /// <returns>Bool (currently always true)</returns>
-        bool CanLoadNextSolution() => _solutions.Count > 1 && _solutionIndex < _classicSolutions.Count - 1;
+        bool CanLoadNextSolution() => _solutions.Count > 1 && _solutionIndex < _solutions.Count - 1;
 
         /// <summary>
         /// Loads the next possible solution.
@@ -343,7 +334,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         {
             _solutionIndex += 1;
             DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsMatrix());
-            SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _classicSolutions.Count }";
+            SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _solutions.Count }";
         }
 
         /// <summary>
@@ -368,67 +359,42 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         /// </summary>
         private void LoadCommands()
         {
-            DrawClassicSudokuCommand = new ParameterizedCommand(Draw, CanDraw);
-            SolveClassicSudokuCommand = new ParameterlessCommand(Solve, CanSolve);
-            SaveClassicSudokuCommand = new ParameterlessCommand(Save, CanSave);
-            LoadClassicSudokuCommand = new ParameterlessCommand(Load, CanLoad);
+            DrawJigsawSudokuCommand = new ParameterizedCommand(Draw, CanDraw);
+            SolveJigsawSudokuCommand = new ParameterlessCommand(Solve, CanSolve);
+            SaveJigsawSudokuCommand = new ParameterlessCommand(Save, CanSave);
+            LoadJigsawSudokuCommand = new ParameterlessCommand(Load, CanLoad);
             LoadPreviousSolutionCommand = new ParameterlessCommand(LoadPreviousSolution, CanLoadPreviousSolution);
             LoadNextSolutionCommand = new ParameterlessCommand(LoadNextSolution, CanLoadNextSolution);
             BusyIndicatorLoadedCommand = new ParameterlessCommand(BusyIndicatorLoaded, CanBusyIndicatorLoad);
         }
 
         /// <summary>
-        /// Creates a classic Sudoku board, according to the given board size.
+        /// Creates a jigsaw Sudoku board, according to the given board size.
         /// </summary>
         /// <param name="sudokuBoardSize">Size information about the board.</param>
         /// <returns></returns>
-        SudokuBoard CreateClassicBoard(SudokuBoardSize sudokuBoardSize)
+        private SudokuBoard CreateJigsawBoard(SudokuBoardSize sudokuBoardSize, string[] areas)
         {
-            SudokuBoard sudokuBoard;
+            SudokuBoard board = SudokuFactory.ClassicWithSpecialBoxes(areas);
             var boardControlViewModel = (IJigsawSudokuTableViewModel)SudokuBoardControl.DataContext;
-            if (sudokuBoardSize.BoxCountX == 3 && sudokuBoardSize.BoxCountY == 3)
+            for (int row = 0; row < sudokuBoardSize.Height; row++)
             {
-                sudokuBoard = SudokuFactory.ClassicWith3x3Boxes();
-                for (int row = 0; row < sudokuBoardSize.Height; row++)
+                string actRow = "";
+                for (int column = 0; column < sudokuBoardSize.Width; column++)
                 {
-                    string actRow = "";
-                    for (int column = 0; column < sudokuBoardSize.Width; column++)
+                    if (string.IsNullOrEmpty(boardControlViewModel.Cells[row][column]))
                     {
-                        if (string.IsNullOrEmpty(boardControlViewModel.Cells[row][column]))
-                        {
-                            actRow += ".";
-                        }
-                        else
-                        {
-                            // actCell.FontWeight = FontWeights.Bold;
-                            actRow += boardControlViewModel.Cells[row][column];
-                        }
+                        actRow += ".";
                     }
-                    sudokuBoard.AddRow(actRow);
-                }
-            }
-            else
-            {
-                sudokuBoard = SudokuFactory.SizeAndBoxes(sudokuBoardSize);
-                for (int row = 0; row < sudokuBoardSize.Height; row++)
-                {
-                    string actRow = "";
-                    for (int column = 0; column < sudokuBoardSize.Width; column++)
+                    else
                     {
-                        if (string.IsNullOrEmpty(boardControlViewModel.Cells[row][column]))
-                        {
-                            actRow += "0";
-                        }
-                        else
-                        {
-                            //actCell.FontWeight = FontWeights.Bold;
-                            actRow += boardControlViewModel.Cells[row][column];
-                        }
+                        // actCell.FontWeight = FontWeights.Bold;
+                        actRow += boardControlViewModel.Cells[row][column];
                     }
-                    sudokuBoard.AddRow(actRow);
                 }
+                board.AddRow(actRow);
             }
-            return sudokuBoard;
+            return board;
         }
 
         /// <summary>
@@ -437,26 +403,26 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         /// <param name="classicBoard">The classic Sudoku board what is need to be solved.</param>
         /// <param name="findAllSolutions">Determines if all possible solutions have to find or just one.</param>
         /// <returns>Enumerable of the solutions.</returns>
-        IEnumerable<SudokuBoard> Sudoku_SolverThread(SudokuBoard classicBoard, bool findAllSolutions)
+        IEnumerable<SudokuBoard> Sudoku_SolverThread(SudokuBoard sudokuBoard, bool findAllSolutions)
         {
             List<SudokuBoard> solutions = new List<SudokuBoard>();
 
             if (findAllSolutions)
             {
-                solutions = classicBoard.Solve().ToList();
+                solutions = sudokuBoard.Solve().ToList();
             }
             else
             {
-                solutions.Add(classicBoard.SolveOnce());
+                solutions.Add(sudokuBoard.SolveOnce());
             }
 
             return solutions;
         }
 
         /// <summary>
-        /// Configures the viewmodel to display the classic solution(s) and a message about the possible solutions count.
+        /// Configures the viewmodel to display the solution(s) and a message about the possible solutions count.
         /// </summary>
-        private void DisplayClassicSolutionAndMessage()
+        private void DisplaySolutionAndMessage()
         {
             IsBusy = false;
             if (_sudokuSolverThread.ThreadState != ThreadState.Aborted)
@@ -465,25 +431,28 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                 {
                     if (_solutions.Count > 1)
                     {
-                        MessageBoxService.Show("A klasszikus feladványnak több megoldása is van (összesen " + _solutions.Count + "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
-                             MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBoxService.Show($"A puzzle feladványnak több megoldása is van (összesen { _solutions.Count })." +
+                            $" A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+
                         _solutionIndex = 0;
                         SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _solutions.Count }";
-                        IsSolutionsCountVisible = true;
+                        
                     }
                     else
                     {
-                        MessageBoxService.Show("A klasszikus feladványnak egy megoldása van.", "Információ!",
+                        MessageBoxService.Show("A puzzle feladványnak egy megoldása van.",
+                            "Információ!",
                             MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
-                    string[,] solution = _solutions[0].OutputAsMatrix();
-                    DisplayMatrixBoard(solution);
-
+                    string[,] actualSolution = _solutions[0].OutputAsMatrix();
+                    DisplayMatrixBoard(actualSolution);
                 }
                 else
                 {
-                    MessageBoxService.Show("A klasszikus feladványnak sajnos nincs megoldása.", "Információ!",
+                    MessageBoxService.Show("A puzzle feladványnak sajnos nincs megoldása.",
+                        "Információ!",
                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
@@ -495,20 +464,58 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         /// <param name="board"></param>
         private void DisplayMatrixBoard(string[,] board)
         {
-            var boardControlViewModel = (IClassicSudokuTableViewModel)SudokuBoardControl.DataContext;
-            for (int column = 0; column < board.GetLength(0); column++)
-            {
-                for (int row = 0; row < board.GetLength(1); row++)
-                {
-                    if (board[column, row] != "0")
-                    {
-                        boardControlViewModel.Cells[column][row] = board[column, row];
-                    }
-                }
-            }
+            //var boardControlViewModel = (IClassicSudokuTableViewModel)SudokuBoardControl.DataContext;
+            //for (int column = 0; column < board.GetLength(0); column++)
+            //{
+            //    for (int row = 0; row < board.GetLength(1); row++)
+            //    {
+            //        if (board[column, row] != "0")
+            //        {
+            //            boardControlViewModel.Cells[column][row] = board[column, row];
+            //        }
+            //    }
+            //}
         }
+
+        /*private string[] GetPuzzleAreas()
+        {
+            Grid puzzleGrid = (Grid)LogicalTreeHelper.FindLogicalNode(PuzzleDockPanel, "PuzzleGrid");
+            List<string> colorInfos = new List<string>();
+            List<SolidColorBrush> puzzleBrushes = new List<SolidColorBrush>();
+            foreach (ColorItem cItem in PuzzleColorPicker.StandardColors)
+            {
+                puzzleBrushes.Add(new SolidColorBrush(cItem.Color.GetValueOrDefault()));
+            }
+
+            for (int row = 0; row < puzzleGrid.RowDefinitions.Count; row++)
+            {
+                string actRow = "";
+                for (int column = 0; column < puzzleGrid.ColumnDefinitions.Count; column++)
+                {
+
+                    TextBox actCell = (TextBox)this.FindName("TbPuzzleCell" + column + row);
+                    int index = -1;
+                    for (int i = 0; i < puzzleBrushes.Count; i++)
+                    {
+                        if (puzzleBrushes[i].Color == ((SolidColorBrush)actCell.Background).Color)
+                        {
+                            index = i;
+                        }
+                    }
+                    if (index != -1)
+                    {
+                        actRow += index;
+                    }
+
+
+                }
+                colorInfos.Add(actRow);
+            }
+
+            return colorInfos.ToArray();
+        }*/
         #endregion
-      /*  public bool IsBusy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Thread SudokuSolverThread => throw new NotImplementedException();*/
+        /*  public bool IsBusy { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+          public Thread SudokuSolverThread => throw new NotImplementedException();*/
     }
 }
