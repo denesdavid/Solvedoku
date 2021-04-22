@@ -58,7 +58,7 @@ namespace Solvedoku.Classes
                     return SudokuProgress.FAILED;
                 if (possibles.Count == 1)
                 {
-                    possibles.First().Fix(value, "Only possible in rule " + ToString());
+                    possibles.First().Fix(value);
                     result = SudokuProgress.PROGRESS;
                 }
             }

@@ -25,7 +25,7 @@ namespace Solvedoku.Classes
                 var ruleTiles = new HashSet<SudokuTile>();
                 foreach (SudokuTile tile in rule)
                 {
-                    ruleTiles.Add(tiles[tile.X, tile.Y]);
+                    ruleTiles.Add(tiles[tile.Row, tile.Column]);
                 }
                 rules.Add(new SudokuRule(ruleTiles, rule.Description));
             }
@@ -36,8 +36,10 @@ namespace Solvedoku.Classes
             _maxValue = maxValue;
             tiles = new SudokuTile[width, height];
             CreateTiles();
-            if (_maxValue == width || _maxValue == height) // If maxValue is not width or height, then adding line rules would be stupid
+            if (_maxValue == width || _maxValue == height)// If maxValue is not width or height, then adding line rules would be stupid
+            {
                 SetupLineRules();
+            }    
         }
 
         public SudokuBoard(int width, int height) : this(width, height, Math.Max(width, height)) { }
@@ -147,11 +149,17 @@ namespace Solvedoku.Classes
         {
             ResetSolutions();
             SudokuProgress simplify = SudokuProgress.PROGRESS;
-            while (simplify == SudokuProgress.PROGRESS) simplify = Simplify();
+
+            while (simplify == SudokuProgress.PROGRESS) 
+            {
+                simplify = Simplify();
+            }
 
             if (simplify == SudokuProgress.FAILED)
+            {
                 yield break;
-
+            }
+                
             // Find one of the values with the least number of alternatives, but that still has at least 2 alternatives
             var query = from rule in rules
                         from tile in rule
@@ -174,22 +182,36 @@ namespace Solvedoku.Classes
             {
                 // Iterate through all the valid possibles on the chosen square and pick a number for it
                 if (!chosen.IsValuePossible(value))
+                {
                     continue;
+                }
+                    
                 var copy = new SudokuBoard(this);
-                copy.Tile(chosen.X, chosen.Y).Fix(value, "Trial and error");
+                copy.Tile(chosen.Row, chosen.Column).Fix(value);
+
                 foreach (var innerSolution in copy.Solve())
+                {
                     yield return innerSolution;
+                }  
             }
             yield break;
         }
+
         public SudokuBoard SolveOnce()
         {
             ResetSolutions();
             SudokuProgress simplify = SudokuProgress.PROGRESS;
-            while (simplify == SudokuProgress.PROGRESS) simplify = Simplify();
+            while (simplify == SudokuProgress.PROGRESS)
+            {
+                simplify = Simplify();
+            }
+                
 
             if (simplify == SudokuProgress.FAILED)
+            {
                 return null;
+            }
+               
 
             // Find one of the values with the least number of alternatives, but that still has at least 2 alternatives
             var query = from rule in rules
@@ -204,7 +226,6 @@ namespace Solvedoku.Classes
             {
                 // The board has been completed, we're done!
                 return this;
-
             }
 
            // Console.WriteLine("SudokuTile: " + chosen.ToString());
@@ -213,11 +234,17 @@ namespace Solvedoku.Classes
             {
                 // Iterate through all the valid possibles on the chosen square and pick a number for it
                 if (!chosen.IsValuePossible(value))
+                {
                     continue;
+                }
+                    
                 var copy = new SudokuBoard(this);
-                copy.Tile(chosen.X, chosen.Y).Fix(value, "Trial and error");
+                copy.Tile(chosen.Row, chosen.Column).Fix(value);
+
                 foreach (var innerSolution in copy.Solve())
+                {
                     return innerSolution;
+                }
             }
             return null;
         }
@@ -225,55 +252,62 @@ namespace Solvedoku.Classes
         public string[,] OutputAsMatrix()
         {
             string[,] output = new string[tiles.GetLength(0), tiles.GetLength(1)];
-            for (int y = 0; y < tiles.GetLength(1); y++)
+            for (int row = 0; row < tiles.GetLength(0); row++)
             {
-                for (int x = 0; x < tiles.GetLength(0); x++)
+                for (int column = 0; column < tiles.GetLength(1); column++)
                 {
-                    output[x, y] = tiles[x, y].ToStringSimple();
+                    output[row, column] = tiles[row, column].ToStringSimple();
                 }
             }
             return output;
         }
 
-        public SudokuTile Tile(int x, int y)
+        public SudokuTile Tile(int row, int column)
         {
-            return tiles[x, y];
+            return tiles[row, column];
         }
 
-        private int _rowAddIndex;
+        private int _row;
 
-        public void AddRow(string s)
+        public void AddRow(string rowNumbers)
         {
             // Method for initializing a board from string
-            for (int i = 0; i < s.Length; i++)
+            for (int column = 0; column < rowNumbers.Length; column++)
             {
-                var tile = tiles[i, _rowAddIndex];
-                if (s[i] == '/')
+                var tile = tiles[_row, column];
+                if (rowNumbers[column] == '/')
                 {
                     tile.Block();
                     continue;
                 }
-                int value = s[i] == '.' ? 0 : (int)Char.GetNumericValue(s[i]);
+                int value = rowNumbers[column] == '.' ? 0 : (int)Char.GetNumericValue(rowNumbers[column]);
                 tile.Value = value;
             }
-            _rowAddIndex++;
+            _row++;
         }
 
         internal void ResetSolutions()
         {
             foreach (SudokuTile tile in tiles)
+            {
                 tile.ResetPossibles();
+            }  
         }
+
         internal SudokuProgress Simplify()
         {
             SudokuProgress result = SudokuProgress.NO_PROGRESS;
             bool valid = CheckValid();
             if (!valid)
+            {
                 return SudokuProgress.FAILED;
-
+            }
+                
             foreach (SudokuRule rule in rules)
+            {
                 result = SudokuTile.CombineSolvedState(result, rule.Solve());
-
+            }
+                
             return result;
         }
 

@@ -497,13 +497,13 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         private void DisplayMatrixBoard(string[,] board)
         {
             var boardControlViewModel = (IClassicSudokuTableViewModel)SudokuBoardControl.DataContext;
-            for (int column = 0; column < board.GetLength(0); column++)
+            for (int row = 0; row < board.GetLength(0); row++)
             {
-                for (int row = 0; row < board.GetLength(1); row++)
+                for (int column = 0; column < board.GetLength(1); column++)
                 {
-                    if (board[column, row] != "0")
+                    if (board[row, column] != "0")
                     {
-                        boardControlViewModel.Cells[column][row] = board[column, row];
+                        boardControlViewModel.Cells[row][column] = board[row, column];
                     }
                 }
             }
