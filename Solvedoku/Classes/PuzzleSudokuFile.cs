@@ -10,11 +10,11 @@ namespace Solvedoku.Classes
     {
         #region Fields
 
-        private SudokuBoardSize _sudokuBoardSize;
-        private SudokuBoard _sudokuBoard;
-        private string[] _boardAreas;
-        private List<SudokuBoard> _solutions = new List<SudokuBoard>();
-        private ObservableCollection<ColorItem> _colorList;
+        SudokuBoardSize _sudokuBoardSize;
+        SudokuBoard _sudokuBoard;
+        string[] _boardAreas;
+        List<SudokuBoard> _solutions = new List<SudokuBoard>();
+        ObservableCollection<ColorItem> _colorList;
 
         #endregion
 

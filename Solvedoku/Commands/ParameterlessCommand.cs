@@ -5,8 +5,8 @@ namespace Solvedoku.Commands
 {
     class ParameterlessCommand : ICommand
     {
-        private Action _execute;
-        private Func<bool> _canExecute;
+        Action _execute;
+        Func<bool> _canExecute;
 
         public ParameterlessCommand(Action execute, Func<bool> canExecute)
         {
@@ -26,15 +26,8 @@ namespace Solvedoku.Commands
             }
         }
 
-        public bool CanExecute(object parameter = null)
-        {
-            bool isExecutable = _canExecute == null ? true : _canExecute();
-            return isExecutable;
-        }
+        public bool CanExecute(object parameter = null) => _canExecute == null ? true : _canExecute();
 
-        public void Execute(object parameter = null)
-        {
-            _execute();
-        }
+        public void Execute(object parameter = null) => _execute();
     }
 }

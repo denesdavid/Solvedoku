@@ -7,11 +7,14 @@ namespace Solvedoku.Classes
     [Serializable]
     public class SudokuFactory
     {
-        private const int DefaultSize = 9;
-        private const int SamuraiAreas = 7;
-        private const int BoxSize = 3;
-        private const int HyperMargin = 1;
+        #region Constants
+        const int DefaultSize = 9;
+        const int SamuraiAreas = 7;
+        const int BoxSize = 3;
+        const int HyperMargin = 1;
+        #endregion
 
+        #region Functions
         public static IEnumerable<Tuple<int, int>> box(int sizeX, int sizeY)
         {
             foreach (int x in Enumerable.Range(0, sizeX))
@@ -118,5 +121,6 @@ namespace Solvedoku.Classes
 
             return board;
         }
+        #endregion
     }
 }

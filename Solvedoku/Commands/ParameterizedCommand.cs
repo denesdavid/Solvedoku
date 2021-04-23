@@ -5,12 +5,12 @@ namespace Solvedoku.Commands
 {
     class ParameterizedCommand : ICommand
     {
-        private Action<object> execute;
-        private Predicate<object> canExecute;
+        Action<object> _execute;
+        Predicate<object> _canExecute;
         public ParameterizedCommand(Action<object> execute, Predicate<object> canExecute)
         {
-            this.execute = execute;
-            this.canExecute = canExecute;
+            _execute = execute;
+            _canExecute = canExecute;
         }
 
         public event EventHandler CanExecuteChanged
@@ -25,15 +25,8 @@ namespace Solvedoku.Commands
             }
         }
 
-        public bool CanExecute(object parameter)
-        {
-            bool isExecutable = canExecute == null ? true : canExecute(parameter);
-            return isExecutable;
-        }
+        public bool CanExecute(object parameter) => _canExecute == null ? true : _canExecute(parameter);
 
-        public void Execute(object parameter)
-        {
-            execute(parameter);
-        }
+        public void Execute(object parameter) => _execute(parameter);
     }
 }

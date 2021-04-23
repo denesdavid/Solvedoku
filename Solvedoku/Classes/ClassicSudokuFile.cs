@@ -8,8 +8,8 @@ namespace Solvedoku.Classes
     {
         #region Fields
 
-        private SudokuBoard _sudokuBoard;
-        private IEnumerable<SudokuBoard> _solutions = new List<SudokuBoard>();
+        SudokuBoard _sudokuBoard;
+        IEnumerable<SudokuBoard> _solutions = new List<SudokuBoard>();
 
         #endregion
 
