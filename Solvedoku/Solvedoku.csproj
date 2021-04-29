@@ -99,6 +99,7 @@
     <Compile Include="ViewModels\JigsawSudoku\IJigsawSudokuTableViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudoku9x9TableViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudokuViewModel.cs" />
+    <Compile Include="ViewModels\MainWindow\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\BusyIndicatorContent\UcBusyIndicatorContent.xaml.cs">
       <DependentUpon>UcBusyIndicatorContent.xaml</DependentUpon>
@@ -235,7 +236,9 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\Main.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\MainWindow\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -4,14 +4,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:wpfx="http://schemas.xceed.com/wpf/xaml/toolkit"
-                 xmlns:JigsawSudokuViewModels="clr-namespace:Solvedoku.ViewModels.JigsawSudoku"
-             xmlns:local="clr-namespace:Solvedoku.Views.JigsawSudoku"
+             xmlns:JigsawSudokuViewModels="clr-namespace:Solvedoku.ViewModels.JigsawSudoku"
+             xmlns:Converters="clr-namespace:Solvedoku.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
         <JigsawSudokuViewModels:JigsawSudokuViewModel/>
     </UserControl.DataContext>
-    <wpfx:BusyIndicator>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../BusyIndicatorContent/BusyIndicatorContentDataTemplate.xaml"/>
+                <ResourceDictionary Source="../BusyIndicatorContent/BusyIndicatorResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <wpfx:BusyIndicator IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BusyIndicatorStyle}" BusyContentTemplate="{StaticResource BusyContentTemplate}">
         <DockPanel>
             <StackPanel DockPanel.Dock="Right">
                 <Label Content="Színezd ki a feladatnak megfelelően:" Margin="4,4,4,0"/>
