@@ -1,9 +1,4 @@
-﻿using Microsoft.Win32;
-using Solvedoku.Classes;
-using Solvedoku.Commands;
-using Solvedoku.ViewModels.BusyIndicatorContent;
-using Solvedoku.Views.ClassicSudoku;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -13,6 +8,10 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Microsoft.Win32;
+using Solvedoku.Classes;
+using Solvedoku.Commands;
+using Solvedoku.Views.ClassicSudoku;
 
 namespace Solvedoku.ViewModels.ClassicSudoku
 {
@@ -44,6 +43,8 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         public ICommand LoadPreviousSolutionCommand { get; set; }
 
         public ICommand LoadNextSolutionCommand { get; set; }
+
+        public ICommand CancelBusyCommand { get; set; }
 
         public ICommand BusyIndicatorLoadedCommand { get; set; }
 
@@ -346,19 +347,26 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             DisplayMatrixBoard(_classicSolutions[_solutionIndex].OutputAsMatrix());
             SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _classicSolutions.Count }";
         }
-       
-        /// <summary>
-        /// Determines if the BusyInicatorLoaded command can be executed.
-        /// </summary>
-        /// <returns>Bool (currently always true)</returns>
-        bool CanBusyIndicatorLoad() => true;
 
         /// <summary>
-        /// Sets the ISudokuViewModel type field in the BusyIndicator viewmodel when its fully loaded .
+        /// Determines if cancelling the busy task is possible.
         /// </summary>
-        void BusyIndicatorLoaded()
+        /// <returns>Bool (currently always true)</returns>
+        bool CanCancelBusy() => true;
+
+        /// <summary>
+        /// Cancels the busy task.
+        /// </summary>
+        void CancelBusy()
         {
-            BusyIndicatorContentViewModel.Instance.SudokuViewModel = this;
+            var messageBoxResult = MessageBoxService.Show("Biztos, hogy meg szeretnéd szakítani a megoldást?", "Figyelmeztetés!",
+                    MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                SudokuSolverThread.Abort();
+                IsBusy = false;
+            }
         }
         #endregion
 
@@ -375,7 +383,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             LoadClassicSudokuCommand = new ParameterlessCommand(Load, CanLoad);
             LoadPreviousSolutionCommand = new ParameterlessCommand(LoadPreviousSolution, CanLoadPreviousSolution);
             LoadNextSolutionCommand = new ParameterlessCommand(LoadNextSolution, CanLoadNextSolution);
-            BusyIndicatorLoadedCommand = new ParameterlessCommand(BusyIndicatorLoaded, CanBusyIndicatorLoad);
+            CancelBusyCommand = new ParameterlessCommand(CancelBusy, CanCancelBusy);
         }
 
         /// <summary>
@@ -457,7 +465,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// <summary>
         /// Configures the viewmodel to display the classic solution(s) and a message about the possible solutions count.
         /// </summary>
-        private void DisplayClassicSolutionAndMessage()
+        void DisplayClassicSolutionAndMessage()
         {
             IsBusy = false;
             if (_sudokuSolverThread.ThreadState != ThreadState.Aborted)
@@ -494,7 +502,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// Loads the value from the given matrix into the selected table's viewmodel.
         /// </summary>
         /// <param name="board"></param>
-        private void DisplayMatrixBoard(string[,] board)
+        void DisplayMatrixBoard(string[,] board)
         {
             var boardControlViewModel = (IClassicSudokuTableViewModel)SudokuBoardControl.DataContext;
             for (int row = 0; row < board.GetLength(0); row++)

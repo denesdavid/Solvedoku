@@ -3,13 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Solvedoku.Views.BusyIndicatorContent"
-             xmlns:busyContentViewModels="clr-namespace:Solvedoku.ViewModels.BusyIndicatorContent"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.DataContext>
-        <busyContentViewModels:BusyIndicatorContentViewModel/>
-    </UserControl.DataContext>
     <UserControl.Resources>
         <LinearGradientBrush x:Key="BusyIProgressBarBackground" StartPoint="1,0" EndPoint="1,1.75">
             <GradientStop Color="ForestGreen" Offset="0.555"/>
@@ -17,7 +12,7 @@
         </LinearGradientBrush>
         <Style TargetType="{x:Type ProgressBar}" x:Key="ProgressBarStyle">
             <Setter Property="IsIndeterminate" Value="True"/>
-            <Setter Property="Height" Value="15"/>
+            <Setter Property="Height" Value="25"/>
             <Setter Property="Background" Value="LightGray"/>
             <Setter Property="Foreground" Value="{StaticResource BusyIProgressBarBackground}"/>
             <Setter Property="Margin" Value="8,8,8,8"/>
@@ -28,9 +23,9 @@
             <TextBlock Text="Megoldás folyamatban..." FontWeight="Bold" HorizontalAlignment="Center"/>
             <StackPanel Margin="4">
                 <Border Grid.Row="1" CornerRadius="40">
-                    <ProgressBar  Style="{StaticResource ProgressBarStyle}" Height="25"/>
+                    <ProgressBar  Style="{StaticResource ProgressBarStyle}"/>
                 </Border>
-                <Button Content="Mégse" Command="{Binding CancelCommand}" HorizontalAlignment="Right" Margin="0,0,2,0"/>
+                <Button Content="Mégse" Command="{Binding CancelBusyCommand}" HorizontalAlignment="Right" Margin="0,0,2,0"/>
             </StackPanel>
         </StackPanel>
     </Grid>

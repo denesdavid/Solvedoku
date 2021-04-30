@@ -6,6 +6,7 @@
              xmlns:wpfx="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:JigsawSudokuViewModels="clr-namespace:Solvedoku.ViewModels.JigsawSudoku"
              xmlns:Converters="clr-namespace:Solvedoku.Converters"
+              xmlns:BusyContent="clr-namespace:Solvedoku.Views.BusyIndicatorContent"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.DataContext>
@@ -14,22 +15,25 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../BusyIndicatorContent/BusyIndicatorContentDataTemplate.xaml"/>
                 <ResourceDictionary Source="../BusyIndicatorContent/BusyIndicatorResourceDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <wpfx:BusyIndicator IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource BusyIndicatorStyle}" BusyContentTemplate="{StaticResource BusyContentTemplate}">
+    <wpfx:BusyIndicator IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}">
+        <wpfx:BusyIndicator.BusyContent>
+            <BusyContent:UcBusyIndicatorContent/>
+        </wpfx:BusyIndicator.BusyContent>
         <DockPanel>
             <StackPanel DockPanel.Dock="Right">
                 <Label Content="Színezd ki a feladatnak megfelelően:" Margin="4,4,4,0"/>
-                <wpfx:ColorPicker Margin="8,8,8,8" StandardButtonHeader="Alap színek"
+                <wpfx:ColorPicker Margin="8,8,8,8" AvailableColorsHeader="Alap színek"
+                                  
                                               StandardColors="{Binding Path=PuzzleColors}"
                                               ShowTabHeaders="False" ShowAvailableColors="False"
                                               SelectedColor="LightBlue"
                                               StandardColorsHeader="Elérhető színek:"
-                                              AdvancedButtonHeader="Egyéb színek" Style="{DynamicResource PuzzleColorPickerStyle}"/>
+                                              AdvancedTabHeader="Egyéb színek" Style="{DynamicResource PuzzleColorPickerStyle}"/>
                 <Button Content="Rajzol" Command="{Binding DrawJigsawSudokuCommand}"/>
                 <Button Content="Megoldás" Command="{Binding SolveJigsawSudokuCommand}"/>
                 <Button Content="Mentés..." Command="{Binding SaveJigsawSudokuCommand}"/>

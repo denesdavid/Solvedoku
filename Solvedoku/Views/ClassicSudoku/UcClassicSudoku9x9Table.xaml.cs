@@ -1,5 +1,7 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using Solvedoku.Classes;
+using Solvedoku.Services.MessageBox;
 
 namespace Solvedoku.Views.ClassicSudoku
 {
@@ -16,6 +18,17 @@ namespace Solvedoku.Views.ClassicSudoku
         public UcClassicSudoku9x9Table()
         {
             InitializeComponent();
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (System.Text.RegularExpressions.Regex.IsMatch(((TextBox)sender).Text, "[^1-9]") || ((TextBox)sender).Text.Length > 1)
+            {
+                var messageBoxService = new MessageBoxService();
+                messageBoxService.Show("Csak egyjegyű számokat üthetsz be 1-től 9 -ig.", "Információ!",
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                ((TextBox)sender).Clear();
+            }
         }
     }
 }

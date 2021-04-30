@@ -243,8 +243,8 @@
         <Style x:Key="PuzzleColorPickerStyle" TargetType="{x:Type xctk:ColorPicker}">
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey ResourceId=ControlNormalBorderKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}"/>
-            <Setter Property="BorderThickness" Value="1,1,0,1"/>
-            <Setter Property="Margin" Value="4,4,4,4"/>
+            <!--<Setter Property="BorderThickness" Value="1,1,0,1"/>-->
+            <Setter Property="Margin" Value="8,8,8,8"/>
             <Setter Property="ButtonStyle">
                 <Setter.Value>
                     <Style TargetType="{x:Type ToggleButton}">
@@ -316,7 +316,7 @@
                                                                             <DrawingGroup>
                                                                                 <GeometryDrawing Brush="White">
                                                                                     <GeometryDrawing.Geometry>
-                                                                                        <RectangleGeometry Rect="0,0,100,100"/>
+                                                                                        <RectangleGeometry Rect="0,0,80,80"/>
                                                                                     </GeometryDrawing.Geometry>
                                                                                 </GeometryDrawing>
                                                                                 <GeometryDrawing Brush="LightGray">

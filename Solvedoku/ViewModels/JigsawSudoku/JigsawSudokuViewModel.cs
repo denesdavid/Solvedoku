@@ -118,6 +118,8 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                 OnPropertyChanged();
             }
         }
+
+        public ICommand CancelBusyCommand { get; set; }
         #endregion
 
         #region Constructor
