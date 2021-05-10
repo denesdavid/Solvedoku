@@ -1,7 +1,6 @@
 ﻿using Microsoft.Win32;
 using Solvedoku.Classes;
 using Solvedoku.Commands;
-using Solvedoku.ViewModels.BusyIndicatorContent;
 using Solvedoku.Views.JigsawSudoku;
 using System;
 using System.Collections.Generic;
@@ -20,7 +19,7 @@ using Xceed.Wpf.Toolkit;
 
 namespace Solvedoku.ViewModels.JigsawSudoku
 {
-    class JigsawSudokuViewModel : ViewModelBase, ISudokuViewModel
+    class JigsawSudokuViewModel : ViewModelBase
     {
         #region Fields
         bool _isBusy;
@@ -338,20 +337,6 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsMatrix());
             SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _solutions.Count }";
         }
-
-        /// <summary>
-        /// Determines if the BusyInicatorLoaded command can be executed.
-        /// </summary>
-        /// <returns>Bool (currently always true)</returns>
-        bool CanBusyIndicatorLoad() => true;
-
-        /// <summary>
-        /// Sets the ISudokuViewModel type field in the BusyIndicator viewmodel when its fully loaded .
-        /// </summary>
-        void BusyIndicatorLoaded()
-        {
-            BusyIndicatorContentViewModel.Instance.SudokuViewModel = this;
-        }
         #endregion
 
         #region Methods
@@ -367,7 +352,6 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             LoadJigsawSudokuCommand = new ParameterlessCommand(Load, CanLoad);
             LoadPreviousSolutionCommand = new ParameterlessCommand(LoadPreviousSolution, CanLoadPreviousSolution);
             LoadNextSolutionCommand = new ParameterlessCommand(LoadNextSolution, CanLoadNextSolution);
-            BusyIndicatorLoadedCommand = new ParameterlessCommand(BusyIndicatorLoaded, CanBusyIndicatorLoad);
         }
 
         /// <summary>

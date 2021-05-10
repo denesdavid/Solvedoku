@@ -15,7 +15,7 @@ using Solvedoku.Views.ClassicSudoku;
 
 namespace Solvedoku.ViewModels.ClassicSudoku
 {
-    class ClassicSudokuViewModel : ViewModelBase, ISudokuViewModel
+    class ClassicSudokuViewModel : ViewModelBase
     {
         #region Fields
         bool _isBusy;
@@ -27,7 +27,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         SudokuBoardSize _selectedSudokuBoardSize;
         SaveFileDialog _saveFileDialog = new SaveFileDialog();
         OpenFileDialog _openFileDialog = new OpenFileDialog();
-        List<SudokuBoard> _classicSolutions = new List<SudokuBoard>();
+        List<SudokuBoard> _solutions = new List<SudokuBoard>();
         #endregion
 
         #region Properties
@@ -148,6 +148,17 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// </summary>
         void Draw(object o)
         {
+            if (GetCurrentTableViewModel().AreAnyCellsFilled())
+            {
+                var messageBoxResult = MessageBoxService.Show(
+                   "Már találhatóak számok a jelenlegi Sudokuban.\r\nBiztos vagy benne, hogy újat szeretnél rajzolni?",
+                   "Kérdés", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (messageBoxResult == MessageBoxResult.No)
+                {
+                    return;
+                }
+            }
             SudokuBoardSize sudokuBoardSize = (SudokuBoardSize)o;
             if (sudokuBoardSize.Height == 9 && sudokuBoardSize.Width == 9)
             {
@@ -167,8 +178,9 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// <summary>
         /// Determines if solving the sudoku is possible.
         /// </summary>
-        /// <returns>Bool (currently always true)</returns>
-        bool CanSolve() => true;
+        /// <returns>True if the solutions count is 0 or at least one cell is not filled in the table.</returns>
+        bool CanSolve() => _solutions.Count == 0 
+            || !GetCurrentTableViewModel().AreAllCellsFilled();
 
         /// <summary>
         /// Solves the classic sudoku.
@@ -183,7 +195,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 
                 if (msgBoxResult != MessageBoxResult.Cancel)
                 {
-                    _classicSolutions.Clear();
+                    _solutions.Clear();
                     SolutionsCount = string.Empty;
                     var board = CreateClassicBoard(((IClassicSudokuControl)SudokuBoardControl).BoardSize);
 
@@ -192,7 +204,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 
                         _sudokuSolverThread = new Thread(() =>
                         {
-                            _classicSolutions = (List<SudokuBoard>)Sudoku_SolverThread(board, true);
+                            _solutions = (List<SudokuBoard>)Sudoku_SolverThread(board, true);
                             Action action = DisplayClassicSolutionAndMessage;
                             Application.Current.Dispatcher.Invoke(action);
                         });
@@ -202,7 +214,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     {
                         _sudokuSolverThread = new Thread(() =>
                         {
-                            _classicSolutions = (List<SudokuBoard>)Sudoku_SolverThread(board, false);
+                            _solutions = (List<SudokuBoard>)Sudoku_SolverThread(board, false);
                             Action action = DisplayClassicSolutionAndMessage;
                             Application.Current.Dispatcher.Invoke(action);
                         });
@@ -243,7 +255,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 try
                 {
                     var classicSudokuFile = new ClassicSudokuFile(CreateClassicBoard(SelectedSudokuBoardSize),
-                        _classicSolutions);
+                        _solutions);
 
                     using (Stream stream = File.Open(_saveFileDialog.FileName, FileMode.Create))
                     {
@@ -292,17 +304,17 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     DisplayMatrixBoard(_classicSudokuFile.Board.OutputAsMatrix());
                     SolutionsCount = string.Empty;
 
-                    _classicSolutions = (List<SudokuBoard>)_classicSudokuFile.Solutions;
-                    if (_classicSolutions.Count > 1)
+                    _solutions = (List<SudokuBoard>)_classicSudokuFile.Solutions;
+                    if (_solutions.Count > 1)
                     {
-                        MessageBoxService.Show($"A betöltött klasszikus feladványnak több megoldása is van (összesen {_classicSolutions.Count}). " +
+                        MessageBoxService.Show($"A betöltött klasszikus feladványnak több megoldása is van (összesen {_solutions.Count}). " +
                             $"A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
                             MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        SolutionsCount = "Megoldások: 1/" + _classicSolutions.Count;
+                        SolutionsCount = "Megoldások: 1/" + _solutions.Count;
                         IsSolutionsCountVisible = true;
                     }
-                    else if (_classicSolutions.Count == 1)
+                    else if (_solutions.Count == 1)
                     {
                         MessageBoxService.Show("A betöltött klasszikus feladványnak egy megoldása van.", "Információ!", MessageBoxButton.OK, MessageBoxImage.Information);
                         SolutionsCount = string.Empty;
@@ -320,7 +332,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// Determines if loading the previous solution is possible.
         /// </summary>
         /// <returns>Bool (currently always true)</returns>
-        bool CanLoadPreviousSolution() => _classicSolutions.Count > 1 && _solutionIndex > 0;
+        bool CanLoadPreviousSolution() => _solutions.Count > 1 && _solutionIndex > 0;
 
         /// <summary>
         /// Loads the next possible solution.
@@ -328,15 +340,15 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         void LoadPreviousSolution()
         {
             _solutionIndex -= 1;
-            DisplayMatrixBoard(_classicSolutions[_solutionIndex].OutputAsMatrix());
-            SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _classicSolutions.Count }";
+            DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsMatrix());
+            SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _solutions.Count }";
         }
 
         /// <summary>
         /// Determines if loading the next solution is possible.
         /// </summary>
         /// <returns>Bool (currently always true)</returns>
-        bool CanLoadNextSolution() => _classicSolutions.Count > 1 && _solutionIndex < _classicSolutions.Count - 1;
+        bool CanLoadNextSolution() => _solutions.Count > 1 && _solutionIndex < _solutions.Count - 1;
 
         /// <summary>
         /// Loads the next possible solution.
@@ -344,8 +356,8 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         void LoadNextSolution()
         {
             _solutionIndex += 1;
-            DisplayMatrixBoard(_classicSolutions[_solutionIndex].OutputAsMatrix());
-            SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _classicSolutions.Count }";
+            DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsMatrix());
+            SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _solutions.Count }";
         }
 
         /// <summary>
@@ -375,7 +387,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// <summary>
         /// Initializes the command properties in the viewmodel.
         /// </summary>
-        private void LoadCommands()
+        void LoadCommands()
         {
             DrawClassicSudokuCommand = new ParameterizedCommand(Draw, CanDraw);
             SolveClassicSudokuCommand = new ParameterlessCommand(Solve, CanSolve);
@@ -385,6 +397,13 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             LoadNextSolutionCommand = new ParameterlessCommand(LoadNextSolution, CanLoadNextSolution);
             CancelBusyCommand = new ParameterlessCommand(CancelBusy, CanCancelBusy);
         }
+
+        /// <summary>
+        /// Return the viewmodel of the current sudoku board control.
+        /// </summary>
+        /// <returns>IClassicSudokuTableViewModel</returns>
+        IClassicSudokuTableViewModel GetCurrentTableViewModel() =>
+            (IClassicSudokuTableViewModel)(SudokuBoardControl.DataContext);
 
         /// <summary>
         /// Creates a classic Sudoku board, according to the given board size.
@@ -470,14 +489,14 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             IsBusy = false;
             if (_sudokuSolverThread.ThreadState != ThreadState.Aborted)
             {
-                if (_classicSolutions.Count > 0 && _classicSolutions[0] != null)
+                if (_solutions.Count > 0 && _solutions[0] != null)
                 {
-                    if (_classicSolutions.Count > 1)
+                    if (_solutions.Count > 1)
                     {
-                        MessageBoxService.Show("A klasszikus feladványnak több megoldása is van (összesen " + _classicSolutions.Count + "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
+                        MessageBoxService.Show("A klasszikus feladványnak több megoldása is van (összesen " + _solutions.Count + "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
                              MessageBoxButton.OK, MessageBoxImage.Information);
                         _solutionIndex = 0;
-                        SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _classicSolutions.Count }";
+                        SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _solutions.Count }";
                         IsSolutionsCountVisible = true;
                     }
                     else
@@ -486,7 +505,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                             MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
-                    string[,] solution = _classicSolutions[0].OutputAsMatrix();
+                    string[,] solution = _solutions[0].OutputAsMatrix();
                     DisplayMatrixBoard(solution);
 
                 }

@@ -24,7 +24,7 @@ namespace Solvedoku.Views.ClassicSudoku
             if (System.Text.RegularExpressions.Regex.IsMatch(((TextBox)sender).Text, "[^1-4]") || ((TextBox)sender).Text.Length > 1)
             {
                 var messageBoxService = new MessageBoxService();
-                messageBoxService.Show("Csak egyjegyű számokat üthetsz be 1-től 4 -ig.", "Információ!",
+                messageBoxService.Show("Csak egyjegyű számokat üthetsz be 1-től 4-ig.", "Információ!",
                     MessageBoxButton.OK, MessageBoxImage.Information);
                 ((TextBox)sender).Clear();
             }

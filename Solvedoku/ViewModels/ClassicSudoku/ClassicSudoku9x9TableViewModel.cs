@@ -53,5 +53,37 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             }
         }
         #endregion
+
+        #region Functions
+        public bool AreAllCellsFilled()
+        {
+            foreach (var row in Cells)
+            {
+                foreach (var column in row)
+                {
+                    if (column == string.Empty)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        public bool AreAnyCellsFilled()
+        {
+            foreach (var row in Cells)
+            {
+                foreach (var column in row)
+                {
+                    if (column != string.Empty)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        #endregion
     }
 }

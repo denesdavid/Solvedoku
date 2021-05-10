@@ -99,15 +99,14 @@
     <Compile Include="Commands\ParameterlessCommand.cs" />
     <Compile Include="Converters\BoolToFontWeightConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="CustomControls\TabControlWithRightContentArea\TabControlWithRightContentArea.cs" />
     <Compile Include="Services\MessageBox\IMessageBoxService.cs" />
     <Compile Include="Services\MessageBox\MessageBoxService.cs" />
-    <Compile Include="ViewModels\BusyIndicatorContent\BusyIndicatorContentViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku6x6TableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku4x4TableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku9x9TableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudokuViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\IClassicSudokuTableViewModel.cs" />
-    <Compile Include="ViewModels\ISudokuViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\IJigsawSudokuTableViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudoku9x9TableViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudokuViewModel.cs" />
@@ -136,6 +135,9 @@
     <Compile Include="Views\JigsawSudoku\UcJigsawSudoku9x9Table.xaml.cs">
       <DependentUpon>UcJigsawSudoku9x9Table.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\TabControlWithRightContentArea\UcTabControlWithRightContentArea.xaml.cs">
+      <DependentUpon>UcTabControlWithRightContentArea.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -155,6 +157,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\BusyIndicatorContent\BusyIndicatorResourceDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -184,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\JigsawSudoku\UcJigsawSudoku9x9Table.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TabControlWithRightContentArea\UcTabControlWithRightContentArea.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -223,10 +233,6 @@
     <Resource Include="Main.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Icons\LeftArrow.png" />
-    <Resource Include="Resources\Icons\RightArrow.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
@@ -239,12 +245,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Icons\main.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\Main.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Folder Include="Views\AboutDialog\" />
     <Folder Include="Views\MainWindow\" />
   </ItemGroup>
   <ItemGroup>
@@ -264,6 +265,17 @@
     <EmbeddedResource Include="Resources\DLL\Xceed.Wpf.AvalonDock.Themes.Metro.dll" />
     <EmbeddedResource Include="Resources\DLL\Xceed.Wpf.AvalonDock.Themes.VS2010.dll" />
     <EmbeddedResource Include="Resources\DLL\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\About.png" />
+    <Resource Include="Resources\Icons\GearWheel.png" />
+    <Resource Include="Resources\Icons\LeftArrow.png" />
+    <Resource Include="Resources\Icons\main.ico" />
+    <Resource Include="Resources\Icons\Main.png" />
+    <Resource Include="Resources\Icons\RightArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\about44.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

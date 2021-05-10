@@ -6,9 +6,9 @@
              xmlns:wpfx="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:JigsawSudokuViewModels="clr-namespace:Solvedoku.ViewModels.JigsawSudoku"
              xmlns:Converters="clr-namespace:Solvedoku.Converters"
-              xmlns:BusyContent="clr-namespace:Solvedoku.Views.BusyIndicatorContent"
+             xmlns:BusyContent="clr-namespace:Solvedoku.Views.BusyIndicatorContent"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="500" d:DesignWidth="800">
     <UserControl.DataContext>
         <JigsawSudokuViewModels:JigsawSudokuViewModel/>
     </UserControl.DataContext>
@@ -27,8 +27,7 @@
         <DockPanel>
             <StackPanel DockPanel.Dock="Right">
                 <Label Content="Színezd ki a feladatnak megfelelően:" Margin="4,4,4,0"/>
-                <wpfx:ColorPicker Margin="8,8,8,8" AvailableColorsHeader="Alap színek"
-                                  
+                <wpfx:ColorPicker Margin="8" AvailableColorsHeader="Alap színek"
                                               StandardColors="{Binding Path=PuzzleColors}"
                                               ShowTabHeaders="False" ShowAvailableColors="False"
                                               SelectedColor="LightBlue"
@@ -38,7 +37,9 @@
                 <Button Content="Megoldás" Command="{Binding SolveJigsawSudokuCommand}"/>
                 <Button Content="Mentés..." Command="{Binding SaveJigsawSudokuCommand}"/>
                 <Button Content="Betöltés..." Command="{Binding LoadJigsawSudokuCommand}"/>
-                <Label Content="Megoldások: 1/200" HorizontalAlignment="Center" FontSize="24" Foreground="AntiqueWhite" Margin="8,8,8,8" Visibility="Hidden"/>
+                <Label Content ="{Binding SolutionsCount}"  HorizontalAlignment="Center"
+                       FontSize="18" Foreground="AntiqueWhite" Margin="8"
+                       Visibility="{Binding IsSolutionsCountVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityConverter}}"/>
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Width="50" Command="{Binding LoadPreviousSolutionCommand}">
