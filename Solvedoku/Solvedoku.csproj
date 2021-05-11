@@ -112,6 +112,9 @@
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudokuViewModel.cs" />
     <Compile Include="ViewModels\MainWindow\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\AboutBox\AboutBox.xaml.cs">
+      <DependentUpon>AboutBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BusyIndicatorContent\UcBusyIndicatorContent.xaml.cs">
       <DependentUpon>UcBusyIndicatorContent.xaml</DependentUpon>
     </Compile>
@@ -160,6 +163,10 @@
     <Page Include="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AboutBox\AboutBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BusyIndicatorContent\BusyIndicatorResourceDictionary.xaml">
       <SubType>Designer</SubType>
@@ -245,7 +252,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\AboutDialog\" />
     <Folder Include="Views\MainWindow\" />
   </ItemGroup>
   <ItemGroup>

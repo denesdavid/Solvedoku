@@ -13,7 +13,7 @@
     <UserControl.Resources>
         <Converters:BoolToFontWeightConverter x:Key="BoolToFontWeightConverter"/>
     </UserControl.Resources>
-    <Grid x:Name="ClassicGrid" Margin="8,8,8,8" Width="400" Height="400">
+    <Grid x:Name="ClassicGrid" Width="400" Height="400">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>

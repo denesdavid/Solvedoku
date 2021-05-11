@@ -45,7 +45,9 @@ namespace Solvedoku
         {
             InitializeComponent();
             //PopulatePuzzleColorList();
-            DataContext = this;
+            //DataContext = this;
+            MinHeight = Height;
+            MinWidth = Width;
         }
 
         #endregion

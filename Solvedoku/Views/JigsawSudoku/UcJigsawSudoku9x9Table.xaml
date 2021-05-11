@@ -9,7 +9,7 @@
     <UserControl.DataContext>
         <JigsawSudokuViewModels:JigsawSudoku9x9TableViewModel/>
     </UserControl.DataContext>
-    <Grid Margin="8,8,8,8" Width="400" Height="400">
+    <Grid Width="400" Height="400">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition/>
