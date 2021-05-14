@@ -139,7 +139,7 @@
     <value>Classic</value>
   </data>
   <data name="Main_Draw" xml:space="preserve">
-    <value>Rajzol</value>
+    <value>Draw</value>
   </data>
   <data name="Main_Load" xml:space="preserve">
     <value>Load</value>

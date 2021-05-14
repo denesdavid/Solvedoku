@@ -1,10 +1,12 @@
 ﻿using Solvedoku.Commands;
 using Solvedoku.Views.AboutBox;
+using Solvedoku.Views.OptionsWindow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Solvedoku.ViewModels.MainWindow
@@ -38,15 +40,16 @@ namespace Solvedoku.ViewModels.MainWindow
 
         void ShowOptions()
         {
-
+            OptionsWindow optionsWindow = new OptionsWindow();
+            optionsWindow.ShowDialog();
         }
 
         bool CanShowAbout() => true;
 
         void ShowAbout()
         {
-            AboutBox aboutBox = new AboutBox();
-            aboutBox.ShowDialog();
+           AboutBox aboutBox = new AboutBox();
+           aboutBox.ShowDialog();
         }
 
         #endregion

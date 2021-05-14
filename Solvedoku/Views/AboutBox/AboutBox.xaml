@@ -4,19 +4,35 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Solvedoku.Views.AboutBox"
+        xmlns:AboutBoxViewModel="clr-namespace:Solvedoku.ViewModels.AboutBoxWindow"
         mc:Ignorable="d"
-        Background="Gray"
-        ResizeMode="CanResize"
+        ResizeMode="NoResize"
         WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
         WindowStartupLocation="CenterOwner"
-        Title="AboutBox" Height="450" Width="800">
-    <WindowChrome.WindowChrome>
-        <WindowChrome ResizeBorderThickness="0" CaptionHeight="0"/>
-    </WindowChrome.WindowChrome>
-    <Window.Effect>
-        <DropShadowEffect Color="Black" BlurRadius="20" Direction="-90" RenderingBias="Quality"  ShadowDepth="40"/>
-    </Window.Effect>
-    <Grid>
-        <Button Content="OK" IsCancel="True"/>
+        MouseDown="Window_MouseDown"
+        Margin="16" Height="450" Width="800">
+    <Window.DataContext>
+        <AboutBoxViewModel:AboutBoxViewModel/>
+    </Window.DataContext>
+    <Grid Background="LightGray">
+        <Grid.Effect>
+            <DropShadowEffect BlurRadius="200" Direction="-60" ShadowDepth="90" Opacity="0.4"/>
+        </Grid.Effect>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="{Binding Title}" FontSize="25" Margin="8"/>
+        <Label Grid.Row="1" Content="{Binding Version}" FontSize="25" Margin="8"/>
+        <Label Grid.Row="2" Content="Fejlesztette: Dénes Dávid (Darius Davedane)" FontSize="25" Margin="8"/>
+        <Label/>
+        <TextBlock Grid.Row="4" TextAlignment="Justify" Margin="16" FontSize="18" TextWrapping="Wrap" Text="{Binding Description}"/>
+        <Button Grid.Row="5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="OK" IsCancel="True"/>
     </Grid>
 </Window>

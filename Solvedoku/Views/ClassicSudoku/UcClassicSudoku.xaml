@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:wpfx="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:Converters="clr-namespace:Solvedoku.Converters"
+             xmlns:Properties = "clr-namespace:Solvedoku.Properties"
              xmlns:BusyContent="clr-namespace:Solvedoku.Views.BusyIndicatorContent"
              xmlns:ClassicSudokuViewModels="clr-namespace:Solvedoku.ViewModels.ClassicSudoku"
              mc:Ignorable="d"
@@ -34,7 +35,7 @@
                           ItemsSource="{Binding SudokuBoardSizes, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedSudokuBoardSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           Margin="8" SelectedIndex="0" DockPanel.Dock="Right"/>
-                    <Button Content="Rajzol" Command="{Binding DrawClassicSudokuCommand}"
+                <Button Content="{x:Static Properties:Resources.Main_Draw}" Command="{Binding DrawClassicSudokuCommand}"
                         CommandParameter="{Binding SelectedSudokuBoardSize}"/>
                     <Button Content="Megoldás" Command="{Binding SolveClassicSudokuCommand}"/>
                     <Button Content="Mentés..." Command="{Binding SaveClassicSudokuCommand}"/>
@@ -46,26 +47,14 @@
                 </StackPanel>
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Width="50"
+                        Style="{StaticResource IconButtonStyle}"
                         Command="{Binding LoadPreviousSolutionCommand}">
-                    <Image Width="45" Height="45" Source="../../Resources/Icons/LeftArrow.png"/>
+                    <Image Source="../../Resources/Icons/LeftArrow.png"/>
                 </Button>
-                <Button Width="50"
+                <Button Style="{StaticResource IconButtonStyle}"
+                        Width="50" Height="50"
                         Command="{Binding LoadNextSolutionCommand}">
-                    <Image Source="../../Resources/Icons/RightArrow.png">
-                        <Image.Style>
-                            <Style TargetType="{x:Type Image}">
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Effect">
-                                            <Setter.Value>
-                                                <DropShadowEffect ShadowDepth="0" Color="SkyBlue" Opacity="1" BlurRadius="15"/>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Image.Style>
-                    </Image>
+                    <Image Source="../../Resources/Icons/RightArrow.png"/>
                 </Button>
             </StackPanel>
             <ContentControl Content="{Binding SudokuBoardControl, UpdateSourceTrigger=PropertyChanged}"/>

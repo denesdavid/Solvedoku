@@ -19,10 +19,10 @@ namespace Solvedoku.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Solvedoku.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Solvedoku.Properties.Resources", typeof(Resources).Assembly);
@@ -51,12 +51,228 @@ namespace Solvedoku.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string AboutBox_Description {
+            get {
+                return ResourceManager.GetString("AboutBox_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string Button_No {
+            get {
+                return ResourceManager.GetString("Button_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Button_Yes {
+            get {
+                return ResourceManager.GetString("Button_Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load classic Sudoku....
+        /// </summary>
+        public static string LoadDialog_Title_ClassicSudoku {
+            get {
+                return ResourceManager.GetString("LoadDialog_Title_ClassicSudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Choose table size:.
+        /// </summary>
+        public static string Main_ChooseClassicSize {
+            get {
+                return ResourceManager.GetString("Main_ChooseClassicSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Classic.
+        /// </summary>
+        public static string Main_ClassicPage {
+            get {
+                return ResourceManager.GetString("Main_ClassicPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rajzol.
+        /// </summary>
+        public static string Main_Draw {
+            get {
+                return ResourceManager.GetString("Main_Draw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load.
+        /// </summary>
+        public static string Main_Load {
+            get {
+                return ResourceManager.GetString("Main_Load", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color the table:.
+        /// </summary>
+        public static string Main_PuzzleColor {
+            get {
+                return ResourceManager.GetString("Main_PuzzleColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Jigsaw.
+        /// </summary>
+        public static string Main_PuzzlePage {
+            get {
+                return ResourceManager.GetString("Main_PuzzlePage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Main_Save {
+            get {
+                return ResourceManager.GetString("Main_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solutions:.
+        /// </summary>
+        public static string Main_SolutionsCounter {
+            get {
+                return ResourceManager.GetString("Main_SolutionsCounter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solve.
+        /// </summary>
+        public static string Main_Solve {
+            get {
+                return ResourceManager.GetString("Main_Solve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are numbers in the current Sudoku\r\n. Are you sure you want to draw a new one?.
+        /// </summary>
+        public static string MessageBox_DrawIfNumbersArePresented {
+            get {
+                return ResourceManager.GetString("MessageBox_DrawIfNumbersArePresented", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string MessageBox_Error_Title {
+            get {
+                return ResourceManager.GetString("MessageBox_Error_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question.
+        /// </summary>
+        public static string MessageBox_Question_Title {
+            get {
+                return ResourceManager.GetString("MessageBox_Question_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occured during saving the Sudoku..
+        /// </summary>
+        public static string MessageBox_Save_Error {
+            get {
+                return ResourceManager.GetString("MessageBox_Save_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select whether you want to get all the solutions (it can be time consuming, or even the solver will be stopped, if there are too many), or just one possible one..
+        /// </summary>
+        public static string MessageBox_SolveSudoku {
+            get {
+                return ResourceManager.GetString("MessageBox_SolveSudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while solving the Sudoku. Please check that you have entered the numbers correctly..
+        /// </summary>
+        public static string MessageBox_SolveSudokuError {
+            get {
+                return ResourceManager.GetString("MessageBox_SolveSudokuError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Options.
+        /// </summary>
+        public static string Options {
+            get {
+                return ResourceManager.GetString("Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set language:.
+        /// </summary>
+        public static string Options_SetLanguage {
+            get {
+                return ResourceManager.GetString("Options_SetLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save classic Sudoku....
+        /// </summary>
+        public static string SaveDialog_Title_ClassicSudoku {
+            get {
+                return ResourceManager.GetString("SaveDialog_Title_ClassicSudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Classic SUDOKU files (*.csu)|*.csu.
+        /// </summary>
+        public static string SaveLoadDialog_Filter_ClassicSudoku {
+            get {
+                return ResourceManager.GetString("SaveLoadDialog_Filter_ClassicSudoku", resourceCulture);
             }
         }
     }

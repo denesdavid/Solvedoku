@@ -1,0 +1,28 @@
+﻿<Window x:Class="Solvedoku.Views.OptionsWindow.OptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Solvedoku.Views.OptionsWindow"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterOwner"
+        Background="Gray"
+        SizeToContent="WidthAndHeight"
+        Title="Options">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" FontSize="25" Content="Nyelv beállítása:"/>
+        <ComboBox Grid.Row="1" Grid.Column="0" Margin="8" FontSize="25"/>
+        <StackPanel Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Content="Ok" FontSize="25"/>
+            <Button Content="Cancel" FontSize="25" IsCancel="True"/>
+        </StackPanel>
+    </Grid>
+</Window>

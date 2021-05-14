@@ -100,8 +100,19 @@
     <Compile Include="Converters\BoolToFontWeightConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="CustomControls\TabControlWithRightContentArea\TabControlWithRightContentArea.cs" />
+    <Compile Include="Properties\Resources.en.Designer.cs">
+      <DependentUpon>Resources.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Services\MessageBox\IMessageBoxService.cs" />
     <Compile Include="Services\MessageBox\MessageBoxService.cs" />
+    <Compile Include="ViewModels\AboutBoxWindow\AboutBoxViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku6x6TableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku4x4TableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku9x9TableViewModel.cs" />
@@ -137,6 +148,9 @@
     </Compile>
     <Compile Include="Views\JigsawSudoku\UcJigsawSudoku9x9Table.xaml.cs">
       <DependentUpon>UcJigsawSudoku9x9Table.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OptionsWindow\OptionsWindow.xaml.cs">
+      <DependentUpon>OptionsWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\TabControlWithRightContentArea\UcTabControlWithRightContentArea.xaml.cs">
       <DependentUpon>UcTabControlWithRightContentArea.xaml</DependentUpon>
@@ -200,6 +214,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\OptionsWindow\OptionsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\TabControlWithRightContentArea\UcTabControlWithRightContentArea.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -209,19 +227,27 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Compile Include="Properties\Resources.hu.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
+      <DependentUpon>Resources.hu.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.hu.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.hu.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

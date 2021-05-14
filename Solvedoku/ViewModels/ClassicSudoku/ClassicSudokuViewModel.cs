@@ -226,7 +226,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             catch (Exception ex)
             {
                 MessageBoxService.Show(
-                    $"A klasszikus feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot. {ex.Message}",
+                    $"A feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot. {ex.Message}",
                     "Hiba!", MessageBoxButton.OK, MessageBoxImage.Question);
             }
         }
@@ -307,7 +307,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     _solutions = (List<SudokuBoard>)_classicSudokuFile.Solutions;
                     if (_solutions.Count > 1)
                     {
-                        MessageBoxService.Show($"A betöltött klasszikus feladványnak több megoldása is van (összesen {_solutions.Count}). " +
+                        MessageBoxService.Show($"A betöltött klasszikus feladványnak már több megoldása is van (összesen {_solutions.Count}). " +
                             $"A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
                             MessageBoxButton.OK, MessageBoxImage.Information);
 
