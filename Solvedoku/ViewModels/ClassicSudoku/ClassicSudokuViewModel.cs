@@ -11,6 +11,7 @@ using System.Windows.Input;
 using Microsoft.Win32;
 using Solvedoku.Classes;
 using Solvedoku.Commands;
+using Solvedoku.Properties;
 using Solvedoku.Views.ClassicSudoku;
 
 namespace Solvedoku.ViewModels.ClassicSudoku
@@ -151,8 +152,8 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             if (GetCurrentTableViewModel().AreAnyCellsFilled())
             {
                 var messageBoxResult = MessageBoxService.Show(
-                   "Már találhatóak számok a jelenlegi Sudokuban.\r\nBiztos vagy benne, hogy újat szeretnél rajzolni?",
-                   "Kérdés", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                   Resources.MessageBox_DrawIfNumbersArePresented,
+                   Resources.MessageBox_Question_Title, MessageBoxButton.YesNo, MessageBoxImage.Question);
 
                 if (messageBoxResult == MessageBoxResult.No)
                 {
@@ -190,8 +191,8 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             try
             {
                 MessageBoxResult msgBoxResult = MessageBoxService.Show(
-                    "Kérlek válaszd ki, hogy az összes megoldást (feltéve ha van egynél több, illetve ez időigényes is lehet), vagy csak egy lehetségeset szeretnél megkapni.",
-                    "Kérdés", MessageBoxButton.YesNo, MessageBoxImage.Question ,(Style)Application.Current.Resources["MessageBoxStyleForClassicSolve"]);
+                    Resources.MessageBox_SolveSudoku,
+                    Resources.MessageBox_Question_Title, MessageBoxButton.YesNo, MessageBoxImage.Question ,(Style)Application.Current.Resources["MessageBoxStyleForClassicSolve"]);
 
                 if (msgBoxResult != MessageBoxResult.Cancel)
                 {
@@ -226,8 +227,8 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             catch (Exception ex)
             {
                 MessageBoxService.Show(
-                    $"A feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot. {ex.Message}",
-                    "Hiba!", MessageBoxButton.OK, MessageBoxImage.Question);
+                    $"{Resources.MessageBox_SolveSudokuError} {ex.Message}",
+                    Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Question);
             }
         }
 
@@ -242,10 +243,10 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// </summary>
         void Save()
         {
-            _saveFileDialog.Title = "Klasszikus SUDOKU mentése..";
+            _saveFileDialog.Title = Resources.SaveDialog_Title_ClassicSudoku;
             _saveFileDialog.RestoreDirectory = true;
             _saveFileDialog.DefaultExt = "csu";
-            _saveFileDialog.Filter = "Klasszikus SUDOKU fájlok (*.csu)|*.csu";
+            _saveFileDialog.Filter = Resources.SaveLoadDialog_Filter_ClassicSudoku;
             _saveFileDialog.FilterIndex = 1;
             _saveFileDialog.CheckPathExists = true;
             _saveFileDialog.OverwritePrompt = true;
@@ -265,7 +266,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 }
                 catch (Exception ex)
                 {
-                    MessageBoxService.Show($"A Sudoku mentése során hiba lépett fel. {ex.Message}", "Hiba!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBoxService.Show($"{Resources.MessageBox_Save_Error} {ex.Message}", Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -281,10 +282,10 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// </summary>
         void Load()
         {
-            _openFileDialog.Title = "Klasszikus SUDOKU betöltése..";
+            _openFileDialog.Title = Resources.LoadDialog_Title_ClassicSudoku;
             _openFileDialog.RestoreDirectory = true;
             _openFileDialog.DefaultExt = "csu";
-            _openFileDialog.Filter = "Klasszikus SUDOKU fájlok (*.csu)|*.csu";
+            _openFileDialog.Filter = Resources.SaveLoadDialog_Filter_ClassicSudoku;
             _openFileDialog.FilterIndex = 1;
             _openFileDialog.CheckPathExists = true;
             _openFileDialog.CheckFileExists = true;
@@ -307,7 +308,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     _solutions = (List<SudokuBoard>)_classicSudokuFile.Solutions;
                     if (_solutions.Count > 1)
                     {
-                        MessageBoxService.Show($"A betöltött klasszikus feladványnak már több megoldása is van (összesen {_solutions.Count}). " +
+                        MessageBoxService.Show($"A betöltött feladványnak már több megoldása is van (összesen {_solutions.Count}). " +
                             $"A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
                             MessageBoxButton.OK, MessageBoxImage.Information);
 
@@ -316,7 +317,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     }
                     else if (_solutions.Count == 1)
                     {
-                        MessageBoxService.Show("A betöltött klasszikus feladványnak egy megoldása van.", "Információ!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBoxService.Show("A betöltött feladványnak egy megoldása van.", "Információ!", MessageBoxButton.OK, MessageBoxImage.Information);
                         SolutionsCount = string.Empty;
                     }
                 }

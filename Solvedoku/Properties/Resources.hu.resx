@@ -121,13 +121,13 @@
     <value />
   </data>
   <data name="Button_No" xml:space="preserve">
-    <value>No</value>
+    <value>Nem</value>
   </data>
   <data name="Button_Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Igen</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Mégse</value>
   </data>
   <data name="LoadDialog_Title_ClassicSudoku" xml:space="preserve">
     <value>Load classic Sudoku...</value>
@@ -136,37 +136,37 @@
     <value>Choose table size:</value>
   </data>
   <data name="Main_ClassicPage" xml:space="preserve">
-    <value>Classic</value>
+    <value>Klasszikus</value>
   </data>
   <data name="Main_Draw" xml:space="preserve">
-    <value>Draw</value>
+    <value>Rajzol</value>
   </data>
   <data name="Main_Load" xml:space="preserve">
-    <value>Load</value>
+    <value>Betöltés</value>
   </data>
   <data name="Main_PuzzleColor" xml:space="preserve">
-    <value>Color the table:</value>
+    <value>Sznezd ki a feladatnak megfelelően:</value>
   </data>
   <data name="Main_PuzzlePage" xml:space="preserve">
-    <value>Jigsaw</value>
+    <value>Puzzle</value>
   </data>
   <data name="Main_Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Mentés</value>
   </data>
   <data name="Main_SolutionsCounter" xml:space="preserve">
-    <value>Solutions:</value>
+    <value>Megoldások:</value>
   </data>
   <data name="Main_Solve" xml:space="preserve">
-    <value>Solve</value>
+    <value>Megoldás</value>
   </data>
   <data name="MessageBox_DrawIfNumbersArePresented" xml:space="preserve">
     <value>There are numbers in the current Sudoku\r\n. Are you sure you want to draw a new one?</value>
   </data>
   <data name="MessageBox_Error_Title" xml:space="preserve">
-    <value>Error</value>
+    <value>Hiba</value>
   </data>
   <data name="MessageBox_Question_Title" xml:space="preserve">
-    <value>Question</value>
+    <value>Kérdés</value>
   </data>
   <data name="MessageBox_Save_Error" xml:space="preserve">
     <value>An error occured during saving the Sudoku.</value>
@@ -178,15 +178,15 @@
     <value>An error occurred while solving the Sudoku. Please check that you have entered the numbers correctly.</value>
   </data>
   <data name="Options" xml:space="preserve">
-    <value>Options</value>
+    <value>Beállítások</value>
   </data>
   <data name="Options_SetLanguage" xml:space="preserve">
-    <value>Set language:</value>
+    <value>Nyelv beállítása:</value>
   </data>
   <data name="SaveDialog_Title_ClassicSudoku" xml:space="preserve">
-    <value>Save classic Sudoku...</value>
+    <value>Klasszikus Sudoku mentése...</value>
   </data>
   <data name="SaveLoadDialog_Filter_ClassicSudoku" xml:space="preserve">
-    <value>Classic SUDOKU files (*.csu)|*.csu</value>
+    <value>Klasszikus SUDOKU fájlok (*.csu)|*.csu</value>
   </data>
 </root>

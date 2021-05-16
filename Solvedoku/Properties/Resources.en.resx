@@ -165,6 +165,9 @@
   <data name="MessageBox_Error_Title" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="MessageBox_LoadedSudokuWithMultipleSolutions" xml:space="preserve">
+    <value>The loaded Sudoku has more solutions already (in summary</value>
+  </data>
   <data name="MessageBox_Question_Title" xml:space="preserve">
     <value>Question</value>
   </data>
