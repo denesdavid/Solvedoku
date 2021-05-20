@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:wpfx="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:Converters="clr-namespace:Solvedoku.Converters"
-             xmlns:Properties = "clr-namespace:Solvedoku.Properties"
+             xmlns:Classes="clr-namespace:Solvedoku.Classes"
              xmlns:BusyContent="clr-namespace:Solvedoku.Views.BusyIndicatorContent"
              xmlns:ClassicSudokuViewModels="clr-namespace:Solvedoku.ViewModels.ClassicSudoku"
              mc:Ignorable="d"
@@ -30,16 +30,16 @@
         </wpfx:BusyIndicator.BusyContent>
         <DockPanel>
             <StackPanel DockPanel.Dock="Right">
-                    <Label Content="Válassz méretet:" Margin="4,4,4,0"/>
+                <Label Content="{Classes:Loc Main_ChooseClassicSize}" Margin="4,4,4,0"/>
                     <ComboBox x:Name="CboxClassicSizes" 
                           ItemsSource="{Binding SudokuBoardSizes, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedSudokuBoardSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           Margin="8" SelectedIndex="0" DockPanel.Dock="Right"/>
-                <Button Content="{x:Static Properties:Resources.Main_Draw}" Command="{Binding DrawClassicSudokuCommand}"
+                <Button Content="{Classes:Loc Main_Draw}" Width="200" Command="{Binding DrawClassicSudokuCommand}"
                         CommandParameter="{Binding SelectedSudokuBoardSize}"/>
-                    <Button Content="Megoldás" Command="{Binding SolveClassicSudokuCommand}"/>
-                    <Button Content="Mentés..." Command="{Binding SaveClassicSudokuCommand}"/>
-                    <Button Content="Betöltés..." Command="{Binding LoadClassicSudokuCommand}"/>
+                <Button Content="{Classes:Loc Main_Solve}" Command="{Binding SolveClassicSudokuCommand}"/>
+                <Button Content="{Classes:Loc Main_Save}" Command="{Binding SaveClassicSudokuCommand}"/>
+                <Button Content="{Classes:Loc Main_Load}" Command="{Binding LoadClassicSudokuCommand}"/>
 
                     <Label Content ="{Binding SolutionsCount}"  HorizontalAlignment="Center"
                        FontSize="18" Foreground="AntiqueWhite" Margin="8"

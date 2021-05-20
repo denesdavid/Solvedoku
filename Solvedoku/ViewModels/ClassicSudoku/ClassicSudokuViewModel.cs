@@ -494,7 +494,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 {
                     if (_solutions.Count > 1)
                     {
-                        MessageBoxService.Show("A klasszikus feladványnak több megoldása is van (összesen " + _solutions.Count + "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
+                        MessageBoxService.Show("A feladványnak több megoldása is van (összesen " + _solutions.Count + "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
                              MessageBoxButton.OK, MessageBoxImage.Information);
                         _solutionIndex = 0;
                         SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _solutions.Count }";
@@ -502,7 +502,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     }
                     else
                     {
-                        MessageBoxService.Show("A klasszikus feladványnak egy megoldása van.", "Információ!",
+                        MessageBoxService.Show("A feladványnak egy megoldása van.", "Információ!",
                             MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
@@ -512,7 +512,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 }
                 else
                 {
-                    MessageBoxService.Show("A klasszikus feladványnak sajnos nincs megoldása.", "Információ!",
+                    MessageBoxService.Show("A feladványnak sajnos nincs megoldása.", "Információ!",
                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }

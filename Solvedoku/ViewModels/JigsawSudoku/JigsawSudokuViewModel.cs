@@ -16,6 +16,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using Xceed.Wpf.Toolkit;
+using Solvedoku.Properties;
 
 namespace Solvedoku.ViewModels.JigsawSudoku
 {
@@ -65,13 +66,13 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         public ObservableCollection<ColorItem> PuzzleColors
         {
             get => new ObservableCollection<ColorItem> {
-                new ColorItem(Colors.LightBlue, "Világoskék"),
-                new ColorItem(Colors.CornflowerBlue, "Égkék"),
-                new ColorItem(Colors.Magenta, "Rózsaszín"),
-                new ColorItem(Colors.Red, "Piros"),
-                new ColorItem(Colors.Green, "Zöld"),
-                new ColorItem(Colors.Yellow, "Sárga"),
-                new ColorItem(Colors.RosyBrown, "Barna"),
+                new ColorItem(Colors.LightBlue,Resources.Color_LightBlue),
+                new ColorItem(Colors.CornflowerBlue, Resources.Color_CornflowerBlue),
+                new ColorItem(Colors.Magenta, Resources.Color_Magenta),
+                new ColorItem(Colors.Red, Resources.Color_Red),
+                new ColorItem(Colors.Green, Resources.Color_Green),
+                new ColorItem(Colors.Yellow, Resources.Color_Yellow),
+                new ColorItem(Colors.RosyBrown, Resources.Color_RosyBrown),
                 new ColorItem(Colors.Orange, "Narancssárga"),
                 new ColorItem(Colors.MediumPurple, "Lila"),
                 new ColorItem(Colors.LightGray, "Szürke")

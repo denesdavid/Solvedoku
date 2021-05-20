@@ -94,6 +94,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Language.cs" />
+    <Compile Include="Classes\LocalizationHelper.cs" />
     <Compile Include="Classes\SudokuBoardSize.cs" />
     <Compile Include="Commands\ParameterizedCommand.cs" />
     <Compile Include="Commands\ParameterlessCommand.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudoku9x9TableViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudokuViewModel.cs" />
     <Compile Include="ViewModels\MainWindow\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\OptionsWindow\OptionsWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\AboutBox\AboutBox.xaml.cs">
       <DependentUpon>AboutBox.xaml</DependentUpon>

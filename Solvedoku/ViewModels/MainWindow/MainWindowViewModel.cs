@@ -40,7 +40,7 @@ namespace Solvedoku.ViewModels.MainWindow
 
         void ShowOptions()
         {
-            OptionsWindow optionsWindow = new OptionsWindow();
+            var optionsWindow = new Solvedoku.Views.OptionsWindow.OptionsWindow();
             optionsWindow.ShowDialog();
         }
 

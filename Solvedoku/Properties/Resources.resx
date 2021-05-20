@@ -121,72 +121,144 @@
     <value />
   </data>
   <data name="Button_No" xml:space="preserve">
-    <value>No</value>
+    <value>Nem</value>
   </data>
   <data name="Button_Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Igen</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Mégse</value>
+  </data>
+  <data name="Color_CornflowerBlue" xml:space="preserve">
+    <value>Égkék</value>
+  </data>
+  <data name="Color_Green" xml:space="preserve">
+    <value>Zöld</value>
+  </data>
+  <data name="Color_LightBlue" xml:space="preserve">
+    <value>Világoskék</value>
+  </data>
+  <data name="Color_LightGray" xml:space="preserve">
+    <value>Szürke</value>
+  </data>
+  <data name="Color_Magenta" xml:space="preserve">
+    <value>Rózsaszín</value>
+  </data>
+  <data name="Color_MediumPurple" xml:space="preserve">
+    <value>Lila</value>
+  </data>
+  <data name="Color_Orange" xml:space="preserve">
+    <value>Narancssárga</value>
+  </data>
+  <data name="Color_Red" xml:space="preserve">
+    <value>Piros</value>
+  </data>
+  <data name="Color_RosyBrown" xml:space="preserve">
+    <value>Barna</value>
+  </data>
+  <data name="Color_Yellow" xml:space="preserve">
+    <value>Sárga</value>
   </data>
   <data name="LoadDialog_Title_ClassicSudoku" xml:space="preserve">
-    <value>Load classic Sudoku...</value>
+    <value>Klasszikus Sudoku betöltése...</value>
   </data>
   <data name="Main_ChooseClassicSize" xml:space="preserve">
-    <value>Choose table size:</value>
+    <value>Válassz méretet:</value>
   </data>
   <data name="Main_ClassicPage" xml:space="preserve">
-    <value>Classic</value>
+    <value>Klasszikus</value>
   </data>
   <data name="Main_Draw" xml:space="preserve">
     <value>Rajzol</value>
   </data>
   <data name="Main_Load" xml:space="preserve">
-    <value>Load</value>
+    <value>Betöltés</value>
   </data>
   <data name="Main_PuzzleColor" xml:space="preserve">
-    <value>Color the table:</value>
+    <value>Színezd ki a feladatnak megfelelően:</value>
   </data>
   <data name="Main_PuzzlePage" xml:space="preserve">
-    <value>Jigsaw</value>
+    <value>Puzzle</value>
   </data>
   <data name="Main_Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Mentés</value>
   </data>
   <data name="Main_SolutionsCounter" xml:space="preserve">
-    <value>Solutions:</value>
+    <value>Megoldások: 1/</value>
   </data>
   <data name="Main_Solve" xml:space="preserve">
-    <value>Solve</value>
+    <value>Megoldás</value>
+  </data>
+  <data name="MessageBox_CancelSolving" xml:space="preserve">
+    <value>Biztos, hogy meg szeretnéd szakítani a megoldást?</value>
   </data>
   <data name="MessageBox_DrawIfNumbersArePresented" xml:space="preserve">
-    <value>There are numbers in the current Sudoku\r\n. Are you sure you want to draw a new one?</value>
+    <value>Már találhatóak számok a jelenlegi Sudokuban.\r\nBiztos vagy benne, hogy újat szeretnél rajzolni?</value>
   </data>
   <data name="MessageBox_Error_Title" xml:space="preserve">
-    <value>Error</value>
+    <value>Hiba</value>
+  </data>
+  <data name="MessageBox_Information_Title" xml:space="preserve">
+    <value>Információ</value>
+  </data>
+  <data name="MessageBox_LoadedSudokuHasMoreSolutions_Part1" xml:space="preserve">
+    <value>A betöltött feladványnak már több megoldása is van (összesen</value>
+  </data>
+  <data name="MessageBox_LoadedSudokuHasMoreSolutions_Part2" xml:space="preserve">
+    <value>A táblázat alatt található nyilakkal tudsz köztük váltani.</value>
+  </data>
+  <data name="MessageBox_LoadedSudokuHasOneSolution" xml:space="preserve">
+    <value>A betöltött feladványnak egy megoldása van.</value>
+  </data>
+  <data name="MessageBox_Load_Error" xml:space="preserve">
+    <value>A klasszikus Sudoku betöltése során hiba lépett fel.</value>
+  </data>
+  <data name="MessageBox_OnlyNumbersFrom1To4" xml:space="preserve">
+    <value>Csak egyjegyű számokat üthetsz be 1-től 4-ig.</value>
+  </data>
+  <data name="MessageBox_OnlyNumbersFrom1To6" xml:space="preserve">
+    <value>Csak egyjegyű számokat üthetsz be 1-től 6-ig.</value>
+  </data>
+  <data name="MessageBox_OnlyNumbersFrom1To9" xml:space="preserve">
+    <value>Csak egyjegyű számokat üthetsz be 1-től 9-ig.</value>
   </data>
   <data name="MessageBox_Question_Title" xml:space="preserve">
-    <value>Question</value>
+    <value>Kérdés</value>
   </data>
   <data name="MessageBox_Save_Error" xml:space="preserve">
-    <value>An error occured during saving the Sudoku.</value>
+    <value>A Sudoku mentése során hiba lépett fel.</value>
   </data>
   <data name="MessageBox_SolveSudoku" xml:space="preserve">
-    <value>Please select whether you want to get all the solutions (it can be time consuming, or even the solver will be stopped, if there are too many), or just one possible one.</value>
+    <value>Kérlek válaszd ki, hogy az összes megoldást (feltéve ha van egynél több, illetve ez időigényes is lehet), vagy csak egy lehetségeset szeretnél megkapni.</value>
   </data>
   <data name="MessageBox_SolveSudokuError" xml:space="preserve">
-    <value>An error occurred while solving the Sudoku. Please check that you have entered the numbers correctly.</value>
+    <value>A feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot.</value>
+  </data>
+  <data name="MessageBox_SudokuHasMoreSolutions_Part1" xml:space="preserve">
+    <value>A feladványnak több megoldása is van (összesen</value>
+  </data>
+  <data name="MessageBox_SudokuHasMoreSolutions_Part2" xml:space="preserve">
+    <value>A táblázat alatt található nyilakkal tudsz köztük váltani.</value>
+  </data>
+  <data name="MessageBox_SudokuHasNoSolution" xml:space="preserve">
+    <value>A feladványnak sajnos nincs megoldása.</value>
+  </data>
+  <data name="MessageBox_SudokuHasOneSolution" xml:space="preserve">
+    <value>A feladványnak egy megoldása van.</value>
+  </data>
+  <data name="MessageBox_Warning_Title" xml:space="preserve">
+    <value>Figyelmeztetés</value>
   </data>
   <data name="Options" xml:space="preserve">
-    <value>Options</value>
+    <value>Beállítások</value>
   </data>
   <data name="Options_SetLanguage" xml:space="preserve">
-    <value>Set language:</value>
+    <value>Nyelv beállítása:</value>
   </data>
   <data name="SaveDialog_Title_ClassicSudoku" xml:space="preserve">
-    <value>Save classic Sudoku...</value>
+    <value>Klasszikus Sudoku mentése...</value>
   </data>
   <data name="SaveLoadDialog_Filter_ClassicSudoku" xml:space="preserve">
-    <value>Classic SUDOKU files (*.csu)|*.csu</value>
+    <value>Klasszikus SUDOKU fájlok (*.csu)|*.csu</value>
   </data>
 </root>

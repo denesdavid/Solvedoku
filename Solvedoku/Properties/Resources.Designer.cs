@@ -70,7 +70,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No.
+        ///   Looks up a localized string similar to Nem.
         /// </summary>
         public static string Button_No {
             get {
@@ -79,7 +79,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes.
+        ///   Looks up a localized string similar to Igen.
         /// </summary>
         public static string Button_Yes {
             get {
@@ -88,7 +88,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancel.
+        ///   Looks up a localized string similar to Mégse.
         /// </summary>
         public static string Cancel {
             get {
@@ -97,7 +97,97 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Load classic Sudoku....
+        ///   Looks up a localized string similar to Égkék.
+        /// </summary>
+        public static string Color_CornflowerBlue {
+            get {
+                return ResourceManager.GetString("Color_CornflowerBlue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zöld.
+        /// </summary>
+        public static string Color_Green {
+            get {
+                return ResourceManager.GetString("Color_Green", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Világoskék.
+        /// </summary>
+        public static string Color_LightBlue {
+            get {
+                return ResourceManager.GetString("Color_LightBlue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szürke.
+        /// </summary>
+        public static string Color_LightGray {
+            get {
+                return ResourceManager.GetString("Color_LightGray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rózsaszín.
+        /// </summary>
+        public static string Color_Magenta {
+            get {
+                return ResourceManager.GetString("Color_Magenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lila.
+        /// </summary>
+        public static string Color_MediumPurple {
+            get {
+                return ResourceManager.GetString("Color_MediumPurple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Narancssárga.
+        /// </summary>
+        public static string Color_Orange {
+            get {
+                return ResourceManager.GetString("Color_Orange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Piros.
+        /// </summary>
+        public static string Color_Red {
+            get {
+                return ResourceManager.GetString("Color_Red", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barna.
+        /// </summary>
+        public static string Color_RosyBrown {
+            get {
+                return ResourceManager.GetString("Color_RosyBrown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sárga.
+        /// </summary>
+        public static string Color_Yellow {
+            get {
+                return ResourceManager.GetString("Color_Yellow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Klasszikus Sudoku betöltése....
         /// </summary>
         public static string LoadDialog_Title_ClassicSudoku {
             get {
@@ -106,7 +196,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose table size:.
+        ///   Looks up a localized string similar to Válassz méretet:.
         /// </summary>
         public static string Main_ChooseClassicSize {
             get {
@@ -115,7 +205,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Classic.
+        ///   Looks up a localized string similar to Klasszikus.
         /// </summary>
         public static string Main_ClassicPage {
             get {
@@ -133,7 +223,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Load.
+        ///   Looks up a localized string similar to Betöltés.
         /// </summary>
         public static string Main_Load {
             get {
@@ -142,7 +232,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Color the table:.
+        ///   Looks up a localized string similar to Színezd ki a feladatnak megfelelően:.
         /// </summary>
         public static string Main_PuzzleColor {
             get {
@@ -151,7 +241,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Jigsaw.
+        ///   Looks up a localized string similar to Puzzle.
         /// </summary>
         public static string Main_PuzzlePage {
             get {
@@ -160,7 +250,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save.
+        ///   Looks up a localized string similar to Mentés.
         /// </summary>
         public static string Main_Save {
             get {
@@ -169,7 +259,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Solutions:.
+        ///   Looks up a localized string similar to Megoldások: 1/.
         /// </summary>
         public static string Main_SolutionsCounter {
             get {
@@ -178,7 +268,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Solve.
+        ///   Looks up a localized string similar to Megoldás.
         /// </summary>
         public static string Main_Solve {
             get {
@@ -187,7 +277,16 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There are numbers in the current Sudoku\r\n. Are you sure you want to draw a new one?.
+        ///   Looks up a localized string similar to Biztos, hogy meg szeretnéd szakítani a megoldást?.
+        /// </summary>
+        public static string MessageBox_CancelSolving {
+            get {
+                return ResourceManager.GetString("MessageBox_CancelSolving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Már találhatóak számok a jelenlegi Sudokuban.\r\nBiztos vagy benne, hogy újat szeretnél rajzolni?.
         /// </summary>
         public static string MessageBox_DrawIfNumbersArePresented {
             get {
@@ -196,7 +295,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error.
+        ///   Looks up a localized string similar to Hiba.
         /// </summary>
         public static string MessageBox_Error_Title {
             get {
@@ -205,7 +304,79 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Question.
+        ///   Looks up a localized string similar to Információ.
+        /// </summary>
+        public static string MessageBox_Information_Title {
+            get {
+                return ResourceManager.GetString("MessageBox_Information_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A klasszikus Sudoku betöltése során hiba lépett fel..
+        /// </summary>
+        public static string MessageBox_Load_Error {
+            get {
+                return ResourceManager.GetString("MessageBox_Load_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A betöltött feladványnak már több megoldása is van (összesen.
+        /// </summary>
+        public static string MessageBox_LoadedSudokuHasMoreSolutions_Part1 {
+            get {
+                return ResourceManager.GetString("MessageBox_LoadedSudokuHasMoreSolutions_Part1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A táblázat alatt található nyilakkal tudsz köztük váltani..
+        /// </summary>
+        public static string MessageBox_LoadedSudokuHasMoreSolutions_Part2 {
+            get {
+                return ResourceManager.GetString("MessageBox_LoadedSudokuHasMoreSolutions_Part2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A betöltött feladványnak egy megoldása van..
+        /// </summary>
+        public static string MessageBox_LoadedSudokuHasOneSolution {
+            get {
+                return ResourceManager.GetString("MessageBox_LoadedSudokuHasOneSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Csak egyjegyű számokat üthetsz be 1-től 4-ig..
+        /// </summary>
+        public static string MessageBox_OnlyNumbersFrom1To4 {
+            get {
+                return ResourceManager.GetString("MessageBox_OnlyNumbersFrom1To4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Csak egyjegyű számokat üthetsz be 1-től 6-ig..
+        /// </summary>
+        public static string MessageBox_OnlyNumbersFrom1To6 {
+            get {
+                return ResourceManager.GetString("MessageBox_OnlyNumbersFrom1To6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Csak egyjegyű számokat üthetsz be 1-től 9-ig..
+        /// </summary>
+        public static string MessageBox_OnlyNumbersFrom1To9 {
+            get {
+                return ResourceManager.GetString("MessageBox_OnlyNumbersFrom1To9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kérdés.
         /// </summary>
         public static string MessageBox_Question_Title {
             get {
@@ -214,7 +385,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error occured during saving the Sudoku..
+        ///   Looks up a localized string similar to A Sudoku mentése során hiba lépett fel..
         /// </summary>
         public static string MessageBox_Save_Error {
             get {
@@ -223,7 +394,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please select whether you want to get all the solutions (it can be time consuming, or even the solver will be stopped, if there are too many), or just one possible one..
+        ///   Looks up a localized string similar to Kérlek válaszd ki, hogy az összes megoldást (feltéve ha van egynél több, illetve ez időigényes is lehet), vagy csak egy lehetségeset szeretnél megkapni..
         /// </summary>
         public static string MessageBox_SolveSudoku {
             get {
@@ -232,7 +403,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to An error occurred while solving the Sudoku. Please check that you have entered the numbers correctly..
+        ///   Looks up a localized string similar to A feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot..
         /// </summary>
         public static string MessageBox_SolveSudokuError {
             get {
@@ -241,7 +412,52 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Options.
+        ///   Looks up a localized string similar to A feladványnak több megoldása is van (összesen.
+        /// </summary>
+        public static string MessageBox_SudokuHasMoreSolutions_Part1 {
+            get {
+                return ResourceManager.GetString("MessageBox_SudokuHasMoreSolutions_Part1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A táblázat alatt található nyilakkal tudsz köztük váltani..
+        /// </summary>
+        public static string MessageBox_SudokuHasMoreSolutions_Part2 {
+            get {
+                return ResourceManager.GetString("MessageBox_SudokuHasMoreSolutions_Part2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A feladványnak sajnos nincs megoldása..
+        /// </summary>
+        public static string MessageBox_SudokuHasNoSolution {
+            get {
+                return ResourceManager.GetString("MessageBox_SudokuHasNoSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A feladványnak egy megoldása van..
+        /// </summary>
+        public static string MessageBox_SudokuHasOneSolution {
+            get {
+                return ResourceManager.GetString("MessageBox_SudokuHasOneSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Figyelmeztetés.
+        /// </summary>
+        public static string MessageBox_Warning_Title {
+            get {
+                return ResourceManager.GetString("MessageBox_Warning_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beállítások.
         /// </summary>
         public static string Options {
             get {
@@ -250,7 +466,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Set language:.
+        ///   Looks up a localized string similar to Nyelv beállítása:.
         /// </summary>
         public static string Options_SetLanguage {
             get {
@@ -259,7 +475,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save classic Sudoku....
+        ///   Looks up a localized string similar to Klasszikus Sudoku mentése....
         /// </summary>
         public static string SaveDialog_Title_ClassicSudoku {
             get {
@@ -268,7 +484,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Classic SUDOKU files (*.csu)|*.csu.
+        ///   Looks up a localized string similar to Klasszikus SUDOKU fájlok (*.csu)|*.csu.
         /// </summary>
         public static string SaveLoadDialog_Filter_ClassicSudoku {
             get {
