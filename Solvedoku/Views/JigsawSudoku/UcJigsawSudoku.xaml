@@ -32,7 +32,11 @@
                                               ShowTabHeaders="False" ShowAvailableColors="False"
                                               SelectedColor="LightBlue"
                                               StandardColorsHeader="Elérhető színek:"
-                                              AdvancedTabHeader="Egyéb színek" Style="{DynamicResource PuzzleColorPickerStyle}"/>
+                                              AdvancedTabHeader="Egyéb színek" Style="{DynamicResource PuzzleColorPickerStyle}">
+                    <wpfx:ColorPicker.StandardColors>
+                        
+                    </wpfx:ColorPicker.StandardColors>
+                </wpfx:ColorPicker>
                 <Button Content="Rajzol" Command="{Binding DrawJigsawSudokuCommand}"/>
                 <Button Content="Megoldás" Command="{Binding SolveJigsawSudokuCommand}"/>
                 <Button Content="Mentés..." Command="{Binding SaveJigsawSudokuCommand}"/>

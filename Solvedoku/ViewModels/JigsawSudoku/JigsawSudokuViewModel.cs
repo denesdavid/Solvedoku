@@ -73,9 +73,9 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                 new ColorItem(Colors.Green, Resources.Color_Green),
                 new ColorItem(Colors.Yellow, Resources.Color_Yellow),
                 new ColorItem(Colors.RosyBrown, Resources.Color_RosyBrown),
-                new ColorItem(Colors.Orange, "Narancssárga"),
-                new ColorItem(Colors.MediumPurple, "Lila"),
-                new ColorItem(Colors.LightGray, "Szürke")
+                new ColorItem(Colors.Orange, Resources.Color_Orange),
+                new ColorItem(Colors.MediumPurple, Resources.Color_MediumPurple),
+                new ColorItem(Colors.LightGray, Resources.Color_LightGray)
             };
         }
 

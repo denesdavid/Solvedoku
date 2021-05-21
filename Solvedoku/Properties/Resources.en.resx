@@ -129,6 +129,36 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Color_CornflowerBlue" xml:space="preserve">
+    <value>Cornflower blue</value>
+  </data>
+  <data name="Color_Green" xml:space="preserve">
+    <value>Green</value>
+  </data>
+  <data name="Color_LightBlue" xml:space="preserve">
+    <value>Light blue</value>
+  </data>
+  <data name="Color_LightGray" xml:space="preserve">
+    <value>Gray</value>
+  </data>
+  <data name="Color_Magenta" xml:space="preserve">
+    <value>Magenta</value>
+  </data>
+  <data name="Color_MediumPurple" xml:space="preserve">
+    <value>Purple</value>
+  </data>
+  <data name="Color_Orange" xml:space="preserve">
+    <value>Orange</value>
+  </data>
+  <data name="Color_Red" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="Color_RosyBrown" xml:space="preserve">
+    <value>Brown</value>
+  </data>
+  <data name="Color_Yellow" xml:space="preserve">
+    <value>Yellow</value>
+  </data>
   <data name="LoadDialog_Title_ClassicSudoku" xml:space="preserve">
     <value>Load classic Sudoku...</value>
   </data>
