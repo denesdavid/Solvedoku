@@ -23,7 +23,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Grid.Column="0" FontSize="25" Content="Nyelv beállítása:"/>
-        <ComboBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Localizations}" DisplayMemberPath="FriendlyName" SelectedItem="{Binding SelectedLocalization, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="8" FontSize="25"/>
+        <ComboBox Grid.Row="1" Grid.Column="0" 
+                  ItemsSource="{Binding Localizations}"
+                  SelectedItem="{Binding SelectedLocalization, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  DisplayMemberPath="FriendlyName" Margin="8" FontSize="25"/>
         <StackPanel Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Content="Ok" Command="{Binding OkCommand}" FontSize="25"/>
             <Button Content="Cancel" FontSize="25" IsCancel="True"/>

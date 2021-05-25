@@ -66,7 +66,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         public ObservableCollection<ColorItem> PuzzleColors
         {
             get => new ObservableCollection<ColorItem> {
-                new ColorItem(Colors.LightBlue,Resources.Color_LightBlue),
+                new ColorItem(Colors.LightBlue, Resources.Color_LightBlue),
                 new ColorItem(Colors.CornflowerBlue, Resources.Color_CornflowerBlue),
                 new ColorItem(Colors.Magenta, Resources.Color_Magenta),
                 new ColorItem(Colors.Red, Resources.Color_Red),

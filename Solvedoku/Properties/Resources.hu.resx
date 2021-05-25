@@ -162,6 +162,9 @@
   <data name="LoadDialog_Title_ClassicSudoku" xml:space="preserve">
     <value>Klasszikus Sudoku betöltése...</value>
   </data>
+  <data name="Main_AvailableJigsawColors" xml:space="preserve">
+    <value>Elérhető színek:</value>
+  </data>
   <data name="Main_ChooseClassicSize" xml:space="preserve">
     <value>Válassz méretet:</value>
   </data>

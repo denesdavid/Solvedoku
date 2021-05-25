@@ -10,17 +10,21 @@ namespace Solvedoku.ViewModels.OptionsWindow
     {
         #region Fields
         Language _selectedLocalization;
+        ObservableCollection<Language> _localizations = new ObservableCollection<Language>
+        {
+            new Language{ FriendlyName = "English (en)", Name = "en"},
+            new Language{ FriendlyName = "Magyar (hu)", Name = "hu"}
+        };
         #endregion
 
         #region Properties
 
         public ICommand OkCommand { get; set; }
-
-        public ObservableCollection<Language> Localizations => new ObservableCollection<Language>
-        { 
-            new Language{ FriendlyName = "English (en)", Name = "en"},
-            new Language{ FriendlyName = "Magyar (hu)", Name = "hu"}
-        };
+        
+        public ObservableCollection<Language> Localizations
+        {
+            get => _localizations;
+        }
 
         public Language SelectedLocalization
         {

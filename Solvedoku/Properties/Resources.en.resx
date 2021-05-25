@@ -162,6 +162,9 @@
   <data name="LoadDialog_Title_ClassicSudoku" xml:space="preserve">
     <value>Load classic Sudoku...</value>
   </data>
+  <data name="Main_AvailableJigsawColors" xml:space="preserve">
+    <value>Available colors:</value>
+  </data>
   <data name="Main_ChooseClassicSize" xml:space="preserve">
     <value>Choose table size:</value>
   </data>

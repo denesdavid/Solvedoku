@@ -6,6 +6,7 @@
              xmlns:wpfx="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:JigsawSudokuViewModels="clr-namespace:Solvedoku.ViewModels.JigsawSudoku"
              xmlns:Converters="clr-namespace:Solvedoku.Converters"
+             xmlns:Classes="clr-namespace:Solvedoku.Classes"
              xmlns:BusyContent="clr-namespace:Solvedoku.Views.BusyIndicatorContent"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="800">
@@ -26,16 +27,12 @@
         </wpfx:BusyIndicator.BusyContent>
         <DockPanel>
             <StackPanel DockPanel.Dock="Right">
-                <Label Content="Színezd ki a feladatnak megfelelően:" Margin="4,4,4,0"/>
-                <wpfx:ColorPicker Margin="8" AvailableColorsHeader="Alap színek"
-                                              StandardColors="{Binding Path=PuzzleColors}"
+                <Label Content="{Classes:Loc Main_PuzzleColor}" Margin="4,4,4,0"/>
+                <wpfx:ColorPicker Margin="8" StandardColors="{Binding Path=PuzzleColors}"
                                               ShowTabHeaders="False" ShowAvailableColors="False"
                                               SelectedColor="LightBlue"
-                                              StandardColorsHeader="Elérhető színek:"
-                                              AdvancedTabHeader="Egyéb színek" Style="{DynamicResource PuzzleColorPickerStyle}">
-                    <wpfx:ColorPicker.StandardColors>
-                        
-                    </wpfx:ColorPicker.StandardColors>
+                                              StandardColorsHeader="{Classes:Loc Main_AvailableJigsawColors}"
+                                              Style="{DynamicResource PuzzleColorPickerStyle}">
                 </wpfx:ColorPicker>
                 <Button Content="Rajzol" Command="{Binding DrawJigsawSudokuCommand}"/>
                 <Button Content="Megoldás" Command="{Binding SolveJigsawSudokuCommand}"/>
