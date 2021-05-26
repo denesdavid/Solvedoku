@@ -24,5 +24,10 @@ namespace Solvedoku.Views.OptionsWindow
             InitializeComponent();
             Owner = Application.Current.MainWindow;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = true;
+        }
     }
 }

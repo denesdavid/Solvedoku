@@ -308,23 +308,23 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     _solutions = (List<SudokuBoard>)_classicSudokuFile.Solutions;
                     if (_solutions.Count > 1)
                     {
-                        MessageBoxService.Show($"A betöltött feladványnak már több megoldása is van (összesen {_solutions.Count}). " +
-                            $"A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
+                        MessageBoxService.Show($"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part1} {_solutions.Count}). " +
+                            $"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
                             MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        SolutionsCount = "Megoldások: 1/" + _solutions.Count;
+                        SolutionsCount = $"{Resources.Main_SolutionsCounter}{ _solutions.Count}";
                         IsSolutionsCountVisible = true;
                     }
                     else if (_solutions.Count == 1)
                     {
-                        MessageBoxService.Show("A betöltött feladványnak egy megoldása van.", "Információ!", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBoxService.Show(Resources.MessageBox_LoadedSudokuHasOneSolution, Resources.MessageBox_Information_Title, MessageBoxButton.OK, MessageBoxImage.Information);
                         SolutionsCount = string.Empty;
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBoxService.Show($"A klasszikus Sudoku betöltése során hiba lépett fel. {ex.Message}",
-                        "Hiba!",MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBoxService.Show($"{Resources.MessageBox_Load_Error} {ex.Message}",
+                        Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
@@ -372,7 +372,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// </summary>
         void CancelBusy()
         {
-            var messageBoxResult = MessageBoxService.Show("Biztos, hogy meg szeretnéd szakítani a megoldást?", "Figyelmeztetés!",
+            var messageBoxResult = MessageBoxService.Show("Biztos, hogy meg szeretnéd szakítani a megoldást?", Resources.MessageBox_Warning_Title,
                     MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
             if (messageBoxResult == MessageBoxResult.Yes)

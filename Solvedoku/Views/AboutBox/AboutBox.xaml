@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Solvedoku.Views.AboutBox"
+        xmlns:Classes="clr-namespace:Solvedoku.Classes"
         xmlns:AboutBoxViewModel="clr-namespace:Solvedoku.ViewModels.AboutBoxWindow"
         mc:Ignorable="d"
         ResizeMode="NoResize"
@@ -30,9 +30,8 @@
         </Grid.RowDefinitions>
         <Label Grid.Row="0" Content="{Binding Title}" FontSize="25" Margin="8"/>
         <Label Grid.Row="1" Content="{Binding Version}" FontSize="25" Margin="8"/>
-        <Label Grid.Row="2" Content="Fejlesztette: Dénes Dávid (Darius Davedane)" FontSize="25" Margin="8"/>
-        <Label/>
-        <TextBlock Grid.Row="4" TextAlignment="Justify" Margin="16" FontSize="18" TextWrapping="Wrap" Text="{Binding Description}"/>
+        <Label Grid.Row="2" Content="{Classes:Loc AboutBox_DevelopedByDD}" FontSize="25" Margin="8"/>
+        <TextBlock Grid.Row="4" TextAlignment="Justify" Margin="16" FontSize="18" TextWrapping="Wrap" Text="{Classes:Loc AboutBox_Description}"/>
         <Button Grid.Row="5" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="OK" IsCancel="True"/>
     </Grid>
 </Window>

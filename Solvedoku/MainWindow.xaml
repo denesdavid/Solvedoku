@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:classes="clr-namespace:Solvedoku.Classes"
+        xmlns:Classes="clr-namespace:Solvedoku.Classes"
         xmlns:MainViewModels="clr-namespace:Solvedoku.ViewModels.MainWindow"
         xmlns:ClassicSudokuControls="clr-namespace:Solvedoku.Views.ClassicSudoku"
         xmlns:customtab="clr-namespace:Solvedoku.CustomControls.TabControlWithRightContentArea"
@@ -13,8 +13,8 @@
         WindowStartupLocation="CenterScreen"
         Background="Gray"
         Title="Solvedoku"
-        Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={classes:RatioConverter}, ConverterParameter='0.9' }"
-        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={classes:RatioConverter}, ConverterParameter='0.6' }">
+        Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={Classes:RatioConverter}, ConverterParameter='0.9' }"
+        Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={Classes:RatioConverter}, ConverterParameter='0.6' }">
     <Window.DataContext>
         <MainViewModels:MainWindowViewModel/>
     </Window.DataContext>
@@ -63,10 +63,10 @@
                     </StackPanel>
 
                 </customtab:TabControlWithRightContentArea.RightAreaContent>
-                <TabItem Header="Klasszikus" Height="30">
+                <TabItem Header="{Classes:Loc Main_ClassicPage}" Height="30">
                     <ClassicSudokuControls:UcClassicSudoku/>
                 </TabItem>
-                <TabItem Header="Puzzle" Height="30">
+                <TabItem Header="{Classes:Loc Main_JigsawPage}" Height="30">
                     <JigsawSudokuControls:UcJigsawSudoku/>
                 </TabItem>
             </customtab:TabControlWithRightContentArea>

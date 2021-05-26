@@ -3,13 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Solvedoku.Views.OptionsWindow"
+        xmlns:Classes="clr-namespace:Solvedoku.Classes"
         xmlns:OptionsViewModels="clr-namespace:Solvedoku.ViewModels.OptionsWindow"
         mc:Ignorable="d"
         WindowStartupLocation="CenterOwner"
         Background="Gray"
         SizeToContent="WidthAndHeight"
-        Title="Options">
+        Title="{Classes:Loc Options}">
     <Window.DataContext>
         <OptionsViewModels:OptionsWindowViewModel/>
     </Window.DataContext>
@@ -22,14 +22,14 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Grid.Row="0" Grid.Column="0" FontSize="25" Content="Nyelv beállítása:"/>
+        <Label Grid.Row="0" Grid.Column="0" FontSize="25" Content="{Classes:Loc Options_SetLanguage}"/>
         <ComboBox Grid.Row="1" Grid.Column="0" 
                   ItemsSource="{Binding Localizations}"
                   SelectedItem="{Binding SelectedLocalization, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   DisplayMemberPath="FriendlyName" Margin="8" FontSize="25"/>
         <StackPanel Grid.Column="0" Grid.Row="2" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Content="Ok" Command="{Binding OkCommand}" FontSize="25"/>
-            <Button Content="Cancel" FontSize="25" IsCancel="True"/>
+            <Button Content="OK" Click="Button_Click" Command="{Binding OkCommand}" FontSize="25"/>
+            <Button Content="{Classes:Loc Button_Cancel}" FontSize="25" IsCancel="True"/>
         </StackPanel>
     </Grid>
 </Window>

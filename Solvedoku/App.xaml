@@ -1,7 +1,8 @@
 ﻿<Application xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Solvedoku"
-             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:Themes="clr-namespace:Xceed.Wpf.Toolkit.Themes;assembly=Xceed.Wpf.Toolkit" xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:Converters="clr-namespace:Xceed.Wpf.Toolkit.Converters;assembly=Xceed.Wpf.Toolkit" x:Class="Solvedoku.App"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:Classes="clr-namespace:Solvedoku.Classes"
+             xmlns:Themes="clr-namespace:Xceed.Wpf.Toolkit.Themes;assembly=Xceed.Wpf.Toolkit" xmlns:System="clr-namespace:System;assembly=mscorlib" xmlns:Converters="clr-namespace:Xceed.Wpf.Toolkit.Converters;assembly=Xceed.Wpf.Toolkit" x:Class="Solvedoku.App"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
@@ -207,8 +208,6 @@
 
         <!--#endregion-->
         
-        
-
         <!--#region TextBoxStyle-->
 
         <!--#region Brushes-->
@@ -1088,9 +1087,8 @@
             <Setter Property="Foreground" Value="AntiqueWhite"/>
             <Setter Property="FontSize" Value="18"/>
 
-            <Setter Property="YesButtonContent" Value="Igen"/>
-            <Setter Property="NoButtonContent" Value="Nem"/>
-            <Setter Property="CancelButtonContent" Value="Mégse"/>
+            <Setter Property="YesButtonContent" Value="{Classes:Loc Button_Yes}"/>
+            <Setter Property="NoButtonContent" Value="{Classes:Loc Button_No}"/>
 
             <Setter Property="OkButtonStyle" Value="{StaticResource MessageBoxButtonStyle}"/>
             <Setter Property="YesButtonStyle" Value="{StaticResource MessageBoxButtonStyle}"/>

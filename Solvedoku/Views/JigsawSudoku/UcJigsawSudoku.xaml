@@ -34,10 +34,10 @@
                                               StandardColorsHeader="{Classes:Loc Main_AvailableJigsawColors}"
                                               Style="{DynamicResource PuzzleColorPickerStyle}">
                 </wpfx:ColorPicker>
-                <Button Content="Rajzol" Command="{Binding DrawJigsawSudokuCommand}"/>
-                <Button Content="Megoldás" Command="{Binding SolveJigsawSudokuCommand}"/>
-                <Button Content="Mentés..." Command="{Binding SaveJigsawSudokuCommand}"/>
-                <Button Content="Betöltés..." Command="{Binding LoadJigsawSudokuCommand}"/>
+                <Button Content="{Classes:Loc Main_Draw}" Command="{Binding DrawJigsawSudokuCommand}"/>
+                <Button Content="{Classes:Loc Main_Solve}" Command="{Binding SolveJigsawSudokuCommand}"/>
+                <Button Content="{Classes:Loc Main_Save}" Command="{Binding SaveJigsawSudokuCommand}"/>
+                <Button Content="{Classes:Loc Main_Load}" Command="{Binding LoadJigsawSudokuCommand}"/>
                 <Label Content ="{Binding SolutionsCount}"  HorizontalAlignment="Center"
                        FontSize="18" Foreground="AntiqueWhite" Margin="8"
                        Visibility="{Binding IsSolutionsCountVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityConverter}}"/>

@@ -118,16 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutBox_Description" xml:space="preserve">
-    <value />
+    <value>Remélem elnyerte tetszésed ez a kis program, mellyel különböző Sudoku feladványokat (klasszikus: 4x4, 6x6, 9x9, puzzle: 9x9) oldhatsz meg. Habár módosítottam pár dolgot a megoldó logikán, illetve refaktoráltam a forráskódot, az alap verzió nem az én szellemi termékem. A szoftver ingyenes, viszont arra szeretnélek megkérni, hogy ha felhasználod az egészet, vagy egy részét, beleértve ebbe a forráskódot is, tüntesd fel a nevemet, illetve, egy, a GitHub repositoryra vezető linket.</value>
+  </data>
+  <data name="AboutBox_DevelopedByDD" xml:space="preserve">
+    <value>Fejlesztette: Dénes Dávid (Darius Davedane)</value>
+  </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Mégse</value>
   </data>
   <data name="Button_No" xml:space="preserve">
     <value>Nem</value>
   </data>
   <data name="Button_Yes" xml:space="preserve">
     <value>Igen</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Mégse</value>
   </data>
   <data name="Color_CornflowerBlue" xml:space="preserve">
     <value>Égkék</value>
@@ -174,14 +177,14 @@
   <data name="Main_Draw" xml:space="preserve">
     <value>Rajzol</value>
   </data>
+  <data name="Main_JigsawPage" xml:space="preserve">
+    <value>Puzzle</value>
+  </data>
   <data name="Main_Load" xml:space="preserve">
     <value>Betöltés</value>
   </data>
   <data name="Main_PuzzleColor" xml:space="preserve">
     <value>Színezd ki a feladatnak megfelelően:</value>
-  </data>
-  <data name="Main_PuzzlePage" xml:space="preserve">
-    <value>Puzzle</value>
   </data>
   <data name="Main_Save" xml:space="preserve">
     <value>Mentés</value>
@@ -196,7 +199,8 @@
     <value>Biztos, hogy meg szeretnéd szakítani a megoldást?</value>
   </data>
   <data name="MessageBox_DrawIfNumbersArePresented" xml:space="preserve">
-    <value>Már találhatóak számok a jelenlegi Sudokuban.\r\nBiztos vagy benne, hogy újat szeretnél rajzolni?</value>
+    <value>Már találhatóak számok a jelenlegi Sudokuban.
+Biztos vagy benne, hogy újat szeretnél rajzolni?</value>
   </data>
   <data name="MessageBox_Error_Title" xml:space="preserve">
     <value>Hiba</value>

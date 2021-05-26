@@ -120,14 +120,17 @@
   <data name="AboutBox_Description" xml:space="preserve">
     <value />
   </data>
+  <data name="AboutBox_DevelopedByDD" xml:space="preserve">
+    <value>Developed by Dávid Dénes (Darius Davedane)</value>
+  </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="Button_No" xml:space="preserve">
     <value>No</value>
   </data>
   <data name="Button_Yes" xml:space="preserve">
     <value>Yes</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
   </data>
   <data name="Color_CornflowerBlue" xml:space="preserve">
     <value>Cornflower blue</value>
@@ -174,14 +177,14 @@
   <data name="Main_Draw" xml:space="preserve">
     <value>Draw</value>
   </data>
+  <data name="Main_JigsawPage" xml:space="preserve">
+    <value>Jigsaw</value>
+  </data>
   <data name="Main_Load" xml:space="preserve">
     <value>Load</value>
   </data>
   <data name="Main_PuzzleColor" xml:space="preserve">
     <value>Color the table:</value>
-  </data>
-  <data name="Main_PuzzlePage" xml:space="preserve">
-    <value>Jigsaw</value>
   </data>
   <data name="Main_Save" xml:space="preserve">
     <value>Save</value>
@@ -193,7 +196,8 @@
     <value>Solve</value>
   </data>
   <data name="MessageBox_DrawIfNumbersArePresented" xml:space="preserve">
-    <value>There are numbers in the current Sudoku\r\n. Are you sure you want to draw a new one?</value>
+    <value>There are numbers in the current Sudoku.
+Are you sure you want to draw a new one?</value>
   </data>
   <data name="MessageBox_Error_Title" xml:space="preserve">
     <value>Error</value>

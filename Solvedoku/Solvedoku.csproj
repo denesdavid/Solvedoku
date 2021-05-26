@@ -312,6 +312,10 @@
   <ItemGroup>
     <Resource Include="Resources\Icons\about44.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DLL\en\Solvedoku.resources.dll" />
+    <EmbeddedResource Include="Resources\DLL\hu\Solvedoku.resources.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
