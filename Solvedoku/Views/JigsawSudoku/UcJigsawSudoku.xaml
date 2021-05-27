@@ -27,7 +27,7 @@
         </wpfx:BusyIndicator.BusyContent>
         <DockPanel>
             <StackPanel DockPanel.Dock="Right">
-                <Label Content="{Classes:Loc Main_PuzzleColor}" Margin="4,4,4,0"/>
+                <Label Content="{Classes:Loc Main_JigsawColor}" Margin="4,4,4,0"/>
                 <wpfx:ColorPicker Margin="8" StandardColors="{Binding Path=PuzzleColors}"
                                               ShowTabHeaders="False" ShowAvailableColors="False"
                                               SelectedColor="LightBlue"

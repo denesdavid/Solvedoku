@@ -1,16 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Collections;
-using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows.Threading;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows;
-using System.Windows.Automation.Peers;
-using System.Windows.Media;
-using System.Windows.Controls.Primitives;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace Solvedoku.CustomControls.TabControlWithRightContentArea

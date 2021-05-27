@@ -312,7 +312,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                             $"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
                             MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        SolutionsCount = $"{Resources.Main_SolutionsCounter}{ _solutions.Count}";
+                        SolutionsCount = $"{Resources.Main_SolutionsCounter}1/{ _solutions.Count}";
                         IsSolutionsCountVisible = true;
                     }
                     else if (_solutions.Count == 1)
@@ -342,7 +342,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         {
             _solutionIndex -= 1;
             DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsMatrix());
-            SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _solutions.Count }";
+            SolutionsCount = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         {
             _solutionIndex += 1;
             DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsMatrix());
-            SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _solutions.Count }";
+            SolutionsCount = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
         }
 
         /// <summary>
@@ -372,7 +372,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// </summary>
         void CancelBusy()
         {
-            var messageBoxResult = MessageBoxService.Show("Biztos, hogy meg szeretnéd szakítani a megoldást?", Resources.MessageBox_Warning_Title,
+            var messageBoxResult = MessageBoxService.Show(Resources.MessageBox_AbortSolution, Resources.MessageBox_Warning_Title,
                     MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
             if (messageBoxResult == MessageBoxResult.Yes)
@@ -404,7 +404,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// </summary>
         /// <returns>IClassicSudokuTableViewModel</returns>
         IClassicSudokuTableViewModel GetCurrentTableViewModel() =>
-            (IClassicSudokuTableViewModel)(SudokuBoardControl.DataContext);
+            (IClassicSudokuTableViewModel)SudokuBoardControl.DataContext;
 
         /// <summary>
         /// Creates a classic Sudoku board, according to the given board size.
@@ -494,15 +494,15 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 {
                     if (_solutions.Count > 1)
                     {
-                        MessageBoxService.Show("A feladványnak több megoldása is van (összesen " + _solutions.Count + "). A táblázat alatt található nyilakkal tudsz köztük váltani.", "Információ!",
+                        MessageBoxService.Show($"{Resources.MessageBox_SudokuHasMoreSolutions_Part1} { _solutions.Count}). {Resources.MessageBox_SudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
                              MessageBoxButton.OK, MessageBoxImage.Information);
                         _solutionIndex = 0;
-                        SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _solutions.Count }";
+                        SolutionsCount = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
                         IsSolutionsCountVisible = true;
                     }
                     else
                     {
-                        MessageBoxService.Show("A feladványnak egy megoldása van.", "Információ!",
+                        MessageBoxService.Show(Resources.MessageBox_SudokuHasOneSolution, Resources.MessageBox_Information_Title,
                             MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
@@ -512,7 +512,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 }
                 else
                 {
-                    MessageBoxService.Show("A feladványnak sajnos nincs megoldása.", "Információ!",
+                    MessageBoxService.Show(Resources.MessageBox_SudokuHasNoSolution, Resources.MessageBox_Information_Title,
                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }

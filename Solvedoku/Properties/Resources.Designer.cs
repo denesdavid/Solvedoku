@@ -61,11 +61,47 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Remélem elnyerte tetszésed ez a kis program, mellyel különböző Sudoku feladványokat (klasszikus: 4x4, 6x6, 9x9, puzzle: 9x9) oldhatsz meg. Habár módosítottam pár dolgot a megoldó logikán, illetve refaktoráltam a forráskódot, az alap verzió nem az én szellemi termékem. A szoftver ingyenes, viszont arra szeretnélek megkérni, hogy ha felhasználod az egészet, vagy egy részét, beleértve ebbe a forráskódot is, tüntesd fel a nevemet, illetve, egy, a GitHub repositoryra vezető linket..
         /// </summary>
         public static string AboutBox_Description {
             get {
                 return ResourceManager.GetString("AboutBox_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fejlesztette: Dénes Dávid (Darius Davedane).
+        /// </summary>
+        public static string AboutBox_DevelopedByDD {
+            get {
+                return ResourceManager.GetString("AboutBox_DevelopedByDD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mégse.
+        /// </summary>
+        public static string Button_Cancel {
+            get {
+                return ResourceManager.GetString("Button_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Összes megoldás kiszámítása.
+        /// </summary>
+        public static string Button_GetAllSolutions {
+            get {
+                return ResourceManager.GetString("Button_GetAllSolutions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Egy lehetséges megoldás kiszámítása.
+        /// </summary>
+        public static string Button_GetOneSolution {
+            get {
+                return ResourceManager.GetString("Button_GetOneSolution", resourceCulture);
             }
         }
         
@@ -84,15 +120,6 @@ namespace Solvedoku.Properties {
         public static string Button_Yes {
             get {
                 return ResourceManager.GetString("Button_Yes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Mégse.
-        /// </summary>
-        public static string Cancel {
-            get {
-                return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
         
@@ -196,6 +223,24 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Puzzle Sudoku betöltése....
+        /// </summary>
+        public static string LoadDialog_Title_JigsawSudoku {
+            get {
+                return ResourceManager.GetString("LoadDialog_Title_JigsawSudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Elérhető színek:.
+        /// </summary>
+        public static string Main_AvailableJigsawColors {
+            get {
+                return ResourceManager.GetString("Main_AvailableJigsawColors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Válassz méretet:.
         /// </summary>
         public static string Main_ChooseClassicSize {
@@ -223,29 +268,29 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Betöltés.
-        /// </summary>
-        public static string Main_Load {
-            get {
-                return ResourceManager.GetString("Main_Load", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Színezd ki a feladatnak megfelelően:.
         /// </summary>
-        public static string Main_PuzzleColor {
+        public static string Main_JigsawColor {
             get {
-                return ResourceManager.GetString("Main_PuzzleColor", resourceCulture);
+                return ResourceManager.GetString("Main_JigsawColor", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Puzzle.
         /// </summary>
-        public static string Main_PuzzlePage {
+        public static string Main_JigsawPage {
             get {
-                return ResourceManager.GetString("Main_PuzzlePage", resourceCulture);
+                return ResourceManager.GetString("Main_JigsawPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Betöltés.
+        /// </summary>
+        public static string Main_Load {
+            get {
+                return ResourceManager.GetString("Main_Load", resourceCulture);
             }
         }
         
@@ -259,7 +304,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Megoldások: 1/.
+        ///   Looks up a localized string similar to Megoldások:.
         /// </summary>
         public static string Main_SolutionsCounter {
             get {
@@ -273,6 +318,15 @@ namespace Solvedoku.Properties {
         public static string Main_Solve {
             get {
                 return ResourceManager.GetString("Main_Solve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Biztos, hogy megszakítod a megoldást?.
+        /// </summary>
+        public static string MessageBox_AbortSolution {
+            get {
+                return ResourceManager.GetString("MessageBox_AbortSolution", resourceCulture);
             }
         }
         
@@ -313,7 +367,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A klasszikus Sudoku betöltése során hiba lépett fel..
+        ///   Looks up a localized string similar to A Sudoku betöltése során hiba lépett fel..
         /// </summary>
         public static string MessageBox_Load_Error {
             get {
@@ -390,6 +444,15 @@ namespace Solvedoku.Properties {
         public static string MessageBox_Save_Error {
             get {
                 return ResourceManager.GetString("MessageBox_Save_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Megoldás folyamatban....
+        /// </summary>
+        public static string MessageBox_SolutionInProgress {
+            get {
+                return ResourceManager.GetString("MessageBox_SolutionInProgress", resourceCulture);
             }
         }
         
@@ -484,11 +547,29 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Puzzle Sudoku mentése....
+        /// </summary>
+        public static string SaveDialog_Title_JigsawSudoku {
+            get {
+                return ResourceManager.GetString("SaveDialog_Title_JigsawSudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Klasszikus SUDOKU fájlok (*.csu)|*.csu.
         /// </summary>
         public static string SaveLoadDialog_Filter_ClassicSudoku {
             get {
                 return ResourceManager.GetString("SaveLoadDialog_Filter_ClassicSudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puzzle SUDOKU fájlok (*.jsu)|*.jsu.
+        /// </summary>
+        public static string SaveLoadDialog_Filter_JigsawSudoku {
+            get {
+                return ResourceManager.GetString("SaveLoadDialog_Filter_JigsawSudoku", resourceCulture);
             }
         }
     }

@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Microsoft.Win32;
 using Solvedoku.Classes;
+using Solvedoku.Views.AboutBox;
+using Solvedoku.Views.OptionsWindow;
 using Xceed.Wpf.Toolkit;
 
 namespace Solvedoku
@@ -1062,5 +1064,17 @@ namespace Solvedoku
             return blockSize;
         }
         #endregion
+
+        private void Options_Click(object sender, RoutedEventArgs e)
+        {
+            OptionsWindow optionsWindow = new OptionsWindow();
+            optionsWindow.ShowDialog();
+        }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            AboutBox aboutBox = new AboutBox();
+            aboutBox.ShowDialog();
+        }
     }
 }

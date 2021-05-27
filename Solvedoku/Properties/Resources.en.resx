@@ -118,13 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AboutBox_Description" xml:space="preserve">
-    <value />
+    <value>I hope you enjoy this little program with which you can solve various Sudoku puzzles (classic: 4x4, 6x6, 9x9, puzzle: 9x9). Although I modified a few things on the solving logic and refactored the source code, the basic version is not my intellectual product. The software is free, but I would like to ask that if you use all or part of it, including the source code, please mention my name and a link to the GitHub repository.</value>
   </data>
   <data name="AboutBox_DevelopedByDD" xml:space="preserve">
     <value>Developed by Dávid Dénes (Darius Davedane)</value>
   </data>
   <data name="Button_Cancel" xml:space="preserve">
     <value>Cancel</value>
+  </data>
+  <data name="Button_GetAllSolutions" xml:space="preserve">
+    <value>Get all solutions</value>
+  </data>
+  <data name="Button_GetOneSolution" xml:space="preserve">
+    <value>Get one possible solution</value>
   </data>
   <data name="Button_No" xml:space="preserve">
     <value>No</value>
@@ -165,6 +171,9 @@
   <data name="LoadDialog_Title_ClassicSudoku" xml:space="preserve">
     <value>Load classic Sudoku...</value>
   </data>
+  <data name="LoadDialog_Title_JigsawSudoku" xml:space="preserve">
+    <value>Load jigsaw Sudoku</value>
+  </data>
   <data name="Main_AvailableJigsawColors" xml:space="preserve">
     <value>Available colors:</value>
   </data>
@@ -177,14 +186,14 @@
   <data name="Main_Draw" xml:space="preserve">
     <value>Draw</value>
   </data>
+  <data name="Main_JigsawColor" xml:space="preserve">
+    <value>Color the table:</value>
+  </data>
   <data name="Main_JigsawPage" xml:space="preserve">
     <value>Jigsaw</value>
   </data>
   <data name="Main_Load" xml:space="preserve">
     <value>Load</value>
-  </data>
-  <data name="Main_PuzzleColor" xml:space="preserve">
-    <value>Color the table:</value>
   </data>
   <data name="Main_Save" xml:space="preserve">
     <value>Save</value>
@@ -195,6 +204,12 @@
   <data name="Main_Solve" xml:space="preserve">
     <value>Solve</value>
   </data>
+  <data name="MessageBox_AbortSolution" xml:space="preserve">
+    <value>Are you sure you want to abort the solution?</value>
+  </data>
+  <data name="MessageBox_CancelSolving" xml:space="preserve">
+    <value>Are you sure you want to abort the solving progress?</value>
+  </data>
   <data name="MessageBox_DrawIfNumbersArePresented" xml:space="preserve">
     <value>There are numbers in the current Sudoku.
 Are you sure you want to draw a new one?</value>
@@ -202,8 +217,29 @@ Are you sure you want to draw a new one?</value>
   <data name="MessageBox_Error_Title" xml:space="preserve">
     <value>Error</value>
   </data>
-  <data name="MessageBox_LoadedSudokuWithMultipleSolutions" xml:space="preserve">
-    <value>The loaded Sudoku has more solutions already (in summary</value>
+  <data name="MessageBox_Information_Title" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="MessageBox_LoadedSudokuHasMoreSolutions_Part1" xml:space="preserve">
+    <value>The loaded Sudoku already has several solutions (total</value>
+  </data>
+  <data name="MessageBox_LoadedSudokuHasMoreSolutions_Part2" xml:space="preserve">
+    <value>You can switch between them with the arrows below the table.</value>
+  </data>
+  <data name="MessageBox_LoadedSudokuHasOneSolution" xml:space="preserve">
+    <value>Tehere is one solution to the loaded Sudoku.</value>
+  </data>
+  <data name="MessageBox_Load_Error" xml:space="preserve">
+    <value>Error occured while loading the Sudoku.</value>
+  </data>
+  <data name="MessageBox_OnlyNumbersFrom1To4" xml:space="preserve">
+    <value>You can only enter one-digit numbers from 1 to 4.</value>
+  </data>
+  <data name="MessageBox_OnlyNumbersFrom1To6" xml:space="preserve">
+    <value>You can only enter one-digit numbers from 1 to 6.</value>
+  </data>
+  <data name="MessageBox_OnlyNumbersFrom1To9" xml:space="preserve">
+    <value>You can only enter one-digit numbers from 1 to 9.</value>
   </data>
   <data name="MessageBox_Question_Title" xml:space="preserve">
     <value>Question</value>
@@ -211,11 +247,29 @@ Are you sure you want to draw a new one?</value>
   <data name="MessageBox_Save_Error" xml:space="preserve">
     <value>An error occured during saving the Sudoku.</value>
   </data>
+  <data name="MessageBox_SolutionInProgress" xml:space="preserve">
+    <value>Solution in progress...</value>
+  </data>
   <data name="MessageBox_SolveSudoku" xml:space="preserve">
     <value>Please select whether you want to get all the solutions (it can be time consuming, or even the solver will be stopped, if there are too many), or just one possible one.</value>
   </data>
   <data name="MessageBox_SolveSudokuError" xml:space="preserve">
     <value>An error occurred while solving the Sudoku. Please check that you have entered the numbers correctly.</value>
+  </data>
+  <data name="MessageBox_SudokuHasMoreSolutions_Part1" xml:space="preserve">
+    <value>There are several solutions to the Sudoku (total</value>
+  </data>
+  <data name="MessageBox_SudokuHasMoreSolutions_Part2" xml:space="preserve">
+    <value>You can switch between them with the arrows below the table.</value>
+  </data>
+  <data name="MessageBox_SudokuHasNoSolution" xml:space="preserve">
+    <value>Unfortunately, there is no solution to the Sudoku.</value>
+  </data>
+  <data name="MessageBox_SudokuHasOneSolution" xml:space="preserve">
+    <value>Tehere is one solution to the Sudoku.</value>
+  </data>
+  <data name="MessageBox_Warning_Title" xml:space="preserve">
+    <value>Warning</value>
   </data>
   <data name="Options" xml:space="preserve">
     <value>Options</value>
@@ -226,7 +280,13 @@ Are you sure you want to draw a new one?</value>
   <data name="SaveDialog_Title_ClassicSudoku" xml:space="preserve">
     <value>Save classic Sudoku...</value>
   </data>
+  <data name="SaveDialog_Title_JigsawSudoku" xml:space="preserve">
+    <value>Save jigsaw Sudoku...</value>
+  </data>
   <data name="SaveLoadDialog_Filter_ClassicSudoku" xml:space="preserve">
     <value>Classic SUDOKU files (*.csu)|*.csu</value>
+  </data>
+  <data name="SaveLoadDialog_Filter_JigsawSudoku" xml:space="preserve">
+    <value>Jigsaw SUDOKU files (*.jsu)|*.jsu</value>
   </data>
 </root>

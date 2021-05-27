@@ -123,7 +123,6 @@
     <Compile Include="ViewModels\JigsawSudoku\IJigsawSudokuTableViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudoku9x9TableViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudokuViewModel.cs" />
-    <Compile Include="ViewModels\MainWindow\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\OptionsWindow\OptionsWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\AboutBox\AboutBox.xaml.cs">

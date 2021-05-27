@@ -126,6 +126,12 @@
   <data name="Button_Cancel" xml:space="preserve">
     <value>Mégse</value>
   </data>
+  <data name="Button_GetAllSolutions" xml:space="preserve">
+    <value>Összes megoldás kiszámítása</value>
+  </data>
+  <data name="Button_GetOneSolution" xml:space="preserve">
+    <value>Egy lehetséges megoldás kiszámítása</value>
+  </data>
   <data name="Button_No" xml:space="preserve">
     <value>Nem</value>
   </data>
@@ -165,6 +171,9 @@
   <data name="LoadDialog_Title_ClassicSudoku" xml:space="preserve">
     <value>Klasszikus Sudoku betöltése...</value>
   </data>
+  <data name="LoadDialog_Title_JigsawSudoku" xml:space="preserve">
+    <value>Puzzle Sudoku betöltése...</value>
+  </data>
   <data name="Main_AvailableJigsawColors" xml:space="preserve">
     <value>Elérhető színek:</value>
   </data>
@@ -177,23 +186,26 @@
   <data name="Main_Draw" xml:space="preserve">
     <value>Rajzol</value>
   </data>
+  <data name="Main_JigsawColor" xml:space="preserve">
+    <value>Színezd ki a feladatnak megfelelően:</value>
+  </data>
   <data name="Main_JigsawPage" xml:space="preserve">
     <value>Puzzle</value>
   </data>
   <data name="Main_Load" xml:space="preserve">
     <value>Betöltés</value>
   </data>
-  <data name="Main_PuzzleColor" xml:space="preserve">
-    <value>Színezd ki a feladatnak megfelelően:</value>
-  </data>
   <data name="Main_Save" xml:space="preserve">
     <value>Mentés</value>
   </data>
   <data name="Main_SolutionsCounter" xml:space="preserve">
-    <value>Megoldások: 1/</value>
+    <value>Megoldások:</value>
   </data>
   <data name="Main_Solve" xml:space="preserve">
     <value>Megoldás</value>
+  </data>
+  <data name="MessageBox_AbortSolution" xml:space="preserve">
+    <value>Biztos, hogy megszakítod a megoldást?</value>
   </data>
   <data name="MessageBox_CancelSolving" xml:space="preserve">
     <value>Biztos, hogy meg szeretnéd szakítani a megoldást?</value>
@@ -218,7 +230,7 @@ Biztos vagy benne, hogy újat szeretnél rajzolni?</value>
     <value>A betöltött feladványnak egy megoldása van.</value>
   </data>
   <data name="MessageBox_Load_Error" xml:space="preserve">
-    <value>A klasszikus Sudoku betöltése során hiba lépett fel.</value>
+    <value>A Sudoku betöltése során hiba lépett fel.</value>
   </data>
   <data name="MessageBox_OnlyNumbersFrom1To4" xml:space="preserve">
     <value>Csak egyjegyű számokat üthetsz be 1-től 4-ig.</value>
@@ -234,6 +246,9 @@ Biztos vagy benne, hogy újat szeretnél rajzolni?</value>
   </data>
   <data name="MessageBox_Save_Error" xml:space="preserve">
     <value>A Sudoku mentése során hiba lépett fel.</value>
+  </data>
+  <data name="MessageBox_SolutionInProgress" xml:space="preserve">
+    <value>Megoldás folyamatban...</value>
   </data>
   <data name="MessageBox_SolveSudoku" xml:space="preserve">
     <value>Kérlek válaszd ki, hogy az összes megoldást (feltéve ha van egynél több, illetve ez időigényes is lehet), vagy csak egy lehetségeset szeretnél megkapni.</value>
@@ -265,7 +280,13 @@ Biztos vagy benne, hogy újat szeretnél rajzolni?</value>
   <data name="SaveDialog_Title_ClassicSudoku" xml:space="preserve">
     <value>Klasszikus Sudoku mentése...</value>
   </data>
+  <data name="SaveDialog_Title_JigsawSudoku" xml:space="preserve">
+    <value>Puzzle Sudoku mentése...</value>
+  </data>
   <data name="SaveLoadDialog_Filter_ClassicSudoku" xml:space="preserve">
     <value>Klasszikus SUDOKU fájlok (*.csu)|*.csu</value>
+  </data>
+  <data name="SaveLoadDialog_Filter_JigsawSudoku" xml:space="preserve">
+    <value>Puzzle SUDOKU fájlok (*.jsu)|*.jsu</value>
   </data>
 </root>
