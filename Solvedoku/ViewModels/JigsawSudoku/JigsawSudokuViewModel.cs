@@ -262,7 +262,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         {
             _openFileDialog.Title = "Klasszikus SUDOKU betöltése..";
             _openFileDialog.RestoreDirectory = true;
-            _openFileDialog.DefaultExt = "csu";
+            _openFileDialog.DefaultExt = "jsu";
             _openFileDialog.Filter = "Klasszikus SUDOKU fájlok (*.csu)|*.csu";
             _openFileDialog.FilterIndex = 1;
             _openFileDialog.CheckPathExists = true;

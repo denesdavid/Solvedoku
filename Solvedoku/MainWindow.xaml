@@ -59,10 +59,10 @@
                     </StackPanel>
 
                 </customtab:TabControlWithRightContentArea.RightAreaContent>
-                <TabItem Header="{Classes:Loc Main_ClassicPage}" Height="30">
+                <TabItem Header="{Classes:Loc Main_ClassicPage}" Height="30" Width="80">
                     <ClassicSudokuControls:UcClassicSudoku/>
                 </TabItem>
-                <TabItem Header="{Classes:Loc Main_JigsawPage}" Height="30">
+                <TabItem Header="{Classes:Loc Main_JigsawPage}" Height="30" Width="80">
                     <JigsawSudokuControls:UcJigsawSudoku/>
                 </TabItem>
             </customtab:TabControlWithRightContentArea>
