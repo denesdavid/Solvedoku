@@ -23,11 +23,13 @@ namespace Solvedoku.ViewModels.JigsawSudoku
     class JigsawSudokuViewModel : ViewModelBase
     {
         #region Fields
+        static JigsawSudokuViewModel _instance;
         bool _isBusy;
         bool _isSolutionsCountVisible;
         int _solutionIndex = -1;
         string _solutionsCount = string.Empty;
         Thread _sudokuSolverThread;
+        Color? _selectedColor;
         UserControl _sudokuBoardControl;
         SudokuBoardSize _selectedSudokuBoardSize;
         SaveFileDialog _saveFileDialog = new SaveFileDialog();
@@ -36,6 +38,8 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         #endregion
 
         #region Properties
+
+        public static JigsawSudokuViewModel Instance { get => _instance; }
 
         public ICommand DrawJigsawSudokuCommand { get; set; }
 
@@ -53,6 +57,16 @@ namespace Solvedoku.ViewModels.JigsawSudoku
 
         public Thread SudokuSolverThread { get => _sudokuSolverThread; }
 
+        public Color? SelectedColor
+        {
+            get => _selectedColor;
+            set
+            {
+                _selectedColor = value;
+                OnPropertyChanged();
+            }
+        }
+
         public UserControl SudokuBoardControl
         {
             get => _sudokuBoardControl;
@@ -63,20 +77,25 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             }
         }
 
+        //public ObservableCollection<ColorItem> PuzzleColors
+        //{
+        //    get => new ObservableCollection<ColorItem> {
+        //        new ColorItem(Colors.LightBlue, Resources.Color_LightBlue),
+        //        new ColorItem(Colors.CornflowerBlue, Resources.Color_CornflowerBlue),
+        //        new ColorItem(Colors.Magenta, Resources.Color_Magenta),
+        //        new ColorItem(Colors.Red, Resources.Color_Red),
+        //        new ColorItem(Colors.Green, Resources.Color_Green),
+        //        new ColorItem(Colors.Yellow, Resources.Color_Yellow),
+        //        new ColorItem(Colors.RosyBrown, Resources.Color_RosyBrown),
+        //        new ColorItem(Colors.Orange, Resources.Color_Orange),
+        //        new ColorItem(Colors.MediumPurple, Resources.Color_MediumPurple),
+        //        new ColorItem(Colors.LightGray, Resources.Color_LightGray)
+        //    };
+        //}
+
         public ObservableCollection<ColorItem> PuzzleColors
         {
-            get => new ObservableCollection<ColorItem> {
-                new ColorItem(Colors.LightBlue, Resources.Color_LightBlue),
-                new ColorItem(Colors.CornflowerBlue, Resources.Color_CornflowerBlue),
-                new ColorItem(Colors.Magenta, Resources.Color_Magenta),
-                new ColorItem(Colors.Red, Resources.Color_Red),
-                new ColorItem(Colors.Green, Resources.Color_Green),
-                new ColorItem(Colors.Yellow, Resources.Color_Yellow),
-                new ColorItem(Colors.RosyBrown, Resources.Color_RosyBrown),
-                new ColorItem(Colors.Orange, Resources.Color_Orange),
-                new ColorItem(Colors.MediumPurple, Resources.Color_MediumPurple),
-                new ColorItem(Colors.LightGray, Resources.Color_LightGray)
-            };
+            get => SudokuBoard.PuzzleColors;
         }
 
         public SudokuBoardSize SelectedSudokuBoardSize
@@ -127,7 +146,9 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         public JigsawSudokuViewModel()
         {
             LoadCommands();
+            SelectedColor = Colors.LightBlue;
             SudokuBoardControl = new UcJigsawSudoku9x9Table();
+            _instance = this;
         }
 
         #endregion
@@ -162,53 +183,53 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         /// <summary>
         /// Solves the classic sudoku.
         /// </summary>
-        void Solve()
-        {
-            /*try
-            {
-                var messageBoxResult = MessageBoxService.Show("Kérlek válaszd ki, hogy az összes megoldást (feltéve ha van egynél több, illetve ez időigényes is lehet), vagy csak egy lehetségeset szeretnél megkapni.",
-                    "Kérdés!",
-                    MessageBoxButton.YesNo, MessageBoxImage.Question);
-                
-                if (messageBoxResult != MessageBoxResult.Cancel)
-                {
-                    SolutionsCount = string.Empty;
+        //void Solve()
+        //{
+        //    try
+        //    {
+        //        var messageBoxResult = MessageBoxService.Show(Resources.MessageBox_SolveSudoku,
+        //            Resources.MessageBox_Question_Title,
+        //            MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-                    string[] areas = GetPuzzleAreas();
-                    var board = CreatePuzzleBoard(areas);
+        //        if (messageBoxResult != MessageBoxResult.Cancel)
+        //        {
+        //            SolutionsCount = string.Empty;
 
-                    _solutionIndex= 0;
+        //            string[] areas = GetPuzzleAreas();
+        //            var board = CreatePuzzleBoard(areas);
 
-                    if (messageBoxResult == MessageBoxResult.Yes)
-                    {
-                        _sudokuSolverThread = new Thread(() =>
-                        {
-                            _solutions = Sudoku_SolverThread(board, true);
-                            Action action = DisplayPuzzleSolutionAndMessage;
-                            Application.Current.Dispatcher.Invoke(action);
-                        });
-                        _sudokuSolverThread.Start();
-                    }
-                    else
-                    {
-                        _sudokuSolverThread = new Thread(() =>
-                        {
-                            _solutions = Sudoku_SolverThread(board, false);
-                            Action action = DisplayPuzzleSolutionAndMessage;
-                            Application.Current.Dispatcher.Invoke(action);
-                        });
-                        _sudokuSolverThread.Start();
-                    }
-                   IsBusy = true;
-                }
-            }
-            catch
-            {
-                MessageBoxService.Show("A puzzle feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot.",
-                    "Hiba!",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
-            }*/
-        }
+        //            _solutionIndex = 0;
+
+        //            if (messageBoxResult == MessageBoxResult.Yes)
+        //            {
+        //                _sudokuSolverThread = new Thread(() =>
+        //                {
+        //                    _solutions = Sudoku_SolverThread(board, true);
+        //                    Action action = DisplayPuzzleSolutionAndMessage;
+        //                    Application.Current.Dispatcher.Invoke(action);
+        //                });
+        //                _sudokuSolverThread.Start();
+        //            }
+        //            else
+        //            {
+        //                _sudokuSolverThread = new Thread(() =>
+        //                {
+        //                    _solutions = Sudoku_SolverThread(board, false);
+        //                    Action action = DisplayPuzzleSolutionAndMessage;
+        //                    Application.Current.Dispatcher.Invoke(action);
+        //                });
+        //                _sudokuSolverThread.Start();
+        //            }
+        //            IsBusy = true;
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        MessageBoxService.Show(Resources.MessageBox_SolveSudokuError,
+        //            Resources.MessageBox_Error_Title,
+        //            MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //}
 
         /// <summary>
         /// Determines if saving the sudoku is possible.
@@ -348,12 +369,34 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         private void LoadCommands()
         {
             DrawJigsawSudokuCommand = new ParameterizedCommand(Draw, CanDraw);
-            SolveJigsawSudokuCommand = new ParameterlessCommand(Solve, CanSolve);
+           // SolveJigsawSudokuCommand = new ParameterlessCommand(Solve, CanSolve);
             SaveJigsawSudokuCommand = new ParameterlessCommand(Save, CanSave);
             LoadJigsawSudokuCommand = new ParameterlessCommand(Load, CanLoad);
             LoadPreviousSolutionCommand = new ParameterlessCommand(LoadPreviousSolution, CanLoadPreviousSolution);
             LoadNextSolutionCommand = new ParameterlessCommand(LoadNextSolution, CanLoadNextSolution);
         }
+
+        public List<SolidColorBrush> GetPuzzleColorsAsSolidColorBrushes()
+        {
+            List<SolidColorBrush> puzzleBrushes = new List<SolidColorBrush>();
+            foreach (ColorItem cItem in PuzzleColors)
+            {
+               puzzleBrushes.Add(new SolidColorBrush(cItem.Color.GetValueOrDefault()));
+            }
+            return puzzleBrushes;
+        }
+
+        public void SetColorForCell(int row, int column)
+        {
+
+        }
+
+        /// <summary>
+        /// Returns the viewmodel of the current sudoku board control.
+        /// </summary>
+        /// <returns>IJigsawSudokuTableViewModel</returns>
+        IJigsawSudokuTableViewModel GetCurrentTableViewModel() =>
+            (IJigsawSudokuTableViewModel)SudokuBoardControl.DataContext;
 
         /// <summary>
         /// Creates a jigsaw Sudoku board, according to the given board size.

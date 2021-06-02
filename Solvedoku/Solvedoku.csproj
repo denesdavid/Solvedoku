@@ -101,6 +101,7 @@
     <Compile Include="Commands\ParameterlessCommand.cs" />
     <Compile Include="Converters\BoolToFontWeightConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\IntegerToPuzzleColorConverter.cs" />
     <Compile Include="CustomControls\TabControlWithRightContentArea\TabControlWithRightContentArea.cs" />
     <Compile Include="Properties\Resources.en.Designer.cs">
       <DependentUpon>Resources.en.resx</DependentUpon>

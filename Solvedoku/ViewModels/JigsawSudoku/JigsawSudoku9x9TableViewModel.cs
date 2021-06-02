@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace Solvedoku.ViewModels.JigsawSudoku
 {
     class JigsawSudoku9x9TableViewModel : ViewModelBase, IJigsawSudokuTableViewModel
     {
         #region Fields
+
         ObservableCollection<ObservableCollection<string>> _cells = new ObservableCollection<ObservableCollection<string>>()
         {
             new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
@@ -31,9 +31,24 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             new ObservableCollection<bool> {  false, false, false, false, false, false, false, false, false},
             new ObservableCollection<bool> {  false, false, false, false, false, false, false, false, false},
         };
+
+        ObservableCollection<ObservableCollection<int>> _puzzleAreas = new ObservableCollection<ObservableCollection<int>>()
+        {
+            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
+            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
+        };
+
         #endregion
 
         #region Properties
+
         public ObservableCollection<ObservableCollection<string>> Cells
         {
             get => _cells;
@@ -54,7 +69,15 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             }
         }
 
-        public ObservableCollection<ObservableCollection<int>> PuzzleAreas { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public ObservableCollection<ObservableCollection<int>> PuzzleAreas
+        { 
+            get => _puzzleAreas;
+            set
+            {
+                _puzzleAreas = value;
+                OnPropertyChanged();
+            }
+        }
 
         #endregion
 

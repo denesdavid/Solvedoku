@@ -12,6 +12,7 @@ using System.Windows.Media;
 using Microsoft.Win32;
 using Solvedoku.Classes;
 using Solvedoku.Views.AboutBox;
+using Solvedoku.Views.JigsawSudoku;
 using Solvedoku.Views.OptionsWindow;
 using Xceed.Wpf.Toolkit;
 

@@ -28,9 +28,10 @@
         <DockPanel>
             <StackPanel DockPanel.Dock="Right">
                 <Label Content="{Classes:Loc Main_JigsawColor}" Margin="4,4,4,0"/>
-                <wpfx:ColorPicker Margin="8" StandardColors="{Binding Path=PuzzleColors}"
+                <wpfx:ColorPicker x:Name="asd" Margin="8" StandardColors="{Binding PuzzleColors}"
+                                  DataContext="{Binding}"
                                               ShowTabHeaders="False" ShowAvailableColors="False"
-                                              SelectedColor="LightBlue"
+                                              SelectedColor="{Binding SelectedColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                               StandardColorsHeader="{Classes:Loc Main_AvailableJigsawColors}"
                                               Style="{DynamicResource PuzzleColorPickerStyle}">
                 </wpfx:ColorPicker>

@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Solvedoku.Properties;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Media;
+using Xceed.Wpf.Toolkit;
 
 namespace Solvedoku.Classes
 {
@@ -12,6 +16,21 @@ namespace Solvedoku.Classes
         int _maxValue;
         SudokuTile[,] _tiles;
         ISet<SudokuRule> _rules = new HashSet<SudokuRule>();
+        public static ObservableCollection<ColorItem> PuzzleColors
+        {
+            get => new ObservableCollection<ColorItem> {
+                new ColorItem(Colors.LightBlue, Resources.Color_LightBlue),
+                new ColorItem(Colors.CornflowerBlue, Resources.Color_CornflowerBlue),
+                new ColorItem(Colors.Magenta, Resources.Color_Magenta),
+                new ColorItem(Colors.Red, Resources.Color_Red),
+                new ColorItem(Colors.Green, Resources.Color_Green),
+                new ColorItem(Colors.Yellow, Resources.Color_Yellow),
+                new ColorItem(Colors.RosyBrown, Resources.Color_RosyBrown),
+                new ColorItem(Colors.Orange, Resources.Color_Orange),
+                new ColorItem(Colors.MediumPurple, Resources.Color_MediumPurple),
+                new ColorItem(Colors.LightGray, Resources.Color_LightGray)
+            };
+        }
         #endregion
 
         #region Properties
@@ -328,6 +347,16 @@ namespace Solvedoku.Classes
                 tile.Value = value;
             }
             _row++;
+        }
+
+        public static List<SolidColorBrush> GetPuzzleColorsAsSolidColorBrushes()
+        {
+            List<SolidColorBrush> puzzleBrushes = new List<SolidColorBrush>();
+            foreach (ColorItem cItem in PuzzleColors)
+            {
+                puzzleBrushes.Add(new SolidColorBrush(cItem.Color.GetValueOrDefault()));
+            }
+            return puzzleBrushes;
         }
         #endregion
     }
