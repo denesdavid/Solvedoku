@@ -37,5 +37,13 @@ namespace Solvedoku.Views.JigsawSudoku
                 ((TextBox)sender).Clear();
             }
         }
+
+        private void PuzzleCell_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                PuzzleCell_OnMouseRightButtonUp(sender, null);
+            }
+        }
     }
 }

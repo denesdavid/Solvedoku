@@ -77,26 +77,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             }
         }
 
-        //public ObservableCollection<ColorItem> PuzzleColors
-        //{
-        //    get => new ObservableCollection<ColorItem> {
-        //        new ColorItem(Colors.LightBlue, Resources.Color_LightBlue),
-        //        new ColorItem(Colors.CornflowerBlue, Resources.Color_CornflowerBlue),
-        //        new ColorItem(Colors.Magenta, Resources.Color_Magenta),
-        //        new ColorItem(Colors.Red, Resources.Color_Red),
-        //        new ColorItem(Colors.Green, Resources.Color_Green),
-        //        new ColorItem(Colors.Yellow, Resources.Color_Yellow),
-        //        new ColorItem(Colors.RosyBrown, Resources.Color_RosyBrown),
-        //        new ColorItem(Colors.Orange, Resources.Color_Orange),
-        //        new ColorItem(Colors.MediumPurple, Resources.Color_MediumPurple),
-        //        new ColorItem(Colors.LightGray, Resources.Color_LightGray)
-        //    };
-        //}
-
-        public ObservableCollection<ColorItem> PuzzleColors
-        {
-            get => SudokuBoard.PuzzleColors;
-        }
+        public ObservableCollection<ColorItem> PuzzleColors => SudokuBoard.PuzzleColors;
 
         public SudokuBoardSize SelectedSudokuBoardSize
         {
@@ -369,26 +350,11 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         private void LoadCommands()
         {
             DrawJigsawSudokuCommand = new ParameterizedCommand(Draw, CanDraw);
-           // SolveJigsawSudokuCommand = new ParameterlessCommand(Solve, CanSolve);
+            // SolveJigsawSudokuCommand = new ParameterlessCommand(Solve, CanSolve);
             SaveJigsawSudokuCommand = new ParameterlessCommand(Save, CanSave);
             LoadJigsawSudokuCommand = new ParameterlessCommand(Load, CanLoad);
             LoadPreviousSolutionCommand = new ParameterlessCommand(LoadPreviousSolution, CanLoadPreviousSolution);
             LoadNextSolutionCommand = new ParameterlessCommand(LoadNextSolution, CanLoadNextSolution);
-        }
-
-        public List<SolidColorBrush> GetPuzzleColorsAsSolidColorBrushes()
-        {
-            List<SolidColorBrush> puzzleBrushes = new List<SolidColorBrush>();
-            foreach (ColorItem cItem in PuzzleColors)
-            {
-               puzzleBrushes.Add(new SolidColorBrush(cItem.Color.GetValueOrDefault()));
-            }
-            return puzzleBrushes;
-        }
-
-        public void SetColorForCell(int row, int column)
-        {
-
         }
 
         /// <summary>
@@ -467,7 +433,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
 
                         _solutionIndex = 0;
                         SolutionsCount = $"Megoldások: { _solutionIndex + 1 }/{ _solutions.Count }";
-                        
+
                     }
                     else
                     {
