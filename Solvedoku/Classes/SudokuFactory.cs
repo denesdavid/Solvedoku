@@ -115,7 +115,7 @@ namespace Solvedoku.Classes
                 // Select the rule tiles based on the index of the character
                 var ruleTiles = from i in Enumerable.Range(0, joinedString.Length)
                                 where joinedString[i] == ch // filter out any non-matching characters
-                                select board.Tile(i % sizeX, i / sizeY);
+                                select board.Tile(i / sizeX, i % sizeY);
                 board.CreateRule("Area " + ch.ToString(), ruleTiles);
             }
 

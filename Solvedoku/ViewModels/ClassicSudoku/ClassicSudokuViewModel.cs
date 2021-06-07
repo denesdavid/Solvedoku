@@ -20,9 +20,9 @@ namespace Solvedoku.ViewModels.ClassicSudoku
     {
         #region Fields
         bool _isBusy;
-        bool _isSolutionsCountVisible;
+        bool _isSolutionCounterVisible;
         int _solutionIndex = -1;
-        string _solutionsCount = string.Empty;
+        string _solutionCounter = string.Empty;
         Thread _sudokuSolverThread;
         UserControl _sudokuBoardControl;
         SudokuBoardSize _selectedSudokuBoardSize;
@@ -33,13 +33,13 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 
         #region Properties
 
-        public ICommand DrawClassicSudokuCommand { get; set; }
+        public ICommand DrawSudokuCommand { get; set; }
 
-        public ICommand SolveClassicSudokuCommand { get; set; }
+        public ICommand SolveSudokuCommand { get; set; }
 
-        public ICommand SaveClassicSudokuCommand { get; set; }
+        public ICommand SaveSudokuCommand { get; set; }
 
-        public ICommand LoadClassicSudokuCommand { get; set; }
+        public ICommand LoadSudokuCommand { get; set; }
 
         public ICommand LoadPreviousSolutionCommand { get; set; }
 
@@ -105,22 +105,22 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             }
         }
 
-        public bool IsSolutionsCountVisible 
+        public bool IsSolutionCounterVisible 
         {
-            get => _isSolutionsCountVisible;
+            get => _isSolutionCounterVisible;
             set
             {
-                _isSolutionsCountVisible = value;
+                _isSolutionCounterVisible = value;
                 OnPropertyChanged();
             }
         }
 
-        public string SolutionsCount
+        public string SolutionCounter
         {
-            get => _solutionsCount;
+            get => _solutionCounter;
             set
             {
-                _solutionsCount = value;
+                _solutionCounter = value;
                 OnPropertyChanged();
             }
         }
@@ -173,7 +173,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             {
                 SudokuBoardControl = new UcClassicSudoku4x4Table();
             }
-            SolutionsCount = string.Empty;
+            SolutionCounter = string.Empty;
         }
 
         /// <summary>
@@ -197,7 +197,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 if (msgBoxResult != MessageBoxResult.Cancel)
                 {
                     _solutions.Clear();
-                    SolutionsCount = string.Empty;
+                    SolutionCounter = string.Empty;
                     var board = CreateClassicBoard(((IClassicSudokuControl)SudokuBoardControl).BoardSize);
 
                     if (msgBoxResult == MessageBoxResult.Yes)
@@ -206,7 +206,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                         _sudokuSolverThread = new Thread(() =>
                         {
                             _solutions = (List<SudokuBoard>)Sudoku_SolverThread(board, true);
-                            Action action = DisplayClassicSolutionAndMessage;
+                            Action action = DisplaySolutionAndMessage;
                             Application.Current.Dispatcher.Invoke(action);
                         });
                         _sudokuSolverThread.Start();
@@ -216,7 +216,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                         _sudokuSolverThread = new Thread(() =>
                         {
                             _solutions = (List<SudokuBoard>)Sudoku_SolverThread(board, false);
-                            Action action = DisplayClassicSolutionAndMessage;
+                            Action action = DisplaySolutionAndMessage;
                             Application.Current.Dispatcher.Invoke(action);
                         });
                         _sudokuSolverThread.Start();
@@ -303,7 +303,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     SelectedSudokuBoardSize = _classicSudokuFile.Board.BoardSize;
                     Draw(SelectedSudokuBoardSize);
                     DisplayMatrixBoard(_classicSudokuFile.Board.OutputAsMatrix());
-                    SolutionsCount = string.Empty;
+                    SolutionCounter = string.Empty;
 
                     _solutions = (List<SudokuBoard>)_classicSudokuFile.Solutions;
                     if (_solutions.Count > 1)
@@ -312,13 +312,13 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                             $"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
                             MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        SolutionsCount = $"{Resources.Main_SolutionsCounter}1/{ _solutions.Count}";
-                        IsSolutionsCountVisible = true;
+                        SolutionCounter = $"{Resources.Main_SolutionsCounter}1/{ _solutions.Count}";
+                        IsSolutionCounterVisible = true;
                     }
                     else if (_solutions.Count == 1)
                     {
                         MessageBoxService.Show(Resources.MessageBox_LoadedSudokuHasOneSolution, Resources.MessageBox_Information_Title, MessageBoxButton.OK, MessageBoxImage.Information);
-                        SolutionsCount = string.Empty;
+                        SolutionCounter = string.Empty;
                     }
                 }
                 catch (Exception ex)
@@ -342,7 +342,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         {
             _solutionIndex -= 1;
             DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsMatrix());
-            SolutionsCount = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
+            SolutionCounter = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
         }
 
         /// <summary>
@@ -358,7 +358,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         {
             _solutionIndex += 1;
             DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsMatrix());
-            SolutionsCount = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
+            SolutionCounter = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
         }
 
         /// <summary>
@@ -390,10 +390,10 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// </summary>
         void LoadCommands()
         {
-            DrawClassicSudokuCommand = new ParameterizedCommand(Draw, CanDraw);
-            SolveClassicSudokuCommand = new ParameterlessCommand(Solve, CanSolve);
-            SaveClassicSudokuCommand = new ParameterlessCommand(Save, CanSave);
-            LoadClassicSudokuCommand = new ParameterlessCommand(Load, CanLoad);
+            DrawSudokuCommand = new ParameterizedCommand(Draw, CanDraw);
+            SolveSudokuCommand = new ParameterlessCommand(Solve, CanSolve);
+            SaveSudokuCommand = new ParameterlessCommand(Save, CanSave);
+            LoadSudokuCommand = new ParameterlessCommand(Load, CanLoad);
             LoadPreviousSolutionCommand = new ParameterlessCommand(LoadPreviousSolution, CanLoadPreviousSolution);
             LoadNextSolutionCommand = new ParameterlessCommand(LoadNextSolution, CanLoadNextSolution);
             CancelBusyCommand = new ParameterlessCommand(CancelBusy, CanCancelBusy);
@@ -485,20 +485,21 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// <summary>
         /// Configures the viewmodel to display the classic solution(s) and a message about the possible solutions count.
         /// </summary>
-        void DisplayClassicSolutionAndMessage()
+        void DisplaySolutionAndMessage()
         {
             IsBusy = false;
             if (_sudokuSolverThread.ThreadState != ThreadState.Aborted)
             {
                 if (_solutions.Count > 0 && _solutions[0] != null)
                 {
+                    _solutionIndex = 0;
                     if (_solutions.Count > 1)
                     {
                         MessageBoxService.Show($"{Resources.MessageBox_SudokuHasMoreSolutions_Part1} { _solutions.Count}). {Resources.MessageBox_SudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
                              MessageBoxButton.OK, MessageBoxImage.Information);
-                        _solutionIndex = 0;
-                        SolutionsCount = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
-                        IsSolutionsCountVisible = true;
+                        
+                        SolutionCounter = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
+                        IsSolutionCounterVisible = true;
                     }
                     else
                     {
@@ -506,7 +507,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                             MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
-                    string[,] solution = _solutions[0].OutputAsMatrix();
+                    string[,] solution = _solutions[_solutionIndex].OutputAsMatrix();
                     DisplayMatrixBoard(solution);
 
                 }

@@ -16,7 +16,7 @@ namespace Solvedoku.Classes
         int _maxValue;
         SudokuTile[,] _tiles;
         ISet<SudokuRule> _rules = new HashSet<SudokuRule>();
-        public static ObservableCollection<ColorItem> PuzzleColors
+        public static ObservableCollection<ColorItem> JigsawColors
         {
             get => new ObservableCollection<ColorItem> {
                 new ColorItem(Colors.LightBlue, Resources.Color_LightBlue),
@@ -350,7 +350,7 @@ namespace Solvedoku.Classes
         public static List<SolidColorBrush> GetPuzzleColorsAsSolidColorBrushes()
         {
             List<SolidColorBrush> puzzleBrushes = new List<SolidColorBrush>();
-            foreach (ColorItem cItem in PuzzleColors)
+            foreach (ColorItem cItem in JigsawColors)
             {
                 puzzleBrushes.Add(new SolidColorBrush(cItem.Color.GetValueOrDefault()));
             }

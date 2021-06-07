@@ -28,7 +28,7 @@
         <DockPanel>
             <StackPanel DockPanel.Dock="Right">
                 <Label Content="{Classes:Loc Main_JigsawColor}" Margin="4,4,4,0"/>
-                <wpfx:ColorPicker x:Name="asd" Margin="8" StandardColors="{Binding PuzzleColors}"
+                <wpfx:ColorPicker x:Name="asd" Margin="8" StandardColors="{Binding JigsawColors}"
                                   DataContext="{Binding}"
                                               ShowTabHeaders="False" ShowAvailableColors="False"
                                               SelectedColor="{Binding SelectedColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -36,14 +36,14 @@
                                               Style="{DynamicResource PuzzleColorPickerStyle}">
                 </wpfx:ColorPicker>
                 <Button Content="{Classes:Loc Main_Draw}"
-                        Command="{Binding DrawJigsawSudokuCommand}"
+                        Command="{Binding DrawSudokuCommand}"
                         CommandParameter="{Binding SelectedSudokuBoardSize}" Width="200"/>
-                <Button Content="{Classes:Loc Main_Solve}" Command="{Binding SolveJigsawSudokuCommand}"/>
-                <Button Content="{Classes:Loc Main_Save}" Command="{Binding SaveJigsawSudokuCommand}"/>
-                <Button Content="{Classes:Loc Main_Load}" Command="{Binding LoadJigsawSudokuCommand}"/>
-                <Label Content ="{Binding SolutionsCount}"  HorizontalAlignment="Center"
+                <Button Content="{Classes:Loc Main_Solve}" Command="{Binding SolveSudokuCommand}"/>
+                <Button Content="{Classes:Loc Main_Save}" Command="{Binding SaveSudokuCommand}"/>
+                <Button Content="{Classes:Loc Main_Load}" Command="{Binding LoadSudokuCommand}"/>
+                <Label Content ="{Binding SolutionCounter}"  HorizontalAlignment="Center"
                        FontSize="18" Foreground="AntiqueWhite" Margin="8"
-                       Visibility="{Binding IsSolutionsCountVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                       Visibility="{Binding IsSolutionCounterVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityConverter}}"/>
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Style="{StaticResource IconButtonStyle}"
