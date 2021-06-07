@@ -170,7 +170,7 @@
     <Compile Include="Classes\SudokuBoard.cs" />
     <Compile Include="Classes\ClassicSudokuFile.cs" />
     <Compile Include="Classes\SudokuFactory.cs" />
-    <Compile Include="Classes\PuzzleSudokuFile.cs" />
+    <Compile Include="Classes\JigsawSudokuFile.cs" />
     <Compile Include="Classes\SudokuRule.cs" />
     <Compile Include="Classes\SudokuTile.cs" />
     <Compile Include="MainWindow.xaml.cs">

@@ -8,7 +8,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
 
         ObservableCollection<ObservableCollection<bool>> BoldCells { get; set; }
 
-        ObservableCollection<ObservableCollection<int>> PuzzleAreas { get; set; }
+        ObservableCollection<ObservableCollection<int>> JigsawAreas { get; set; }
 
         /// <summary>
         /// Determines if all cells are filled in the board.
@@ -21,5 +21,10 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         /// </summary>
         /// <returns>True if at least one cell is filled.</returns>
         bool AreAnyCellsFilled();
+
+        string[] GetJigsawAreasAsArray();
+
+        int[,] GetJigsawAreasAsMatrix();
+       
     }
 }

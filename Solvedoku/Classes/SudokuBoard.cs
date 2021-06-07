@@ -207,12 +207,10 @@ namespace Solvedoku.Classes
                 simplify = Simplify();
             }
 
-
             if (simplify == SudokuProgress.FAILED)
             {
                 return null;
             }
-
 
             // Find one of the values with the least number of alternatives, but that still has at least 2 alternatives
             var query = from rule in _rules

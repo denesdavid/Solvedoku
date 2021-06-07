@@ -6,13 +6,13 @@ using Xceed.Wpf.Toolkit;
 namespace Solvedoku.Classes
 {
     [Serializable]
-    class PuzzleSudokuFile
+    class JigsawSudokuFile
     {
         #region Fields
 
         SudokuBoardSize _sudokuBoardSize;
         SudokuBoard _sudokuBoard;
-        string[] _boardAreas;
+        int[,] _boardAreas;
         List<SudokuBoard> _solutions = new List<SudokuBoard>();
         ObservableCollection<ColorItem> _colorList;
 
@@ -24,7 +24,7 @@ namespace Solvedoku.Classes
             get { return _sudokuBoard; }
             set { _sudokuBoard = value; }
         }
-        public string [] Areas
+        public int [,] Areas
         {
             get { return _boardAreas; }
             set { _boardAreas = value; }
@@ -45,5 +45,13 @@ namespace Solvedoku.Classes
             set { _colorList = value; }
         }
         #endregion
+
+        public JigsawSudokuFile(SudokuBoard board, SudokuBoardSize boardSize, int[,] areas, List<SudokuBoard> solutions)
+        {
+            Board = board;
+            BoardSize = boardSize;
+            Areas = areas;
+            Solutions = solutions;
+        }
     }
 }

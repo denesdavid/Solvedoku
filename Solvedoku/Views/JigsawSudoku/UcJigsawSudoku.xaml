@@ -35,7 +35,9 @@
                                               StandardColorsHeader="{Classes:Loc Main_AvailableJigsawColors}"
                                               Style="{DynamicResource PuzzleColorPickerStyle}">
                 </wpfx:ColorPicker>
-                <Button Content="{Classes:Loc Main_Draw}" Command="{Binding DrawJigsawSudokuCommand}" Width="200"/>
+                <Button Content="{Classes:Loc Main_Draw}"
+                        Command="{Binding DrawJigsawSudokuCommand}"
+                        CommandParameter="{Binding SelectedSudokuBoardSize}" Width="200"/>
                 <Button Content="{Classes:Loc Main_Solve}" Command="{Binding SolveJigsawSudokuCommand}"/>
                 <Button Content="{Classes:Loc Main_Save}" Command="{Binding SaveJigsawSudokuCommand}"/>
                 <Button Content="{Classes:Loc Main_Load}" Command="{Binding LoadJigsawSudokuCommand}"/>

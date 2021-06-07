@@ -37,7 +37,7 @@ namespace Solvedoku
             set { _puzzleColorList = value; }
         }
         private List<SudokuBoard> _puzzleSolutions = new List<SudokuBoard>();
-        private PuzzleSudokuFile _puzzleSudokuFile = new PuzzleSudokuFile();
+      //  private JigsawSudokuFile _puzzleSudokuFile = new JigsawSudokuFile();
 
 
         #endregion
@@ -504,11 +504,6 @@ namespace Solvedoku
 
         //        }
         //    }
-
-
-
-
-
         //}
 
         //#endregion
