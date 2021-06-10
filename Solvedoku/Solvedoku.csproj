@@ -101,7 +101,7 @@
     <Compile Include="Commands\ParameterlessCommand.cs" />
     <Compile Include="Converters\BoolToFontWeightConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="Converters\IntegerToPuzzleColorConverter.cs" />
+    <Compile Include="Converters\IntegerToJigsawColorConverter.cs" />
     <Compile Include="CustomControls\TabControlWithRightContentArea\TabControlWithRightContentArea.cs" />
     <Compile Include="Properties\Resources.en.Designer.cs">
       <DependentUpon>Resources.en.resx</DependentUpon>
@@ -120,8 +120,9 @@
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku4x4TableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku9x9TableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudokuViewModel.cs" />
-    <Compile Include="ViewModels\ClassicSudoku\IClassicSudokuTableViewModel.cs" />
-    <Compile Include="ViewModels\JigsawSudoku\IJigsawSudokuTableViewModel.cs" />
+    <Compile Include="ViewModels\BaseSudokuTableViewModel.cs" />
+    <Compile Include="ViewModels\BaseSudokuViewModel.cs" />
+    <Compile Include="ViewModels\JigsawSudoku\BaseJigsawSudokuTableViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudoku9x9TableViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudokuViewModel.cs" />
     <Compile Include="ViewModels\OptionsWindow\OptionsWindowViewModel.cs" />

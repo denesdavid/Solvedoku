@@ -362,7 +362,6 @@
         <Style x:Key="PuzzleColorPickerStyle" TargetType="{x:Type xctk:ColorPicker}">
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="{DynamicResource {ComponentResourceKey ResourceId=ControlNormalBorderKey, TypeInTargetAssembly={x:Type Themes:ResourceKeys}}}"/>
-            <!--<Setter Property="BorderThickness" Value="1,1,0,1"/>-->
             <Setter Property="Margin" Value="8,8,8,8"/>
             <Setter Property="ButtonStyle">
                 <Setter.Value>
@@ -1097,7 +1096,7 @@
             <Setter Property="CancelButtonStyle" Value="{StaticResource MessageBoxButtonStyle}"/>
         </Style>
 
-        <Style x:Key="MessageBoxStyleForClassicSolve" TargetType="{x:Type xctk:MessageBox}">
+        <Style x:Key="MessageBoxStyleForSudokuSolve" TargetType="{x:Type xctk:MessageBox}">
             <Setter Property="Background" Value="Gray" />
             <Setter Property="ButtonRegionBackground" Value="Gray" />
             <Setter Property="BorderBrush" Value="#FF999999" />

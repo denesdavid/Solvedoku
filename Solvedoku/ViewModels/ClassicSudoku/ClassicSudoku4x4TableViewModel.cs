@@ -2,7 +2,7 @@
 
 namespace Solvedoku.ViewModels.ClassicSudoku
 {
-    class ClassicSudoku4x4TableViewModel : ViewModelBase, IClassicSudokuTableViewModel
+    class ClassicSudoku4x4TableViewModel : BaseSudokuTableViewModel
     {
         #region Fields
         ObservableCollection<ObservableCollection<string>>_cells = new ObservableCollection<ObservableCollection<string>>()
@@ -23,7 +23,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         #endregion
 
         #region Properties
-        public ObservableCollection<ObservableCollection<string>> Cells
+        public override ObservableCollection<ObservableCollection<string>> Cells
         {
             get => _cells;
             set
@@ -33,7 +33,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             }
         }
 
-        public ObservableCollection<ObservableCollection<bool>> BoldCells
+        public override ObservableCollection<ObservableCollection<bool>> BoldCells
         {
             get => _boldCells;
             set
@@ -41,38 +41,6 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 _boldCells = value;
                 OnPropertyChanged();
             }
-        }
-        #endregion
-
-        #region Functions
-        public bool AreAllCellsFilled()
-        {
-            foreach (var row in Cells)
-            {
-                foreach (var column in row)
-                {
-                    if (column == string.Empty)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        public bool AreAnyCellsFilled()
-        {
-            foreach (var row in Cells)
-            {
-                foreach (var column in row)
-                {
-                    if (column != string.Empty)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
         }
         #endregion
     }

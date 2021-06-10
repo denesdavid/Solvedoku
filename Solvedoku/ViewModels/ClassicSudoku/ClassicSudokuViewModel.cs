@@ -6,124 +6,16 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using Microsoft.Win32;
 using Solvedoku.Classes;
-using Solvedoku.Commands;
 using Solvedoku.Properties;
 using Solvedoku.Views.ClassicSudoku;
 
 namespace Solvedoku.ViewModels.ClassicSudoku
 {
-    class ClassicSudokuViewModel : ViewModelBase
+    class ClassicSudokuViewModel : BaseSudokuViewModel
     {
-        #region Fields
-        bool _isBusy;
-        bool _isSolutionCounterVisible;
-        int _solutionIndex = -1;
-        string _solutionCounter = string.Empty;
-        Thread _sudokuSolverThread;
-        UserControl _sudokuBoardControl;
-        SudokuBoardSize _selectedSudokuBoardSize;
-        SaveFileDialog _saveFileDialog = new SaveFileDialog();
-        OpenFileDialog _openFileDialog = new OpenFileDialog();
-        List<SudokuBoard> _solutions = new List<SudokuBoard>();
-        #endregion
-
         #region Properties
-
-        public ICommand DrawSudokuCommand { get; set; }
-
-        public ICommand SolveSudokuCommand { get; set; }
-
-        public ICommand SaveSudokuCommand { get; set; }
-
-        public ICommand LoadSudokuCommand { get; set; }
-
-        public ICommand LoadPreviousSolutionCommand { get; set; }
-
-        public ICommand LoadNextSolutionCommand { get; set; }
-
-        public ICommand CancelBusyCommand { get; set; }
-
-        public ICommand BusyIndicatorLoadedCommand { get; set; }
-
-        public Thread SudokuSolverThread { get => _sudokuSolverThread; }
-
-        public UserControl SudokuBoardControl
-        {
-            get => _sudokuBoardControl;
-            set
-            {
-                _sudokuBoardControl = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public ObservableCollection<SudokuBoardSize> SudokuBoardSizes
-        {
-            get => new ObservableCollection<SudokuBoardSize> {
-                new SudokuBoardSize{
-                    Width = 9,
-                    Height = 9,
-                    BoxCountX = 3,
-                    BoxCountY = 3
-                },
-                new SudokuBoardSize{
-                    Width = 6,
-                    Height = 6,
-                    BoxCountX = 3,
-                    BoxCountY = 2
-                },
-                new SudokuBoardSize{
-                    Width = 4,
-                    Height = 4,
-                    BoxCountX = 2,
-                    BoxCountY = 2
-                }
-            };
-        }
-
-        public SudokuBoardSize SelectedSudokuBoardSize
-        {
-            get => _selectedSudokuBoardSize;
-            set
-            {
-                _selectedSudokuBoardSize = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool IsBusy
-        {
-            get => _isBusy;
-            set
-            {
-                _isBusy = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool IsSolutionCounterVisible 
-        {
-            get => _isSolutionCounterVisible;
-            set
-            {
-                _isSolutionCounterVisible = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public string SolutionCounter
-        {
-            get => _solutionCounter;
-            set
-            {
-                _solutionCounter = value;
-                OnPropertyChanged();
-            }
-        }
+        public ObservableCollection<SudokuBoardSize> SudokuBoardSizes => SudokuBoard.SudokuBoardSizes;
         #endregion
 
         #region Constructor
@@ -139,15 +31,9 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         #region Commands
 
         /// <summary>
-        /// Determines if drawing a classic sudoku is possible.
-        /// </summary>
-        /// <returns>Bool (currently always true)</returns>
-        bool CanDraw(object o) => true;
-
-        /// <summary>
         /// Draws the classic sudoku table with the given size.
         /// </summary>
-        void Draw(object o)
+        protected override void Draw(object o)
         {
             if (GetCurrentTableViewModel().AreAnyCellsFilled())
             {
@@ -177,35 +63,34 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         }
 
         /// <summary>
-        /// Determines if solving the sudoku is possible.
-        /// </summary>
-        /// <returns>True if the solutions count is 0 or at least one cell is not filled in the table.</returns>
-        bool CanSolve() => _solutions.Count == 0 
-            || !GetCurrentTableViewModel().AreAllCellsFilled();
-
-        /// <summary>
         /// Solves the classic sudoku.
         /// </summary>
-        void Solve()
+        protected override void Solve()
         {
             try
             {
-                MessageBoxResult msgBoxResult = MessageBoxService.Show(
+                var msgBoxResult = MessageBoxService.Show(
                     Resources.MessageBox_SolveSudoku,
-                    Resources.MessageBox_Question_Title, MessageBoxButton.YesNo, MessageBoxImage.Question ,(Style)Application.Current.Resources["MessageBoxStyleForClassicSolve"]);
+                    Resources.MessageBox_Question_Title, MessageBoxButton.YesNo, MessageBoxImage.Question, (Style)Application.Current.Resources["MessageBoxStyleForSudokuSolve"]);
 
                 if (msgBoxResult != MessageBoxResult.Cancel)
                 {
                     _solutions.Clear();
                     SolutionCounter = string.Empty;
-                    var board = CreateClassicBoard(((IClassicSudokuControl)SudokuBoardControl).BoardSize);
+                    var board = CreateBoard(((IClassicSudokuControl)SudokuBoardControl).BoardSize);
 
                     if (msgBoxResult == MessageBoxResult.Yes)
                     {
 
                         _sudokuSolverThread = new Thread(() =>
                         {
-                            _solutions = (List<SudokuBoard>)Sudoku_SolverThread(board, true);
+                            int foundSolution = 0;
+                            foreach (var item in Sudoku_SolverThread(board, true))
+                            {
+                                _solutions.Add(item);
+                                foundSolution++;
+                                FoundSolutionCounter = $"Found solutions: {foundSolution}";
+                            }
                             Action action = DisplaySolutionAndMessage;
                             Application.Current.Dispatcher.Invoke(action);
                         });
@@ -215,7 +100,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     {
                         _sudokuSolverThread = new Thread(() =>
                         {
-                            _solutions = (List<SudokuBoard>)Sudoku_SolverThread(board, false);
+                            _solutions.Add(Sudoku_SolverThread(board, false).First());
                             Action action = DisplaySolutionAndMessage;
                             Application.Current.Dispatcher.Invoke(action);
                         });
@@ -233,15 +118,9 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         }
 
         /// <summary>
-        /// Determines if saving a classic sudoku is possible.
+        /// Saves the classic sudoku to a file.
         /// </summary>
-        /// <returns>Bool (currently always true)</returns>
-        bool CanSave() => true;
-
-        /// <summary>
-        /// Saves a classic sudoku to a file.
-        /// </summary>
-        void Save()
+        protected override void Save()
         {
             _saveFileDialog.Title = Resources.SaveDialog_Title_ClassicSudoku;
             _saveFileDialog.RestoreDirectory = true;
@@ -255,7 +134,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             {
                 try
                 {
-                    var classicSudokuFile = new ClassicSudokuFile(CreateClassicBoard(SelectedSudokuBoardSize),
+                    var classicSudokuFile = new ClassicSudokuFile(CreateBoard(SelectedSudokuBoardSize),
                         _solutions);
 
                     using (Stream stream = File.Open(_saveFileDialog.FileName, FileMode.Create))
@@ -272,15 +151,9 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         }
 
         /// <summary>
-        /// Determines if loading a classic sudoku is possible.
-        /// </summary>
-        /// <returns>Bool (currently always true)</returns>
-        bool CanLoad() => true;
-
-        /// <summary>
         /// Loads a classic sudoku from a file.
         /// </summary>
-        void Load()
+        protected override void Load()
         {
             _openFileDialog.Title = Resources.LoadDialog_Title_ClassicSudoku;
             _openFileDialog.RestoreDirectory = true;
@@ -329,214 +202,6 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             }
         }
 
-        /// <summary>
-        /// Determines if loading the previous solution is possible.
-        /// </summary>
-        /// <returns>Bool (currently always true)</returns>
-        bool CanLoadPreviousSolution() => _solutions.Count > 1 && _solutionIndex > 0;
-
-        /// <summary>
-        /// Loads the next possible solution.
-        /// </summary>
-        void LoadPreviousSolution()
-        {
-            _solutionIndex -= 1;
-            DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsMatrix());
-            SolutionCounter = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
-        }
-
-        /// <summary>
-        /// Determines if loading the next solution is possible.
-        /// </summary>
-        /// <returns>Bool (currently always true)</returns>
-        bool CanLoadNextSolution() => _solutions.Count > 1 && _solutionIndex < _solutions.Count - 1;
-
-        /// <summary>
-        /// Loads the next possible solution.
-        /// </summary>
-        void LoadNextSolution()
-        {
-            _solutionIndex += 1;
-            DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsMatrix());
-            SolutionCounter = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
-        }
-
-        /// <summary>
-        /// Determines if cancelling the busy task is possible.
-        /// </summary>
-        /// <returns>Bool (currently always true)</returns>
-        bool CanCancelBusy() => true;
-
-        /// <summary>
-        /// Cancels the busy task.
-        /// </summary>
-        void CancelBusy()
-        {
-            var messageBoxResult = MessageBoxService.Show(Resources.MessageBox_AbortSolution, Resources.MessageBox_Warning_Title,
-                    MessageBoxButton.YesNo, MessageBoxImage.Warning);
-
-            if (messageBoxResult == MessageBoxResult.Yes)
-            {
-                SudokuSolverThread.Abort();
-                IsBusy = false;
-            }
-        }
-        #endregion
-
-        #region Methods
-
-        /// <summary>
-        /// Initializes the command properties in the viewmodel.
-        /// </summary>
-        void LoadCommands()
-        {
-            DrawSudokuCommand = new ParameterizedCommand(Draw, CanDraw);
-            SolveSudokuCommand = new ParameterlessCommand(Solve, CanSolve);
-            SaveSudokuCommand = new ParameterlessCommand(Save, CanSave);
-            LoadSudokuCommand = new ParameterlessCommand(Load, CanLoad);
-            LoadPreviousSolutionCommand = new ParameterlessCommand(LoadPreviousSolution, CanLoadPreviousSolution);
-            LoadNextSolutionCommand = new ParameterlessCommand(LoadNextSolution, CanLoadNextSolution);
-            CancelBusyCommand = new ParameterlessCommand(CancelBusy, CanCancelBusy);
-        }
-
-        /// <summary>
-        /// Return the viewmodel of the current sudoku board control.
-        /// </summary>
-        /// <returns>IClassicSudokuTableViewModel</returns>
-        IClassicSudokuTableViewModel GetCurrentTableViewModel() =>
-            (IClassicSudokuTableViewModel)SudokuBoardControl.DataContext;
-
-        /// <summary>
-        /// Creates a classic Sudoku board, according to the given board size.
-        /// </summary>
-        /// <param name="sudokuBoardSize">Size information about the board.</param>
-        /// <returns></returns>
-        SudokuBoard CreateClassicBoard(SudokuBoardSize sudokuBoardSize)
-        {
-            SudokuBoard sudokuBoard;
-            var boardControlViewModel = (IClassicSudokuTableViewModel)SudokuBoardControl.DataContext;
-            if (sudokuBoardSize.BoxCountX == 3 && sudokuBoardSize.BoxCountY == 3)
-            {
-                sudokuBoard = SudokuFactory.ClassicWith3x3Boxes();
-                for (int row = 0; row < sudokuBoardSize.Height; row++)
-                {
-                    string actRow = "";
-                    for (int column = 0; column < sudokuBoardSize.Width; column++)
-                    {
-                        if (string.IsNullOrEmpty(boardControlViewModel.Cells[row][column]))
-                        {
-                            actRow += ".";
-                        }
-                        else
-                        {
-                            boardControlViewModel.BoldCells[row][column] = true;
-                            actRow += boardControlViewModel.Cells[row][column];
-                        }
-                    }
-                    sudokuBoard.AddRow(actRow);
-                }
-            }
-            else
-            {
-                sudokuBoard = SudokuFactory.SizeAndBoxes(sudokuBoardSize);
-                for (int row = 0; row < sudokuBoardSize.Height; row++)
-                {
-                    string actRow = "";
-                    for (int column = 0; column < sudokuBoardSize.Width; column++)
-                    {
-                        if (string.IsNullOrEmpty(boardControlViewModel.Cells[row][column]))
-                        {
-                            actRow += "0";
-                        }
-                        else
-                        {
-                            boardControlViewModel.BoldCells[row][column] = true;
-                            actRow += boardControlViewModel.Cells[row][column];
-                        }
-                    }
-                    sudokuBoard.AddRow(actRow);
-                }
-            }
-            return sudokuBoard;
-        }
-
-        /// <summary>
-        /// Solver method for the sudoku solver thread.
-        /// </summary>
-        /// <param name="classicBoard">The classic Sudoku board what is need to be solved.</param>
-        /// <param name="findAllSolutions">Determines if all possible solutions have to find or just one.</param>
-        /// <returns>Enumerable of the solutions.</returns>
-        IEnumerable<SudokuBoard> Sudoku_SolverThread(SudokuBoard classicBoard, bool findAllSolutions)
-        {
-            List<SudokuBoard> solutions = new List<SudokuBoard>();
-
-            if (findAllSolutions)
-            {
-                solutions = classicBoard.Solve().ToList();
-            }
-            else
-            {
-                solutions.Add(classicBoard.SolveOnce());
-            }
-
-            return solutions;
-        }
-
-        /// <summary>
-        /// Configures the viewmodel to display the classic solution(s) and a message about the possible solutions count.
-        /// </summary>
-        void DisplaySolutionAndMessage()
-        {
-            IsBusy = false;
-            if (_sudokuSolverThread.ThreadState != ThreadState.Aborted)
-            {
-                if (_solutions.Count > 0 && _solutions[0] != null)
-                {
-                    _solutionIndex = 0;
-                    if (_solutions.Count > 1)
-                    {
-                        MessageBoxService.Show($"{Resources.MessageBox_SudokuHasMoreSolutions_Part1} { _solutions.Count}). {Resources.MessageBox_SudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
-                             MessageBoxButton.OK, MessageBoxImage.Information);
-                        
-                        SolutionCounter = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
-                        IsSolutionCounterVisible = true;
-                    }
-                    else
-                    {
-                        MessageBoxService.Show(Resources.MessageBox_SudokuHasOneSolution, Resources.MessageBox_Information_Title,
-                            MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-
-                    string[,] solution = _solutions[_solutionIndex].OutputAsMatrix();
-                    DisplayMatrixBoard(solution);
-
-                }
-                else
-                {
-                    MessageBoxService.Show(Resources.MessageBox_SudokuHasNoSolution, Resources.MessageBox_Information_Title,
-                        MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Loads the value from the given matrix into the selected table's viewmodel.
-        /// </summary>
-        /// <param name="board"></param>
-        void DisplayMatrixBoard(string[,] board)
-        {
-            var boardControlViewModel = (IClassicSudokuTableViewModel)SudokuBoardControl.DataContext;
-            for (int row = 0; row < board.GetLength(0); row++)
-            {
-                for (int column = 0; column < board.GetLength(1); column++)
-                {
-                    if (board[row, column] != "0")
-                    {
-                        boardControlViewModel.Cells[row][column] = board[row, column];
-                    }
-                }
-            }
-        }
         #endregion
     }
 }

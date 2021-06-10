@@ -31,6 +31,30 @@ namespace Solvedoku.Classes
                 new ColorItem(Colors.LightGray, Resources.Color_LightGray)
             };
         }
+
+        public static ObservableCollection<SudokuBoardSize> SudokuBoardSizes
+        {
+            get => new ObservableCollection<SudokuBoardSize> {
+                new SudokuBoardSize{
+                    Width = 9,
+                    Height = 9,
+                    BoxCountX = 3,
+                    BoxCountY = 3
+                },
+                new SudokuBoardSize{
+                    Width = 6,
+                    Height = 6,
+                    BoxCountX = 3,
+                    BoxCountY = 2
+                },
+                new SudokuBoardSize{
+                    Width = 4,
+                    Height = 4,
+                    BoxCountX = 2,
+                    BoxCountY = 2
+                }
+            };
+        }
         #endregion
 
         #region Properties
@@ -198,56 +222,6 @@ namespace Solvedoku.Classes
             yield break;
         }
 
-        public SudokuBoard SolveOnce()
-        {
-            ResetSolutions();
-            SudokuProgress simplify = SudokuProgress.PROGRESS;
-            while (simplify == SudokuProgress.PROGRESS)
-            {
-                simplify = Simplify();
-            }
-
-            if (simplify == SudokuProgress.FAILED)
-            {
-                return null;
-            }
-
-            // Find one of the values with the least number of alternatives, but that still has at least 2 alternatives
-            var query = from rule in _rules
-                        from tile in rule
-                        where tile.PossibleCount > 1
-                        orderby tile.PossibleCount ascending
-                        select tile;
-
-            SudokuTile chosen = query.FirstOrDefault();
-
-            if (chosen == null)
-            {
-                // The board has been completed, we're done!
-                return this;
-            }
-
-            // Console.WriteLine("SudokuTile: " + chosen.ToString());
-
-            foreach (var value in Enumerable.Range(1, _maxValue))
-            {
-                // Iterate through all the valid possibles on the chosen square and pick a number for it
-                if (!chosen.IsValuePossible(value))
-                {
-                    continue;
-                }
-
-                var copy = new SudokuBoard(this);
-                copy.Tile(chosen.Row, chosen.Column).Fix(value);
-
-                foreach (var innerSolution in copy.Solve())
-                {
-                    return innerSolution;
-                }
-            }
-            return null;
-        }
-
         public string[,] OutputAsMatrix()
         {
             string[,] output = new string[_tiles.GetLength(0), _tiles.GetLength(1)];
@@ -347,14 +321,14 @@ namespace Solvedoku.Classes
             _row++;
         }
 
-        public static List<SolidColorBrush> GetPuzzleColorsAsSolidColorBrushes()
+        public static List<SolidColorBrush> GetJigsawColorsAsSolidColorBrushes()
         {
-            List<SolidColorBrush> puzzleBrushes = new List<SolidColorBrush>();
+            List<SolidColorBrush> jigsawBrushes = new List<SolidColorBrush>();
             foreach (ColorItem cItem in JigsawColors)
             {
-                puzzleBrushes.Add(new SolidColorBrush(cItem.Color.GetValueOrDefault()));
+                jigsawBrushes.Add(new SolidColorBrush(cItem.Color.GetValueOrDefault()));
             }
-            return puzzleBrushes;
+            return jigsawBrushes;
         }
         #endregion
     }

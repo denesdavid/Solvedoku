@@ -1,4 +1,5 @@
 ﻿<UserControl x:Class="Solvedoku.Views.BusyIndicatorContent.UcBusyIndicatorContent"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,6 +8,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
+        <System:Boolean x:Key="FalseValue">False</System:Boolean>
+        <System:Boolean x:Key="TrueValue">True</System:Boolean>
         <LinearGradientBrush x:Key="BusyIProgressBarBackground" StartPoint="1,0" EndPoint="1,1.75">
             <GradientStop Color="ForestGreen" Offset="0.555"/>
             <GradientStop Color="LightGreen" Offset="-0.111"/>
@@ -26,7 +29,9 @@
                 <Border Grid.Row="1" CornerRadius="40">
                     <ProgressBar  Style="{StaticResource ProgressBarStyle}"/>
                 </Border>
-                <Button Content="{Classes:Loc Button_Cancel}" Command="{Binding CancelBusyCommand}" HorizontalAlignment="Right" Margin="0,0,2,0"/>
+                <TextBlock Text="{Binding FoundSolutionCounter}" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Center" Margin="8"/>
+                <Button Content="{Classes:Loc Button_Cancel}" Command="{Binding CancelBusyCommand}" CommandParameter="{StaticResource TrueValue}" HorizontalAlignment="Right" Margin="0,0,2,0"/>
+                <Button Content="Cancel and keep solutions" Command="{Binding CancelBusyCommand}" CommandParameter="{StaticResource FalseValue}" HorizontalAlignment="Right" Margin="0,0,2,0"/>
             </StackPanel>
         </StackPanel>
     </Grid>

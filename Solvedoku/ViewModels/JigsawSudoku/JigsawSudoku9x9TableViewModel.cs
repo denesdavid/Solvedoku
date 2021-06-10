@@ -2,7 +2,7 @@
 
 namespace Solvedoku.ViewModels.JigsawSudoku
 {
-    class JigsawSudoku9x9TableViewModel : ViewModelBase, IJigsawSudokuTableViewModel
+    class JigsawSudoku9x9TableViewModel : BaseJigsawSudokuTableViewModel
     {
         #region Fields
 
@@ -49,7 +49,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
 
         #region Properties
 
-        public ObservableCollection<ObservableCollection<string>> Cells
+        public override ObservableCollection<ObservableCollection<string>> Cells
         {
             get => _cells;
             set
@@ -59,7 +59,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             }
         }
 
-        public ObservableCollection<ObservableCollection<bool>> BoldCells
+        public override ObservableCollection<ObservableCollection<bool>> BoldCells
         {
             get => _boldCells;
             set
@@ -69,7 +69,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             }
         }
 
-        public ObservableCollection<ObservableCollection<int>> JigsawAreas
+        public override ObservableCollection<ObservableCollection<int>> JigsawAreas
         { 
             get => _puzzleAreas;
             set
@@ -77,69 +77,6 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                 _puzzleAreas = value;
                 OnPropertyChanged();
             }
-        }
-
-        #endregion
-
-        #region Functions
-        public bool AreAllCellsFilled()
-        {
-            foreach (var row in Cells)
-            {
-                foreach (var column in row)
-                {
-                    if (column == string.Empty)
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
-
-        public bool AreAnyCellsFilled()
-        {
-            foreach (var row in Cells)
-            {
-                foreach (var column in row)
-                {
-                    if (column != string.Empty)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        public string[] GetJigsawAreasAsArray()
-        {
-            string[] puzzleAreas = new string[9];
-            int i = -1;
-            foreach (ObservableCollection<int> row in JigsawAreas)
-            {
-                i++;
-                string actRow = "";
-                foreach (int item in row)
-                {
-                    actRow += item;
-                }
-                puzzleAreas[i] = actRow;
-            }
-            return puzzleAreas;
-        }
-
-        public int[,] GetJigsawAreasAsMatrix()
-        {
-            int[,] matrix = new int[9, 9];
-            for (int row = 0; row < JigsawAreas.Count; row++)
-            {
-                for (int column = 0; column < JigsawAreas[row].Count; column++)
-                {
-                    matrix[row, column] = JigsawAreas[row][column];
-                }
-            }
-            return matrix;
         }
 
         #endregion

@@ -11,7 +11,8 @@
         <JigsawSudokuViewModels:JigsawSudoku9x9TableViewModel/>
     </UserControl.DataContext>
     <UserControl.Resources>
-        <Converters:IntegerToPuzzleColorConverter x:Key="ColorConverter"/>
+        <Converters:IntegerToJigsawColorConverter x:Key="ColorConverter"/>
+        <Converters:BoolToFontWeightConverter x:Key="BoolToFontWeightConverter"/>
     </UserControl.Resources>
     <Grid Width="400" Height="400">
         <Grid.ColumnDefinitions>
@@ -37,7 +38,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <TextBox Grid.Row="0" Grid.Column="0" TextChanged="TextBox_TextChanged" Background="{Binding JigsawAreas[0][0], Mode=TwoWay, Converter={StaticResource ColorConverter}, FallbackValue=AntiqueWhite}" Text="{Binding Cells[0][0], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp" MouseMove="PuzzleCell_MouseMove"/>
+        <TextBox Grid.Row="0" Grid.Column="0" TextChanged="TextBox_TextChanged" Background="{Binding JigsawAreas[0][0], Mode=TwoWay, Converter={StaticResource ColorConverter}, FallbackValue=AntiqueWhite}" Text="{Binding Cells[0][0], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" FontWeight="{Binding BoldCells[0][0], UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToFontWeightConverter}}" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp" MouseMove="PuzzleCell_MouseMove"/>
         <TextBox Grid.Row="0" Grid.Column="1" TextChanged="TextBox_TextChanged" Background="{Binding JigsawAreas[0][1], Mode=TwoWay, Converter={StaticResource ColorConverter}, FallbackValue=AntiqueWhite}" Text="{Binding Cells[0][1], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp" MouseMove="PuzzleCell_MouseMove"/>
         <TextBox Grid.Row="0" Grid.Column="2" TextChanged="TextBox_TextChanged" Background="{Binding JigsawAreas[0][2], Mode=TwoWay, Converter={StaticResource ColorConverter}, FallbackValue=AntiqueWhite}" Text="{Binding Cells[0][2], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp" MouseMove="PuzzleCell_MouseMove"/>
         <TextBox Grid.Row="0" Grid.Column="3" TextChanged="TextBox_TextChanged" Background="{Binding JigsawAreas[0][3], Mode=TwoWay, Converter={StaticResource ColorConverter}, FallbackValue=AntiqueWhite}" Text="{Binding Cells[0][3], Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ContextMenu="{x:Null}" Style="{DynamicResource TbSudokuEvenCellStyle}" MouseRightButtonUp="PuzzleCell_OnMouseRightButtonUp" MouseMove="PuzzleCell_MouseMove"/>
