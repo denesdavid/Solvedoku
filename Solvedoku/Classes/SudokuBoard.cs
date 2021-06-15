@@ -151,7 +151,7 @@ namespace Solvedoku.Classes
 
         internal IEnumerable<SudokuTile> TileBox(int startX, int startY, int sizeX, int sizeY)
         {
-            return from pos in SudokuFactory.box(sizeX, sizeY) select _tiles[startX + pos.Item1, startY + pos.Item2];
+            return from pos in SudokuFactory.box(sizeX, sizeY) select _tiles[startY + pos.Item2, startX + pos.Item1];
         }
 
         Tuple<int, int> CountBlockSize(int size)
