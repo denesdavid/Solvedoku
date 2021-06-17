@@ -35,6 +35,7 @@
                           ItemsSource="{Binding SudokuBoardSizes, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedSudokuBoardSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           Margin="8" SelectedIndex="0" DockPanel.Dock="Right"/>
+                <CheckBox Content="Set diagonal rules (Sudoku X)" IsChecked="{Binding IsDiagonalRulesApplied, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="8" HorizontalAlignment="Center"/>
                 <Button Content="{Classes:Loc Main_Draw}" Width="200" Command="{Binding DrawSudokuCommand}"
                         CommandParameter="{Binding SelectedSudokuBoardSize}"/>
                 <Button Content="{Classes:Loc Main_Solve}" Command="{Binding SolveSudokuCommand}"/>

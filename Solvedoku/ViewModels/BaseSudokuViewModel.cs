@@ -23,6 +23,7 @@ namespace Solvedoku.ViewModels
         protected string _foundSolutionCounter = string.Empty;
         protected Thread _sudokuSolverThread;
         protected UserControl _sudokuBoardControl;
+        protected SudokuBoard _actualSudokuBoard;
         protected SudokuBoardSize _selectedSudokuBoardSize;
         protected SaveFileDialog _saveFileDialog = new SaveFileDialog();
         protected OpenFileDialog _openFileDialog = new OpenFileDialog();
@@ -178,7 +179,7 @@ namespace Solvedoku.ViewModels
         protected void LoadPreviousSolution()
         {
             _solutionIndex -= 1;
-            DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsMatrix());
+            DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsStringMatrix());
             SolutionCounter = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
         }
 
@@ -195,7 +196,7 @@ namespace Solvedoku.ViewModels
         protected void LoadNextSolution()
         {
             _solutionIndex += 1;
-            DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsMatrix());
+            DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsStringMatrix());
             SolutionCounter = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
         }
 
@@ -258,13 +259,13 @@ namespace Solvedoku.ViewModels
         /// </summary>
         /// <param name="sudokuBoardSize">Size information about the board.</param>
         /// <returns>Sudoku board.</returns>
-        protected virtual SudokuBoard CreateBoard(SudokuBoardSize sudokuBoardSize)
+        protected virtual SudokuBoard CreateBoard(SudokuBoardSize sudokuBoardSize, bool applyDiagonalRules = false)
         {
             SudokuBoard sudokuBoard;
             var boardControlViewModel = (BaseSudokuTableViewModel)SudokuBoardControl.DataContext;
             if (sudokuBoardSize.BoxCountX == 3 && sudokuBoardSize.BoxCountY == 3)
             {
-                sudokuBoard = SudokuFactory.ClassicWith3x3Boxes();
+                sudokuBoard = SudokuFactory.ClassicWith3x3Boxes(applyDiagonalRules);
                 for (int row = 0; row < sudokuBoardSize.Height; row++)
                 {
                     string actRow = "";
@@ -285,7 +286,7 @@ namespace Solvedoku.ViewModels
             }
             else
             {
-                sudokuBoard = SudokuFactory.SizeAndBoxes(sudokuBoardSize);
+                sudokuBoard = SudokuFactory.SizeAndBoxes(sudokuBoardSize, applyDiagonalRules);
                 for (int row = 0; row < sudokuBoardSize.Height; row++)
                 {
                     string actRow = "";
@@ -386,7 +387,7 @@ namespace Solvedoku.ViewModels
                             MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
-                    string[,] solution = _solutions[_solutionIndex].OutputAsMatrix();
+                    string[,] solution = _solutions[_solutionIndex].OutputAsStringMatrix();
                     DisplayMatrixBoard(solution);
 
                 }

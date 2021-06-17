@@ -14,7 +14,24 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 {
     class ClassicSudokuViewModel : BaseSudokuViewModel
     {
+        #region Fields
+
+        bool _isDiagonalRulesApplied;
+
+        #endregion
+
         #region Properties
+
+        public bool IsDiagonalRulesApplied
+        {
+            get => _isDiagonalRulesApplied;
+            set
+            {
+                _isDiagonalRulesApplied = value;
+                OnPropertyChanged();
+            }
+        }
+
         public ObservableCollection<SudokuBoardSize> SudokuBoardSizes => SudokuBoard.SudokuBoardSizes;
         #endregion
 
@@ -50,6 +67,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             if (sudokuBoardSize.Height == 9 && sudokuBoardSize.Width == 9)
             {
                 SudokuBoardControl = new UcClassicSudoku9x9Table();
+                _actualSudokuBoard = CreateBoard(sudokuBoardSize);
             }
             else if (sudokuBoardSize.Height == 6 && sudokuBoardSize.Width == 6)
             {
@@ -60,6 +78,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 SudokuBoardControl = new UcClassicSudoku4x4Table();
             }
             SolutionCounter = string.Empty;
+            _solutions.Clear();
         }
 
         /// <summary>
@@ -77,11 +96,10 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 {
                     _solutions.Clear();
                     SolutionCounter = string.Empty;
-                    var board = CreateBoard(((IClassicSudokuControl)SudokuBoardControl).BoardSize);
+                    var board = CreateBoard(((IClassicSudokuControl)SudokuBoardControl).BoardSize, IsDiagonalRulesApplied);
 
                     if (msgBoxResult == MessageBoxResult.Yes)
                     {
-
                         _sudokuSolverThread = new Thread(() =>
                         {
                             int foundSolution = 0;
@@ -134,7 +152,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             {
                 try
                 {
-                    var classicSudokuFile = new ClassicSudokuFile(CreateBoard(SelectedSudokuBoardSize),
+                    var classicSudokuFile = new ClassicSudokuFile(CreateBoard(SelectedSudokuBoardSize, IsDiagonalRulesApplied),
                         _solutions);
 
                     using (Stream stream = File.Open(_saveFileDialog.FileName, FileMode.Create))
@@ -174,8 +192,9 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                         _classicSudokuFile = (ClassicSudokuFile)bformatter.Deserialize(stream);
                     }
                     SelectedSudokuBoardSize = _classicSudokuFile.Board.BoardSize;
+                    IsDiagonalRulesApplied = _classicSudokuFile.Board.HasDiagonalRules;
                     Draw(SelectedSudokuBoardSize);
-                    DisplayMatrixBoard(_classicSudokuFile.Board.OutputAsMatrix());
+                    DisplayMatrixBoard(_classicSudokuFile.Board.OutputAsStringMatrix());
                     SolutionCounter = string.Empty;
 
                     _solutions = (List<SudokuBoard>)_classicSudokuFile.Solutions;

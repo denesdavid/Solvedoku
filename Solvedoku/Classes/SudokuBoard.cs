@@ -44,8 +44,8 @@ namespace Solvedoku.Classes
                 new SudokuBoardSize{
                     Width = 6,
                     Height = 6,
-                    BoxCountX = 3,
-                    BoxCountY = 2
+                    BoxCountX = 2,
+                    BoxCountY = 3
                 },
                 new SudokuBoardSize{
                     Width = 4,
@@ -58,6 +58,8 @@ namespace Solvedoku.Classes
         #endregion
 
         #region Properties
+
+        public bool HasDiagonalRules { get; set; }
         public SudokuBoardSize BoardSize
         {
             get => new SudokuBoardSize
@@ -81,6 +83,7 @@ namespace Solvedoku.Classes
 
             _maxValue = copy._maxValue;
             _tiles = new SudokuTile[copy.Width, copy.Height];
+            HasDiagonalRules = copy.HasDiagonalRules;
             CreateTiles();
             // Copy the tile values
             foreach (var pos in SudokuFactory.box(Width, Height))
@@ -101,18 +104,23 @@ namespace Solvedoku.Classes
             }
         }
 
-        public SudokuBoard(int width, int height, int maxValue)
+        public SudokuBoard(int width, int height, int maxValue, bool applyDiagonalRules = false)
         {
             _maxValue = maxValue;
             _tiles = new SudokuTile[width, height];
+            HasDiagonalRules = applyDiagonalRules;
             CreateTiles();
             if (_maxValue == width || _maxValue == height)// If maxValue is not width or height, then adding line rules would be stupid
             {
                 SetupLineRules();
+                if (HasDiagonalRules)
+                {
+                    SetupDiagonalRules();
+                }
             }
         }
 
-        public SudokuBoard(int width, int height) : this(width, height, Math.Max(width, height)) { }
+        public SudokuBoard(int width, int height, bool applyDiagonalRules = false) : this(width, height, Math.Max(width, height), applyDiagonalRules) { }
         #endregion
 
         #region Functions
@@ -129,6 +137,24 @@ namespace Solvedoku.Classes
             for (int i = 0; i < _tiles.GetLength(1); i++)
             {
                 yield return _tiles[col, i];
+            }
+        }
+
+        IEnumerable<SudokuTile> GetDiagonalFromLeftToRight()
+        {
+            for (int i = 0; i < Height; i++)
+            {
+                yield return _tiles[i, i];
+            }
+        }
+
+        IEnumerable<SudokuTile> GetDiagonalFromRightToLeft()
+        {
+            int column = Width-1;
+            for (int i = 0; i < Height; i++)
+            {
+                yield return _tiles[i, column];
+                column--;
             }
         }
 
@@ -222,7 +248,7 @@ namespace Solvedoku.Classes
             yield break;
         }
 
-        public string[,] OutputAsMatrix()
+        public string[,] OutputAsStringMatrix()
         {
             string[,] output = new string[_tiles.GetLength(0), _tiles.GetLength(1)];
             for (int row = 0; row < _tiles.GetLength(0); row++)
@@ -265,6 +291,14 @@ namespace Solvedoku.Classes
             }
         }
 
+        void SetupDiagonalRules()
+        {
+            IEnumerable<SudokuTile> diagonalTilesFromLeftToRight = GetDiagonalFromLeftToRight();
+            IEnumerable<SudokuTile> diagonalTilesFromRightToLeft = GetDiagonalFromRightToLeft();
+            _rules.Add(new SudokuRule(diagonalTilesFromLeftToRight, "Diagonal from L to R"));
+            _rules.Add(new SudokuRule(diagonalTilesFromRightToLeft, "Diagonal from R to L"));
+        }
+
         internal void ResetSolutions()
         {
             foreach (SudokuTile tile in _tiles)
@@ -281,14 +315,14 @@ namespace Solvedoku.Classes
             var boxes = SudokuFactory.box(sizeX, sizeY);
             foreach (var pos in boxes)
             {
-                if ((sizeX * sizeY) != pos.Item1 * sizeX && (sizeX * sizeY) != pos.Item1 * sizeY)
+                if ((sizeX * sizeY) != (pos.Item1 * Math.Max(sizeX, sizeY)) && (sizeX * sizeY) != (pos.Item2 * Math.Max(sizeX, sizeY)))
                 {
                     IEnumerable<SudokuTile> boxTiles = TileBox(pos.Item1 * sizeX, pos.Item2 * sizeY, sizeX, sizeY);
                     CreateRule("Box at (" + pos.Item1.ToString() + ", " + pos.Item2.ToString() + ")", boxTiles);
                 }
             }
         }
-
+        
         public void CreateRule(string description, params SudokuTile[] tiles)
         {
             _rules.Add(new SudokuRule(tiles, description));

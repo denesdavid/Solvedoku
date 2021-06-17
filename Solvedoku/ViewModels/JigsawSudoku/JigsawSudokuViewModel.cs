@@ -199,7 +199,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                     SelectedSudokuBoardSize = _jigsawSudokuFile.Board.BoardSize;
                     Draw(SelectedSudokuBoardSize);
                     DisplayAreas(_jigsawSudokuFile.Areas);
-                    DisplayMatrixBoard(_jigsawSudokuFile.Board.OutputAsMatrix());
+                    DisplayMatrixBoard(_jigsawSudokuFile.Board.OutputAsStringMatrix());
                     SolutionCounter = string.Empty;
 
                     _solutions = _jigsawSudokuFile.Solutions;
