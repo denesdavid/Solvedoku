@@ -109,7 +109,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                             {
                                 _solutions.Add(item);
                                 foundSolution++;
-                                FoundSolutionCounter = $"Found solutions: {foundSolution}";
+                                //FoundSolutionCounter = $"Found solutions: {foundSolution}";
                             }
                             Action action = DisplaySolutionAndMessage;
                             Application.Current.Dispatcher.Invoke(action);

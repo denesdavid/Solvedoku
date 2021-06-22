@@ -88,6 +88,15 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mégse, de a megoldások megtartása.
+        /// </summary>
+        public static string Button_CancelAndKeepSolutions {
+            get {
+                return ResourceManager.GetString("Button_CancelAndKeepSolutions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Összes megoldás kiszámítása.
         /// </summary>
         public static string Button_GetAllSolutions {
@@ -255,6 +264,15 @@ namespace Solvedoku.Properties {
         public static string Main_ClassicPage {
             get {
                 return ResourceManager.GetString("Main_ClassicPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Átló szabály (Sudoku X).
+        /// </summary>
+        public static string Main_DiagonalRules {
+            get {
+                return ResourceManager.GetString("Main_DiagonalRules", resourceCulture);
             }
         }
         
@@ -570,6 +588,15 @@ namespace Solvedoku.Properties {
         public static string SaveLoadDialog_Filter_JigsawSudoku {
             get {
                 return ResourceManager.GetString("SaveLoadDialog_Filter_JigsawSudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Talált megoldások:.
+        /// </summary>
+        public static string TextBlock_FoundSolutions {
+            get {
+                return ResourceManager.GetString("TextBlock_FoundSolutions", resourceCulture);
             }
         }
     }

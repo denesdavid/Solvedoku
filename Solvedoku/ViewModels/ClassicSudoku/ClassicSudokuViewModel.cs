@@ -33,6 +33,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         }
 
         public ObservableCollection<SudokuBoardSize> SudokuBoardSizes => SudokuBoard.SudokuBoardSizes;
+  
         #endregion
 
         #region Constructor
@@ -107,7 +108,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                             {
                                 _solutions.Add(item);
                                 foundSolution++;
-                                FoundSolutionCounter = $"Found solutions: {foundSolution}";
+                                FoundSolutionCounter = $"{Resources.TextBlock_FoundSolutions} {foundSolution}";
                             }
                             Action action = DisplaySolutionAndMessage;
                             Application.Current.Dispatcher.Invoke(action);

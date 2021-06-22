@@ -126,6 +126,9 @@
   <data name="Button_Cancel" xml:space="preserve">
     <value>Mégse</value>
   </data>
+  <data name="Button_CancelAndKeepSolutions" xml:space="preserve">
+    <value>Mégse, de a megoldások megtartása</value>
+  </data>
   <data name="Button_GetAllSolutions" xml:space="preserve">
     <value>Összes megoldás kiszámítása</value>
   </data>
@@ -182,6 +185,9 @@
   </data>
   <data name="Main_ClassicPage" xml:space="preserve">
     <value>Klasszikus</value>
+  </data>
+  <data name="Main_DiagonalRules" xml:space="preserve">
+    <value>Átló szabály (Sudoku X)</value>
   </data>
   <data name="Main_Draw" xml:space="preserve">
     <value>Rajzol</value>
@@ -288,5 +294,8 @@ Biztos vagy benne, hogy újat szeretnél rajzolni?</value>
   </data>
   <data name="SaveLoadDialog_Filter_JigsawSudoku" xml:space="preserve">
     <value>Puzzle SUDOKU fájlok (*.jsu)|*.jsu</value>
+  </data>
+  <data name="TextBlock_FoundSolutions" xml:space="preserve">
+    <value>Talált megoldások:</value>
   </data>
 </root>
