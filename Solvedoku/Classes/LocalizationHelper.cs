@@ -33,6 +33,8 @@ namespace Solvedoku.Classes
                 if (currentCulture != value)
                 {
                     currentCulture = value;
+                    CultureInfo.DefaultThreadCurrentCulture = value;
+                    CultureInfo.DefaultThreadCurrentUICulture = value;
                     System.Threading.Thread.CurrentThread.CurrentUICulture = value;
                     System.Threading.Thread.CurrentThread.CurrentCulture = value;
                     var @event = PropertyChanged;
