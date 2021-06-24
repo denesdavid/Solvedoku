@@ -16,18 +16,18 @@ namespace Solvedoku.ViewModels.ClassicSudoku
     {
         #region Fields
 
-        bool _isDiagonalRulesApplied;
+        bool _areDiagonalRulesApplied;
 
         #endregion
 
         #region Properties
 
-        public bool IsDiagonalRulesApplied
+        public bool AreDiagonalRulesApplied
         {
-            get => _isDiagonalRulesApplied;
+            get => _areDiagonalRulesApplied;
             set
             {
-                _isDiagonalRulesApplied = value;
+                _areDiagonalRulesApplied = value;
                 OnPropertyChanged();
             }
         }
@@ -97,7 +97,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 {
                     _solutions.Clear();
                     SolutionCounter = string.Empty;
-                    var board = CreateBoard(((IClassicSudokuControl)SudokuBoardControl).BoardSize, IsDiagonalRulesApplied);
+                    var board = CreateBoard(((IClassicSudokuControl)SudokuBoardControl).BoardSize, AreDiagonalRulesApplied);
 
                     if (msgBoxResult == MessageBoxResult.Yes)
                     {
@@ -153,7 +153,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             {
                 try
                 {
-                    var classicSudokuFile = new ClassicSudokuFile(CreateBoard(SelectedSudokuBoardSize, IsDiagonalRulesApplied),
+                    var classicSudokuFile = new ClassicSudokuFile(CreateBoard(SelectedSudokuBoardSize, AreDiagonalRulesApplied),
                         _solutions);
 
                     using (Stream stream = File.Open(_saveFileDialog.FileName, FileMode.Create))
@@ -193,7 +193,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                         _classicSudokuFile = (ClassicSudokuFile)bformatter.Deserialize(stream);
                     }
                     SelectedSudokuBoardSize = _classicSudokuFile.Board.BoardSize;
-                    IsDiagonalRulesApplied = _classicSudokuFile.Board.HasDiagonalRules;
+                    AreDiagonalRulesApplied = _classicSudokuFile.Board.HasDiagonalRules;
                     Draw(SelectedSudokuBoardSize);
                     DisplayMatrixBoard(_classicSudokuFile.Board.OutputAsStringMatrix());
                     SolutionCounter = string.Empty;

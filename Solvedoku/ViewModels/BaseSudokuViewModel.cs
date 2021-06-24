@@ -117,6 +117,7 @@ namespace Solvedoku.ViewModels
                 OnPropertyChanged();
             }
         }
+
         #endregion
 
         #region Commands
@@ -180,7 +181,7 @@ namespace Solvedoku.ViewModels
         {
             _solutionIndex -= 1;
             DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsStringMatrix());
-            SolutionCounter = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
+            SolutionCounter = $"{ _solutionIndex + 1 }/{ _solutions.Count }";
         }
 
         /// <summary>
@@ -197,7 +198,7 @@ namespace Solvedoku.ViewModels
         {
             _solutionIndex += 1;
             DisplayMatrixBoard(_solutions[_solutionIndex].OutputAsStringMatrix());
-            SolutionCounter = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
+            SolutionCounter = $"{ _solutionIndex + 1 }/{ _solutions.Count }";
         }
 
         /// <summary>
@@ -378,7 +379,7 @@ namespace Solvedoku.ViewModels
                         MessageBoxService.Show($"{Resources.MessageBox_SudokuHasMoreSolutions_Part1} { _solutions.Count}). {Resources.MessageBox_SudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
                              MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        SolutionCounter = $"{Resources.Main_SolutionsCounter} { _solutionIndex + 1 }/{ _solutions.Count }";
+                        SolutionCounter = $"{ _solutionIndex + 1 }/{ _solutions.Count }";
                         IsSolutionCounterVisible = true;
                     }
                     else

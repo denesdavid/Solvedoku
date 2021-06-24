@@ -8,6 +8,7 @@ namespace Solvedoku.Views.BusyIndicatorContent
     public partial class UcBusyIndicatorContent : UserControl
     {
         #region Constructor
+
         public UcBusyIndicatorContent()
         {
             InitializeComponent();
