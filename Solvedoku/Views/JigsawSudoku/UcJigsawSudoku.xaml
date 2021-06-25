@@ -37,6 +37,7 @@
                                               Style="{DynamicResource PuzzleColorPickerStyle}">
                 </wpfx:ColorPicker>
                 <Button Content="{Classes:Loc Main_Draw}"
+                        Click="Button_Click"
                         Command="{Binding DrawSudokuCommand}"
                         CommandParameter="{Binding SelectedSudokuBoardSize}" Width="200"/>
                 <Button Content="{Classes:Loc Main_Solve}" Command="{Binding SolveSudokuCommand}"/>

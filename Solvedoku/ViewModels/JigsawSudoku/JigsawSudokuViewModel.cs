@@ -37,7 +37,17 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             }
         }
 
-        public ObservableCollection<ColorItem> JigsawColors => SudokuBoard.JigsawColors;
+        public ObservableCollection<ColorItem> JigsawColors => new ObservableCollection<ColorItem> {
+                new ColorItem(Colors.LightBlue, Resources.Color_LightBlue),
+                new ColorItem(Colors.CornflowerBlue, Resources.Color_CornflowerBlue),
+                new ColorItem(Colors.Magenta, Resources.Color_Magenta),
+                new ColorItem(Colors.Red, Resources.Color_Red),
+                new ColorItem(Colors.Green, Resources.Color_Green),
+                new ColorItem(Colors.Yellow, Resources.Color_Yellow),
+                new ColorItem(Colors.RosyBrown, Resources.Color_RosyBrown),
+                new ColorItem(Colors.Orange, Resources.Color_Orange),
+                new ColorItem(Colors.MediumPurple, Resources.Color_MediumPurple),
+                new ColorItem(Colors.LightGray, Resources.Color_LightGray) };
 
         #endregion
 
@@ -48,6 +58,16 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             LoadCommands();
             SelectedColor = Colors.LightBlue;
             SudokuBoardControl = new UcJigsawSudoku9x9Table();
+            _selectedSudokuBoardSize = new SudokuBoardSize { BoxCountX = 3, BoxCountY = 3, Height = 9, Width = 9 };
+            _instance = this;
+        }
+
+        public JigsawSudokuViewModel(JigsawSudokuViewModel oldViewModel)
+        {
+            LoadCommands();
+            SelectedColor = Colors.LightBlue;
+            SudokuBoardControl = new UcJigsawSudoku9x9Table();
+            SolutionCounter = oldViewModel.SolutionCounter;
             _selectedSudokuBoardSize = new SudokuBoardSize { BoxCountX = 3, BoxCountY = 3, Height = 9, Width = 9 };
             _instance = this;
         }

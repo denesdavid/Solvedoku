@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using Solvedoku.ViewModels.JigsawSudoku;
+using System.Windows.Controls;
 
 namespace Solvedoku.Views.JigsawSudoku
 {
@@ -15,5 +16,10 @@ namespace Solvedoku.Views.JigsawSudoku
         }
 
         #endregion
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+           // DataContext = new JigsawSudokuViewModel();
+        }
     }
 }
