@@ -1,5 +1,5 @@
-﻿using Solvedoku.ViewModels.JigsawSudoku;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
+using Xceed.Wpf.Toolkit;
 
 namespace Solvedoku.Views.JigsawSudoku
 {
@@ -17,9 +17,9 @@ namespace Solvedoku.Views.JigsawSudoku
 
         #endregion
 
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void ColorPicker_Opened(object sender, System.Windows.RoutedEventArgs e)
         {
-           // DataContext = new JigsawSudokuViewModel();
+            ((ColorPicker)sender).GetBindingExpression(ColorPicker.StandardColorsProperty).UpdateTarget();
         }
     }
 }

@@ -32,7 +32,7 @@
                 <TextBlock Text="{Binding FoundSolutionCounter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Center" FontWeight="Bold" VerticalAlignment="Center" Margin="8"/>
                 <StackPanel HorizontalAlignment="Center">
                     <Button Content="{Classes:Loc Button_Cancel}" Command="{Binding CancelBusyCommand}" CommandParameter="{StaticResource TrueValue}" HorizontalAlignment="Stretch" Margin="4"/>
-                    <Button Content="{Classes:Loc Button_CancelAndKeepSolutions}" Command="{Binding CancelBusyCommand}" CommandParameter="{StaticResource FalseValue}" HorizontalAlignment="Right" Margin="4" Width="300"/>
+                    <Button Content="{Classes:Loc Button_CancelAndKeepSolutions}" Command="{Binding CancelBusyCommand}" CommandParameter="{StaticResource FalseValue}" HorizontalAlignment="Right" Margin="4" Width="350"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

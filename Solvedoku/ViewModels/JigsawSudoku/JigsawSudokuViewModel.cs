@@ -14,6 +14,7 @@ using System.Linq;
 
 namespace Solvedoku.ViewModels.JigsawSudoku
 {
+    [Serializable]
     class JigsawSudokuViewModel : BaseSudokuViewModel
     {
         #region Fields
@@ -65,8 +66,8 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         public JigsawSudokuViewModel(JigsawSudokuViewModel oldViewModel)
         {
             LoadCommands();
-            SelectedColor = Colors.LightBlue;
-            SudokuBoardControl = new UcJigsawSudoku9x9Table();
+            SelectedColor = oldViewModel.SelectedColor;
+            SudokuBoardControl = oldViewModel.SudokuBoardControl;
             SolutionCounter = oldViewModel.SolutionCounter;
             _selectedSudokuBoardSize = new SudokuBoardSize { BoxCountX = 3, BoxCountY = 3, Height = 9, Width = 9 };
             _instance = this;
@@ -98,6 +99,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                 SudokuBoardControl = new UcJigsawSudoku9x9Table();
             }
             SolutionCounter = string.Empty;
+            IsSolutionCounterVisible = false;
         }
 
         /// <summary>
@@ -261,6 +263,20 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                     }
                 }
             }
+        }
+
+        public JigsawSudokuViewModel Clone()
+        {
+            MemoryStream ms = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+
+            bf.Serialize(ms, this);
+
+            ms.Position = 0;
+            object obj = bf.Deserialize(ms);
+            ms.Close();
+
+            return obj as JigsawSudokuViewModel;
         }
 
         #endregion

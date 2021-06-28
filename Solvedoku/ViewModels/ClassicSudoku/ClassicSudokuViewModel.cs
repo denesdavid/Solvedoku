@@ -24,10 +24,10 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 
         public bool AreDiagonalRulesApplied
         {
-            get => _areDiagonalRulesApplied;
+            get => ((BaseClassicSudokuTableViewModel)(SudokuBoardControl.DataContext)).AreDiagonalRulesSet;
             set
             {
-                _areDiagonalRulesApplied = value;
+                ((BaseClassicSudokuTableViewModel)(SudokuBoardControl.DataContext)).AreDiagonalRulesSet = _areDiagonalRulesApplied = value;
                 OnPropertyChanged();
             }
         }
@@ -78,7 +78,9 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             {
                 SudokuBoardControl = new UcClassicSudoku4x4Table();
             }
+            
             SolutionCounter = string.Empty;
+            IsSolutionCounterVisible = false;
             _solutions.Clear();
         }
 

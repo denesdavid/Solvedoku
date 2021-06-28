@@ -2,9 +2,12 @@
 
 namespace Solvedoku.ViewModels.ClassicSudoku
 {
-    class ClassicSudoku6x6TableViewModel : BaseSudokuTableViewModel
+    class ClassicSudoku6x6TableViewModel : BaseClassicSudokuTableViewModel
     {
         #region Fields
+
+        bool _areDiagonalRulesSet = false;
+
         ObservableCollection<ObservableCollection<string>> _cells = new ObservableCollection<ObservableCollection<string>>()
         {
             new ObservableCollection<string> { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
@@ -27,6 +30,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         #endregion
 
         #region Properties
+
         public override ObservableCollection<ObservableCollection<string>> Cells
         {
             get => _cells;
@@ -46,6 +50,17 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 OnPropertyChanged();
             }
         }
+
+        public override bool AreDiagonalRulesSet
+        {
+            get => _areDiagonalRulesSet;
+            set
+            {
+                _areDiagonalRulesSet = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
     }
 }

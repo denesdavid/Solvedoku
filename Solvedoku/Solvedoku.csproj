@@ -99,6 +99,7 @@
     <Compile Include="Classes\SudokuBoardSize.cs" />
     <Compile Include="Commands\ParameterizedCommand.cs" />
     <Compile Include="Commands\ParameterlessCommand.cs" />
+    <Compile Include="Converters\BoolToBorderBrushConverter.cs" />
     <Compile Include="Converters\BoolToFontWeightConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\IntegerToJigsawColorConverter.cs" />
@@ -117,6 +118,7 @@
     <Compile Include="Services\MessageBox\IMessageBoxService.cs" />
     <Compile Include="Services\MessageBox\MessageBoxService.cs" />
     <Compile Include="ViewModels\AboutBoxWindow\AboutBoxViewModel.cs" />
+    <Compile Include="ViewModels\ClassicSudoku\BaseClassicSudokuTableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku6x6TableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku4x4TableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku9x9TableViewModel.cs" />

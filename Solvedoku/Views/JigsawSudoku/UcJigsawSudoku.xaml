@@ -29,15 +29,13 @@
         <DockPanel>
             <StackPanel DockPanel.Dock="Right">
                 <Label Content="{Classes:Loc Main_JigsawColor}" Margin="4,4,4,0"/>
-                <wpfx:ColorPicker x:Name="asd" Margin="8" StandardColors="{Binding JigsawColors}"
-                                  DataContext="{Binding}"
-                                              ShowTabHeaders="False" ShowAvailableColors="False"
-                                              SelectedColor="{Binding SelectedColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              StandardColorsHeader="{Classes:Loc Main_AvailableJigsawColors}"
-                                              Style="{DynamicResource PuzzleColorPickerStyle}">
+                <wpfx:ColorPicker Opened="ColorPicker_Opened" Margin="8" StandardColors="{Binding JigsawColors}"
+                                  ShowTabHeaders="False" ShowAvailableColors="False"
+                                  SelectedColor="{Binding SelectedColor, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  StandardColorsHeader="{Classes:Loc Main_AvailableJigsawColors}"
+                                  Style="{DynamicResource PuzzleColorPickerStyle}">
                 </wpfx:ColorPicker>
                 <Button Content="{Classes:Loc Main_Draw}"
-                        Click="Button_Click"
                         Command="{Binding DrawSudokuCommand}"
                         CommandParameter="{Binding SelectedSudokuBoardSize}" Width="200"/>
                 <Button Content="{Classes:Loc Main_Solve}" Command="{Binding SolveSudokuCommand}"/>
