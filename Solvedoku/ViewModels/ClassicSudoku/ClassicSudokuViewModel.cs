@@ -14,26 +14,21 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 {
     class ClassicSudokuViewModel : BaseSudokuViewModel
     {
-        #region Fields
-
-        bool _areDiagonalRulesApplied;
-
-        #endregion
 
         #region Properties
 
         public bool AreDiagonalRulesApplied
         {
-            get => ((BaseClassicSudokuTableViewModel)(SudokuBoardControl.DataContext)).AreDiagonalRulesSet;
+            get => ((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).AreDiagonalRulesSet;
             set
             {
-                ((BaseClassicSudokuTableViewModel)(SudokuBoardControl.DataContext)).AreDiagonalRulesSet = _areDiagonalRulesApplied = value;
+                ((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).AreDiagonalRulesSet = value;
                 OnPropertyChanged();
             }
         }
 
         public ObservableCollection<SudokuBoardSize> SudokuBoardSizes => SudokuBoard.SudokuBoardSizes;
-  
+
         #endregion
 
         #region Constructor
@@ -65,6 +60,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 }
             }
             SudokuBoardSize sudokuBoardSize = (SudokuBoardSize)o;
+            var areDiagonalRulesAlreadyApplied = AreDiagonalRulesApplied;
             if (sudokuBoardSize.Height == 9 && sudokuBoardSize.Width == 9)
             {
                 SudokuBoardControl = new UcClassicSudoku9x9Table();
@@ -78,7 +74,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             {
                 SudokuBoardControl = new UcClassicSudoku4x4Table();
             }
-            
+            ((BaseClassicSudokuTableViewModel)(SudokuBoardControl.DataContext)).AreDiagonalRulesSet = areDiagonalRulesAlreadyApplied;
             SolutionCounter = string.Empty;
             IsSolutionCounterVisible = false;
             _solutions.Clear();
@@ -100,20 +96,33 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     _solutions.Clear();
                     SolutionCounter = string.Empty;
                     var board = CreateBoard(((IClassicSudokuControl)SudokuBoardControl).BoardSize, AreDiagonalRulesApplied);
-
                     if (msgBoxResult == MessageBoxResult.Yes)
                     {
                         _sudokuSolverThread = new Thread(() =>
                         {
                             int foundSolution = 0;
-                            foreach (var item in Sudoku_SolverThread(board, true))
+                            try
                             {
-                                _solutions.Add(item);
-                                foundSolution++;
-                                FoundSolutionCounter = $"{Resources.TextBlock_FoundSolutions} {foundSolution}";
+                                foreach (var item in Sudoku_SolverThread(board, true))
+                                {
+                                    if (item != null)
+                                    {
+                                        _solutions.Add(item);
+                                        foundSolution++;
+                                        FoundSolutionCounter = $"{Resources.TextBlock_FoundSolutions} {foundSolution}";
+                                    }
+                                }
+                                Action action = DisplaySolutionAndMessage;
+                                Application.Current.Dispatcher.Invoke(action);
                             }
-                            Action action = DisplaySolutionAndMessage;
-                            Application.Current.Dispatcher.Invoke(action);
+                            catch (OutOfMemoryException)
+                            {
+                                _solutions.Clear();
+                                Application.Current.Dispatcher.Invoke(new Action(() =>
+                                MessageBoxService.Show($"{Resources.MessageBox_OutOfMemory}", Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error)));
+                                IsBusy = false;
+                            }
+
                         });
                         _sudokuSolverThread.Start();
                     }
@@ -121,7 +130,10 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     {
                         _sudokuSolverThread = new Thread(() =>
                         {
-                            _solutions.Add(Sudoku_SolverThread(board, false).First());
+                            if (Sudoku_SolverThread(board, false).First() != null)
+                            {
+                                _solutions.Add(Sudoku_SolverThread(board, false).First());
+                            }
                             Action action = DisplaySolutionAndMessage;
                             Application.Current.Dispatcher.Invoke(action);
                         });
@@ -129,12 +141,13 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     }
                     IsBusy = true;
                 }
+
             }
             catch (Exception ex)
             {
                 MessageBoxService.Show(
                     $"{Resources.MessageBox_SolveSudokuError} {ex.Message}",
-                    Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Question);
+                    Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -200,14 +213,14 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     DisplayMatrixBoard(_classicSudokuFile.Board.OutputAsStringMatrix());
                     SolutionCounter = string.Empty;
 
-                    _solutions = (List<SudokuBoard>)_classicSudokuFile.Solutions;
+                    _solutions = _classicSudokuFile.Solutions;
                     if (_solutions.Count > 1)
                     {
                         MessageBoxService.Show($"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part1} {_solutions.Count}). " +
                             $"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
                             MessageBoxButton.OK, MessageBoxImage.Information);
-
-                        SolutionCounter = $"{Resources.Main_SolutionsCounter}1/{ _solutions.Count}";
+                        _solutionIndex = 0;
+                        SolutionCounter = $"{ _solutionIndex + 1 }/{ _solutions.Count }";
                         IsSolutionCounterVisible = true;
                     }
                     else if (_solutions.Count == 1)

@@ -3,10 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Solvedoku.Views.TabControlWithRightContentArea"
-             xmlns:classes="clr-namespace:Solvedoku.Classes"
-        xmlns:ClassicSudokuControls="clr-namespace:Solvedoku.Views.ClassicSudoku"
-        xmlns:JigsawSudokuControls="clr-namespace:Solvedoku.Views.JigsawSudoku"
+             xmlns:ClassicSudokuControls="clr-namespace:Solvedoku.Views.ClassicSudoku"
+             xmlns:JigsawSudokuControls="clr-namespace:Solvedoku.Views.JigsawSudoku"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
@@ -90,14 +88,5 @@
                 <JigsawSudokuControls:UcJigsawSudoku/>
             </TabItem>
         </TabControl>
-        <!--<local:TabControlWithRightContentArea Grid.Row="0">
-                <TabItem Header="Klasszikus">
-                    <ClassicSudokuControls:UcClassicSudoku/>
-                </TabItem>
-                <TabItem Header="Puzzle">
-                    <JigsawSudokuControls:UcJigsawSudoku/>
-                </TabItem>
-            </local:TabControlWithRightContentArea>-->
-
     </Grid>
 </UserControl>

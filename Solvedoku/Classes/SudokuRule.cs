@@ -51,7 +51,9 @@ namespace Solvedoku.Classes
 
             SudokuProgress result = SudokuProgress.NO_PROGRESS;
             foreach (SudokuTile tile in withoutNumber)
+            {
                 result = SudokuTile.CombineSolvedState(result, tile.RemovePossibles(existingNumbers));
+            }
             return result;
         }
 

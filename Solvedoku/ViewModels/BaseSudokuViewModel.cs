@@ -227,7 +227,7 @@ namespace Solvedoku.ViewModels
                 else
                 {
                     DisplaySolutionAndMessage();
-                }           
+                }      
             }
         }
         #endregion
@@ -351,14 +351,21 @@ namespace Solvedoku.ViewModels
             {
                 foreach (var item in sudokuBoard.Solve())
                 {
-                   // _solutions.Add(item);
                     yield return item;
                 }
-               // solutions = sudokuBoard.Solve().ToList();
             }
             else
             {
-                yield return sudokuBoard.Solve().First();
+                SudokuBoard solvedBoard = null;
+                try
+                {
+                    solvedBoard = sudokuBoard.Solve().First();
+                }
+                catch
+                {
+                    solvedBoard = null;
+                }
+                yield return solvedBoard;
                 yield break;
             }
         }

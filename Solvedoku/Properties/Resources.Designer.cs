@@ -448,6 +448,15 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A memória, vagy a rendszer erőforrásai elfogytak..
+        /// </summary>
+        public static string MessageBox_OutOfMemory {
+            get {
+                return ResourceManager.GetString("MessageBox_OutOfMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Kérdés.
         /// </summary>
         public static string MessageBox_Question_Title {

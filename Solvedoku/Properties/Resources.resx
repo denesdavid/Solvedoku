@@ -246,6 +246,9 @@
   <data name="MessageBox_OnlyNumbersFrom1To9" xml:space="preserve">
     <value>Csak egyjegyű számokat üthetsz be 1-től 9-ig.</value>
   </data>
+  <data name="MessageBox_OutOfMemory" xml:space="preserve">
+    <value>A memória, vagy a rendszer erőforrásai elfogytak.</value>
+  </data>
   <data name="MessageBox_Question_Title" xml:space="preserve">
     <value>Kérdés</value>
   </data>

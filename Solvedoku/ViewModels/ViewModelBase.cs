@@ -10,7 +10,7 @@ namespace Solvedoku.ViewModels
     class ViewModelBase : INotifyPropertyChanged
     {
         #region Fields
-        public IMessageBoxService MessageBoxService = new MessageBoxService();
+        public static IMessageBoxService MessageBoxService = new MessageBoxService();
         #endregion
 
         #region INotifyPropertyChanged

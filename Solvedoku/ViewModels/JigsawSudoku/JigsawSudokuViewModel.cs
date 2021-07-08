@@ -127,14 +127,28 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                         _sudokuSolverThread = new Thread(() =>
                         {
                             int foundSolution = 0;
-                            foreach (var item in Sudoku_SolverThread(board, true))
+                            try
                             {
-                                _solutions.Add(item);
-                                foundSolution++;
-                                //FoundSolutionCounter = $"Found solutions: {foundSolution}";
+                                foreach (var item in Sudoku_SolverThread(board, true))
+                                {
+                                    if (item != null)
+                                    {
+                                        _solutions.Add(item);
+                                        foundSolution++;
+                                        FoundSolutionCounter = $"{Resources.TextBlock_FoundSolutions} {foundSolution}";
+                                    }
+                                }
+                                Action action = DisplaySolutionAndMessage;
+                                Application.Current.Dispatcher.Invoke(action);
                             }
-                            Action action = DisplaySolutionAndMessage;
-                            Application.Current.Dispatcher.Invoke(action);
+                            catch (OutOfMemoryException)
+                            {
+                                _solutions.Clear();
+                                Application.Current.Dispatcher.Invoke(new Action(() =>
+                                MessageBoxService.Show($"{Resources.MessageBox_OutOfMemory}", Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error)));
+                                IsBusy = false;
+                            }
+
                         });
                         _sudokuSolverThread.Start();
                     }
@@ -142,7 +156,11 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                     {
                         _sudokuSolverThread = new Thread(() =>
                         {
-                            _solutions.Add(Sudoku_SolverThread(board, false).First());
+                            if (Sudoku_SolverThread(board, false).First() != null)
+                            {
+                                _solutions.Add(Sudoku_SolverThread(board, false).First());
+                            }
+                           
                             Action action = DisplaySolutionAndMessage;
                             Application.Current.Dispatcher.Invoke(action);
                         });
@@ -230,8 +248,8 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                         MessageBoxService.Show($"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part1} {_solutions.Count}). " +
                             $"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
                             MessageBoxButton.OK, MessageBoxImage.Information);
-
-                        SolutionCounter = $"{Resources.Main_SolutionsCounter}{ _solutions.Count}";
+                        _solutionIndex = 0;
+                        SolutionCounter = $"{ _solutionIndex + 1 }/{ _solutions.Count }";
                         IsSolutionCounterVisible = true;
                     }
                     else if (_solutions.Count == 1)

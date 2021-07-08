@@ -10,7 +10,7 @@ namespace Solvedoku.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return ((bool)value) ? Brushes.DarkGreen : Brushes.DarkGray;
+            return ((bool)value) ? Brushes.DarkBlue : Brushes.DarkGray;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) =>

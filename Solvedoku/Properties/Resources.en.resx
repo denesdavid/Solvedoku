@@ -193,7 +193,7 @@
     <value>Draw</value>
   </data>
   <data name="Main_JigsawColor" xml:space="preserve">
-    <value>Color the table:</value>
+    <value>Color the table (right click on cell):</value>
   </data>
   <data name="Main_JigsawPage" xml:space="preserve">
     <value>Jigsaw</value>
@@ -247,6 +247,9 @@ Are you sure you want to draw a new one?</value>
   <data name="MessageBox_OnlyNumbersFrom1To9" xml:space="preserve">
     <value>You can enter only one-digit numbers from 1 to 9.</value>
   </data>
+  <data name="MessageBox_OutOfMemory" xml:space="preserve">
+    <value>Out of memory or system resources.</value>
+  </data>
   <data name="MessageBox_Question_Title" xml:space="preserve">
     <value>Question</value>
   </data>
@@ -272,7 +275,7 @@ Are you sure you want to draw a new one?</value>
     <value>Unfortunately, there is no solution to the Sudoku.</value>
   </data>
   <data name="MessageBox_SudokuHasOneSolution" xml:space="preserve">
-    <value>Tehere is one solution to the Sudoku.</value>
+    <value>There is one solution to the Sudoku.</value>
   </data>
   <data name="MessageBox_Warning_Title" xml:space="preserve">
     <value>Warning</value>

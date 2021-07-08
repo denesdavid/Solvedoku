@@ -10,13 +10,13 @@ namespace Solvedoku.Classes
 
         public SudokuBoard Board { get; set; }
 
-        public IEnumerable<SudokuBoard> Solutions { get; set; }
+        public List<SudokuBoard> Solutions { get; set; }
 
         #endregion
 
         #region Constructor
 
-        public ClassicSudokuFile(SudokuBoard sudokuBoard, IEnumerable<SudokuBoard> solutions)
+        public ClassicSudokuFile(SudokuBoard sudokuBoard, List<SudokuBoard> solutions)
         {
             Board = sudokuBoard;
             Solutions = solutions;
