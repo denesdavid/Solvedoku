@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Windows;
@@ -10,7 +10,6 @@ using Xceed.Wpf.Toolkit;
 using Solvedoku.Classes;
 using Solvedoku.Views.JigsawSudoku;
 using Solvedoku.Properties;
-using System.Linq;
 
 namespace Solvedoku.ViewModels.JigsawSudoku
 {
@@ -98,6 +97,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             {
                 SudokuBoardControl = new UcJigsawSudoku9x9Table();
             }
+            _solutions.Clear();
             SolutionCounter = string.Empty;
             IsSolutionCounterVisible = false;
         }

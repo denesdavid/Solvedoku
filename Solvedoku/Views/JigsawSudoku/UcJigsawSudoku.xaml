@@ -19,7 +19,6 @@
                 <ResourceDictionary Source="../BusyIndicatorContent/BusyIndicatorResourceDictionary.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-            <Converters:MultiBindingStringConverter x:Key="MultiBindingStringConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <wpfx:BusyIndicator IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}">
@@ -41,16 +40,16 @@
                 <Button Content="{Classes:Loc Main_Solve}" Command="{Binding SolveSudokuCommand}"/>
                 <Button Content="{Classes:Loc Main_Save}" Command="{Binding SaveSudokuCommand}"/>
                 <Button Content="{Classes:Loc Main_Load}" Command="{Binding LoadSudokuCommand}"/>
-                <Label HorizontalAlignment="Center"
-                       FontSize="18" Foreground="AntiqueWhite" Margin="8"
-                       Visibility="{Binding IsSolutionCounterVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <Label.Content>
-                        <MultiBinding Converter="{StaticResource MultiBindingStringConverter}">
-                            <Binding Source="{x:Static Classes:LocalizationHelper.Instance}" Path="[Main_SolutionsCounter]"   />
-                            <Binding Path="SolutionCounter" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" />
-                        </MultiBinding>
-                    </Label.Content>
-                </Label>
+                <Label FontSize="18" Foreground="AntiqueWhite" Margin="0"
+                       Content="{Binding Source={x:Static Classes:LocalizationHelper.Instance}, Path = [Main_SolutionsCounter] }"
+                       HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                       VerticalAlignment="Center" VerticalContentAlignment="Center"
+                       Visibility="{Binding IsSolutionCounterVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                <Label FontSize="18" Foreground="AntiqueWhite" Margin="0"
+                       Content="{Binding SolutionCounter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                       VerticalAlignment="Center" VerticalContentAlignment="Center"
+                       Visibility="{Binding IsSolutionCounterVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityConverter}}"/>
             </StackPanel>
             <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button Style="{StaticResource IconButtonStyle}"

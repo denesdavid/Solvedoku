@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -74,7 +73,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             {
                 SudokuBoardControl = new UcClassicSudoku4x4Table();
             }
-            ((BaseClassicSudokuTableViewModel)(SudokuBoardControl.DataContext)).AreDiagonalRulesSet = areDiagonalRulesAlreadyApplied;
+            ((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).AreDiagonalRulesSet = areDiagonalRulesAlreadyApplied;
             SolutionCounter = string.Empty;
             IsSolutionCounterVisible = false;
             _solutions.Clear();

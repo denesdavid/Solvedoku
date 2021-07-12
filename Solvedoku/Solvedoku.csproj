@@ -103,7 +103,6 @@
     <Compile Include="Converters\BoolToFontWeightConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Converters\IntegerToJigsawColorConverter.cs" />
-    <Compile Include="Converters\MultiBindingStringConverter.cs" />
     <Compile Include="CustomControls\TabControlWithRightContentArea\TabControlWithRightContentArea.cs" />
     <Compile Include="Properties\Resources.en.Designer.cs">
       <DependentUpon>Resources.en.resx</DependentUpon>
@@ -270,9 +269,6 @@
     <EmbeddedResource Include="Resources\DLL\Xceed.Wpf.Toolkit.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Main.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
@@ -309,13 +305,16 @@
     <Resource Include="Resources\Icons\About.png" />
     <Resource Include="Resources\Icons\GearWheel.png" />
     <Resource Include="Resources\Icons\LeftArrow.png" />
-    <Resource Include="Resources\Icons\main.ico" />
+    <Resource Include="Resources\Icons\Main.ico" />
     <Resource Include="Resources\Icons\Main.png" />
     <Resource Include="Resources\Icons\RightArrow.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\DLL\en\Solvedoku.resources.dll" />
     <EmbeddedResource Include="Resources\DLL\hu\Solvedoku.resources.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Main.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
