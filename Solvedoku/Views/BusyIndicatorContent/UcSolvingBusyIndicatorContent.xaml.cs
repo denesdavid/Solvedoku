@@ -5,11 +5,11 @@ namespace Solvedoku.Views.BusyIndicatorContent
     /// <summary>
     /// Interaction logic for UcBusyIndicatorContent.xaml
     /// </summary>
-    public partial class UcBusyIndicatorContent : UserControl
+    public partial class UcSolvingBusyIndicatorContent : UserControl
     {
         #region Constructor
 
-        public UcBusyIndicatorContent()
+        public UcSolvingBusyIndicatorContent()
         {
             InitializeComponent();
         }

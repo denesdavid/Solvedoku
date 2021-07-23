@@ -5,8 +5,10 @@ using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Windows;
+using System.Windows.Threading;
 using Solvedoku.Classes;
 using Solvedoku.Properties;
+using Solvedoku.Views.BusyIndicatorContent;
 using Solvedoku.Views.ClassicSudoku;
 
 namespace Solvedoku.ViewModels.ClassicSudoku
@@ -53,7 +55,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                    Resources.MessageBox_DrawIfNumbersArePresented,
                    Resources.MessageBox_Question_Title, MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-                if (messageBoxResult == MessageBoxResult.No)
+                if (messageBoxResult == MessageBoxResult.No || messageBoxResult == MessageBoxResult.Cancel)
                 {
                     return;
                 }
@@ -97,6 +99,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     var board = CreateBoard(((IClassicSudokuControl)SudokuBoardControl).BoardSize, AreDiagonalRulesApplied);
                     if (msgBoxResult == MessageBoxResult.Yes)
                     {
+                        BusyIndicatorContent = new UcSolvingBusyIndicatorContent();
                         _sudokuSolverThread = new Thread(() =>
                         {
                             int foundSolution = 0;
@@ -167,14 +170,29 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             {
                 try
                 {
+                    BusyIndicatorContent = new UcSavingBusyIndicatorContent();
+
                     var classicSudokuFile = new ClassicSudokuFile(CreateBoard(SelectedSudokuBoardSize, AreDiagonalRulesApplied),
                         _solutions);
 
-                    using (Stream stream = File.Open(_saveFileDialog.FileName, FileMode.Create))
+                    _sudokuSavingThread = new Thread(() =>
                     {
-                        var bformatter = new BinaryFormatter();
-                        bformatter.Serialize(stream, classicSudokuFile);
-                    }
+                        try
+                        {
+                            Dispatcher.CurrentDispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                            new Action(() => SerializeClassicSudokuFile(_saveFileDialog.FileName, classicSudokuFile)));
+                        }
+                        catch (OutOfMemoryException)
+                        {
+                            _solutions.Clear();
+                            Application.Current.Dispatcher.Invoke(new Action(() =>
+                            MessageBoxService.Show($"{Resources.MessageBox_OutOfMemory}", Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error)));
+                            IsBusy = false;
+                        }
+
+                    });
+                    _sudokuSavingThread.Start();
+                    IsBusy = true;
                 }
                 catch (Exception ex)
                 {
@@ -200,33 +218,30 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             {
                 try
                 {
-                    ClassicSudokuFile _classicSudokuFile = null;
-                    using (Stream stream = File.Open(_openFileDialog.FileName, FileMode.Open))
+                    BusyIndicatorContent = new UcLoadingBusyIndicatorContent();
+                    _sudokuLoadingThread = new Thread(() =>
                     {
-                        var bformatter = new BinaryFormatter();
-                        _classicSudokuFile = (ClassicSudokuFile)bformatter.Deserialize(stream);
-                    }
-                    SelectedSudokuBoardSize = _classicSudokuFile.Board.BoardSize;
-                    AreDiagonalRulesApplied = _classicSudokuFile.Board.HasDiagonalRules;
-                    Draw(SelectedSudokuBoardSize);
-                    DisplayMatrixBoard(_classicSudokuFile.Board.OutputAsStringMatrix());
-                    SolutionCounter = string.Empty;
+                        try
+                        {
+                            ClassicSudokuFile classicSudokuFile = null;
+                            using (Stream stream = File.Open(_openFileDialog.FileName, FileMode.Open))
+                            {
+                                var bformatter = new BinaryFormatter();
+                                classicSudokuFile = (ClassicSudokuFile)bformatter.Deserialize(stream);
+                            }
+                            Application.Current.Dispatcher.Invoke(new Action(() => DeserializeClassicSudokuFile(classicSudokuFile)));
+                        }
+                        catch (OutOfMemoryException)
+                        {
+                            _solutions.Clear();
+                            Application.Current.Dispatcher.Invoke(new Action(() =>
+                            MessageBoxService.Show($"{Resources.MessageBox_OutOfMemory}", Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error)));
+                            IsBusy = false;
+                        }
 
-                    _solutions = _classicSudokuFile.Solutions;
-                    if (_solutions.Count > 1)
-                    {
-                        MessageBoxService.Show($"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part1} {_solutions.Count}). " +
-                            $"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
-                            MessageBoxButton.OK, MessageBoxImage.Information);
-                        _solutionIndex = 0;
-                        SolutionCounter = $"{ _solutionIndex + 1 }/{ _solutions.Count }";
-                        IsSolutionCounterVisible = true;
-                    }
-                    else if (_solutions.Count == 1)
-                    {
-                        MessageBoxService.Show(Resources.MessageBox_LoadedSudokuHasOneSolution, Resources.MessageBox_Information_Title, MessageBoxButton.OK, MessageBoxImage.Information);
-                        SolutionCounter = string.Empty;
-                    }
+                    });
+                    _sudokuLoadingThread.Start();
+                   IsBusy = true;
                 }
                 catch (Exception ex)
                 {
@@ -234,6 +249,42 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                         Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        void DeserializeClassicSudokuFile(ClassicSudokuFile classicSudokuFile)
+        {
+            IsBusy = false;
+            SelectedSudokuBoardSize = classicSudokuFile.Board.BoardSize;
+            AreDiagonalRulesApplied = classicSudokuFile.Board.HasDiagonalRules;
+            Draw(SelectedSudokuBoardSize);
+            DisplayMatrixBoard(classicSudokuFile.Board.OutputAsStringMatrix());
+            SolutionCounter = string.Empty;
+
+            _solutions = classicSudokuFile.Solutions;
+            if (_solutions.Count > 1)
+            {
+                MessageBoxService.Show($"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part1} {_solutions.Count}). " +
+                    $"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
+                    MessageBoxButton.OK, MessageBoxImage.Information);
+                _solutionIndex = 0;
+                SolutionCounter = $"{ _solutionIndex + 1 }/{ _solutions.Count }";
+                IsSolutionCounterVisible = true;
+            }
+            else if (_solutions.Count == 1)
+            {
+                MessageBoxService.Show(Resources.MessageBox_LoadedSudokuHasOneSolution, Resources.MessageBox_Information_Title, MessageBoxButton.OK, MessageBoxImage.Information);
+                SolutionCounter = string.Empty;
+            }
+        }
+
+        void SerializeClassicSudokuFile(string filePath, ClassicSudokuFile classicSudokuFile)
+        {
+            using (Stream stream = File.Open(filePath, FileMode.Create))
+            {
+                var bformatter = new BinaryFormatter();
+                bformatter.Serialize(stream, classicSudokuFile);
+            }
+            IsBusy = false;
         }
 
         #endregion

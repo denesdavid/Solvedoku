@@ -340,11 +340,20 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Biztos, hogy megszakítod a megoldást?.
+        ///   Looks up a localized string similar to Biztos, hogy megszakítod a betöltést?.
         /// </summary>
-        public static string MessageBox_AbortSolution {
+        public static string MessageBox_CancelLoading {
             get {
-                return ResourceManager.GetString("MessageBox_AbortSolution", resourceCulture);
+                return ResourceManager.GetString("MessageBox_CancelLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Biztos, hogy megszakítod a mentést?.
+        /// </summary>
+        public static string MessageBox_CancelSaving {
+            get {
+                return ResourceManager.GetString("MessageBox_CancelSaving", resourceCulture);
             }
         }
         
@@ -421,6 +430,15 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sudoku betöltése....
+        /// </summary>
+        public static string MessageBox_LoadingInProgress {
+            get {
+                return ResourceManager.GetString("MessageBox_LoadingInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Csak egyjegyű számokat üthetsz be 1-től 4-ig..
         /// </summary>
         public static string MessageBox_OnlyNumbersFrom1To4 {
@@ -471,6 +489,15 @@ namespace Solvedoku.Properties {
         public static string MessageBox_Save_Error {
             get {
                 return ResourceManager.GetString("MessageBox_Save_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sudoku mentése....
+        /// </summary>
+        public static string MessageBox_SavingInProgress {
+            get {
+                return ResourceManager.GetString("MessageBox_SavingInProgress", resourceCulture);
             }
         }
         

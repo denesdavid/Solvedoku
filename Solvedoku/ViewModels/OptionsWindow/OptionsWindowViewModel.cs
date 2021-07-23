@@ -1,8 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System.Windows.Input;
-using Solvedoku.Classes;
+﻿using Solvedoku.Classes;
 using Solvedoku.Commands;
 using Solvedoku.Properties;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace Solvedoku.ViewModels.OptionsWindow
 {
@@ -54,6 +54,7 @@ namespace Solvedoku.ViewModels.OptionsWindow
         #endregion
 
         #region Commands
+
         /// <summary>
         /// Determines if applying the settings is possible.
         /// </summary>
@@ -72,6 +73,7 @@ namespace Solvedoku.ViewModels.OptionsWindow
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Initializes the command properties in the viewmodel.
         /// </summary>
@@ -79,6 +81,7 @@ namespace Solvedoku.ViewModels.OptionsWindow
         {
             OkCommand = new ParameterlessCommand(Ok, CanOk);
         }
+
         #endregion
     }
 }

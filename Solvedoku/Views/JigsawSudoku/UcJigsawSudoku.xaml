@@ -23,7 +23,7 @@
     </UserControl.Resources>
     <wpfx:BusyIndicator IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}">
         <wpfx:BusyIndicator.BusyContent>
-            <BusyContent:UcBusyIndicatorContent/>
+            <BusyContent:UcSolvingBusyIndicatorContent/>
         </wpfx:BusyIndicator.BusyContent>
         <DockPanel>
             <StackPanel DockPanel.Dock="Right">

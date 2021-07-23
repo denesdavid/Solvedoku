@@ -22,7 +22,10 @@ namespace Solvedoku.ViewModels
         protected string _solutionCounter = string.Empty;
         protected string _foundSolutionCounter = string.Empty;
         protected Thread _sudokuSolverThread;
+        protected Thread _sudokuSavingThread;
+        protected Thread _sudokuLoadingThread;
         protected UserControl _sudokuBoardControl;
+        protected UserControl _busyIndicatorContent;
         protected SudokuBoard _actualSudokuBoard;
         protected SudokuBoardSize _selectedSudokuBoardSize;
         protected SaveFileDialog _saveFileDialog = new SaveFileDialog();
@@ -45,7 +48,11 @@ namespace Solvedoku.ViewModels
 
         public ICommand LoadNextSolutionCommand { get; set; }
 
-        public ICommand CancelBusyCommand { get; set; }
+        public ICommand CancelBusySolvingCommand { get; set; }
+
+        public ICommand CancelBusySavingCommand { get; set; }
+
+        public ICommand CancelBusyLoadingCommand { get; set; }
 
         public ICommand BusyIndicatorLoadedCommand { get; set; }
 
@@ -58,12 +65,40 @@ namespace Solvedoku.ViewModels
             }
         }
 
+        public Thread SudokuSavingThread
+        {
+            get => _sudokuSavingThread;
+            set
+            {
+                _sudokuSavingThread = value;
+            }
+        }
+
+        public Thread SudokuLoadingThread
+        {
+            get => _sudokuLoadingThread;
+            set
+            {
+                _sudokuLoadingThread = value;
+            }
+        }
+
         public UserControl SudokuBoardControl
         {
             get => _sudokuBoardControl;
             set
             {
                 _sudokuBoardControl = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public UserControl BusyIndicatorContent
+        {
+            get => _busyIndicatorContent;
+            set
+            {
+                _busyIndicatorContent = value;
                 OnPropertyChanged();
             }
         }
@@ -205,14 +240,14 @@ namespace Solvedoku.ViewModels
         /// Determines if cancelling the busy task is possible.
         /// </summary>
         /// <returns>Bool (currently always true)</returns>
-        protected bool CanCancelBusy(object o) => true;
+        protected bool CanCancelBusySolving(object o) => true;
 
         /// <summary>
         /// Cancels the busy task.
         /// </summary>
-        protected void CancelBusy(object o)
+        protected void CancelBusySolving(object o)
         {
-            var messageBoxResult = MessageBoxService.Show(Resources.MessageBox_AbortSolution, Resources.MessageBox_Warning_Title,
+            var messageBoxResult = MessageBoxService.Show(Resources.MessageBox_CancelSolving, Resources.MessageBox_Warning_Title,
                     MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
             if (messageBoxResult == MessageBoxResult.Yes)
@@ -230,6 +265,48 @@ namespace Solvedoku.ViewModels
                 }      
             }
         }
+
+        /// <summary>
+        /// Determines if cancelling the saving task is possible.
+        /// </summary>
+        /// <returns>Bool (currently always true)</returns>
+        protected bool CanCancelBusySaving() => true;
+
+        /// <summary>
+        /// Cancels the saving task.
+        /// </summary>
+        protected void CancelBusySaving()
+        {
+            var messageBoxResult = MessageBoxService.Show(Resources.MessageBox_CancelSaving, Resources.MessageBox_Warning_Title,
+                    MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                SudokuSavingThread.Abort();
+                IsBusy = false;
+            }
+        }
+
+        /// <summary>
+        /// Determines if cancelling the saving task is possible.
+        /// </summary>
+        /// <returns>Bool (currently always true)</returns>
+        protected bool CanCancelBusyLoading() => true;
+
+        /// <summary>
+        /// Cancels the saving task.
+        /// </summary>
+        protected void CancelBusyLoading()
+        {
+            var messageBoxResult = MessageBoxService.Show(Resources.MessageBox_CancelLoading, Resources.MessageBox_Warning_Title,
+                    MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (messageBoxResult == MessageBoxResult.Yes)
+            {
+                SudokuLoadingThread.Abort();
+                IsBusy = false;
+            }
+        }
         #endregion
 
         #region Methods
@@ -245,7 +322,9 @@ namespace Solvedoku.ViewModels
             LoadSudokuCommand = new ParameterlessCommand(Load, CanLoad);
             LoadPreviousSolutionCommand = new ParameterlessCommand(LoadPreviousSolution, CanLoadPreviousSolution);
             LoadNextSolutionCommand = new ParameterlessCommand(LoadNextSolution, CanLoadNextSolution);
-            CancelBusyCommand = new ParameterizedCommand(CancelBusy, CanCancelBusy);
+            CancelBusySolvingCommand = new ParameterizedCommand(CancelBusySolving, CanCancelBusySolving);
+            CancelBusySavingCommand = new ParameterlessCommand(CancelBusySaving, CanCancelBusySaving);
+            CancelBusyLoadingCommand = new ParameterlessCommand(CancelBusyLoading, CanCancelBusyLoading);
         }
 
         /// <summary>

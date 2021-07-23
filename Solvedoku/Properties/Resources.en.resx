@@ -210,11 +210,14 @@
   <data name="Main_Solve" xml:space="preserve">
     <value>Solve</value>
   </data>
-  <data name="MessageBox_AbortSolution" xml:space="preserve">
-    <value>Are you sure you want to abort the solution?</value>
+  <data name="MessageBox_CancelLoading" xml:space="preserve">
+    <value>Are you sure you want to abort the loading progress?</value>
+  </data>
+  <data name="MessageBox_CancelSaving" xml:space="preserve">
+    <value>Are you sure you want to abort the saving progress?</value>
   </data>
   <data name="MessageBox_CancelSolving" xml:space="preserve">
-    <value>Are you sure you want to abort the solving progress?</value>
+    <value>Are you sure you want to abort the solution progress?</value>
   </data>
   <data name="MessageBox_DrawIfNumbersArePresented" xml:space="preserve">
     <value>There are numbers in the current Sudoku.
@@ -234,6 +237,9 @@ Are you sure you want to draw a new one?</value>
   </data>
   <data name="MessageBox_LoadedSudokuHasOneSolution" xml:space="preserve">
     <value>Tehere is one solution to the loaded Sudoku.</value>
+  </data>
+  <data name="MessageBox_LoadingInProgress" xml:space="preserve">
+    <value>Loading Sudoku...</value>
   </data>
   <data name="MessageBox_Load_Error" xml:space="preserve">
     <value>Error occured while loading the Sudoku.</value>
@@ -255,6 +261,9 @@ Are you sure you want to draw a new one?</value>
   </data>
   <data name="MessageBox_Save_Error" xml:space="preserve">
     <value>An error occured during saving the Sudoku.</value>
+  </data>
+  <data name="MessageBox_SavingInProgress" xml:space="preserve">
+    <value>Saving Sudoku...</value>
   </data>
   <data name="MessageBox_SolutionInProgress" xml:space="preserve">
     <value>Solution in progress...</value>

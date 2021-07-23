@@ -134,8 +134,14 @@
     <Compile Include="Views\AboutBox\AboutBox.xaml.cs">
       <DependentUpon>AboutBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\BusyIndicatorContent\UcBusyIndicatorContent.xaml.cs">
-      <DependentUpon>UcBusyIndicatorContent.xaml</DependentUpon>
+    <Compile Include="Views\BusyIndicatorContent\UcSavingBusyIndicatorContent.xaml.cs">
+      <DependentUpon>UcSavingBusyIndicatorContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusyIndicatorContent\UcLoadingBusyIndicatorContent.xaml.cs">
+      <DependentUpon>UcLoadingBusyIndicatorContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusyIndicatorContent\UcSolvingBusyIndicatorContent.xaml.cs">
+      <DependentUpon>UcSolvingBusyIndicatorContent.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ClassicSudoku\IClassicSudokuControl.cs" />
     <Compile Include="Views\ClassicSudoku\UcClassicSudoku.xaml.cs">
@@ -194,7 +200,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\BusyIndicatorContent\UcBusyIndicatorContent.xaml">
+    <Page Include="Views\BusyIndicatorContent\UcSavingBusyIndicatorContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BusyIndicatorContent\UcLoadingBusyIndicatorContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BusyIndicatorContent\UcSolvingBusyIndicatorContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

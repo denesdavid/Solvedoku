@@ -210,8 +210,11 @@
   <data name="Main_Solve" xml:space="preserve">
     <value>Megoldás</value>
   </data>
-  <data name="MessageBox_AbortSolution" xml:space="preserve">
-    <value>Biztos, hogy megszakítod a megoldást?</value>
+  <data name="MessageBox_CancelLoading" xml:space="preserve">
+    <value>Biztos, hogy megszakítod a betöltést?</value>
+  </data>
+  <data name="MessageBox_CancelSaving" xml:space="preserve">
+    <value>Biztos, hogy megszakítod a mentést?</value>
   </data>
   <data name="MessageBox_CancelSolving" xml:space="preserve">
     <value>Biztos, hogy meg szeretnéd szakítani a megoldást?</value>
@@ -234,6 +237,9 @@
   <data name="MessageBox_LoadedSudokuHasOneSolution" xml:space="preserve">
     <value>A betöltött feladványnak egy megoldása van.</value>
   </data>
+  <data name="MessageBox_LoadingInProgress" xml:space="preserve">
+    <value>Sudoku betöltése...</value>
+  </data>
   <data name="MessageBox_Load_Error" xml:space="preserve">
     <value>A Sudoku betöltése során hiba lépett fel.</value>
   </data>
@@ -254,6 +260,9 @@
   </data>
   <data name="MessageBox_Save_Error" xml:space="preserve">
     <value>A Sudoku mentése során hiba lépett fel.</value>
+  </data>
+  <data name="MessageBox_SavingInProgress" xml:space="preserve">
+    <value>Sudoku mentése...</value>
   </data>
   <data name="MessageBox_SolutionInProgress" xml:space="preserve">
     <value>Megoldás folyamatban...</value>

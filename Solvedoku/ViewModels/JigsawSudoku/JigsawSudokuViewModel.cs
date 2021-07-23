@@ -87,7 +87,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                    Resources.MessageBox_DrawIfNumbersArePresented,
                    Resources.MessageBox_Question_Title, MessageBoxButton.YesNo, MessageBoxImage.Question);
 
-                if (messageBoxResult == MessageBoxResult.No)
+                if (messageBoxResult == MessageBoxResult.No || messageBoxResult == MessageBoxResult.Cancel)
                 {
                     return;
                 }
