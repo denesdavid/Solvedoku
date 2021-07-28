@@ -15,7 +15,6 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 {
     class ClassicSudokuViewModel : BaseSudokuViewModel
     {
-
         #region Properties
 
         public bool AreDiagonalRulesApplied
@@ -37,7 +36,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         public ClassicSudokuViewModel()
         {
             LoadCommands();
-            SudokuBoardControl = new UcClassicSudoku9x9Table();
+            Draw(SudokuBoard.SudokuBoardSizes[0]);
         }
 
         #endregion
@@ -49,7 +48,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// </summary>
         protected override void Draw(object o)
         {
-            if (GetCurrentTableViewModel().AreAnyCellsFilled())
+            if (GetCurrentTableViewModel() != null && GetCurrentTableViewModel().AreAnyCellsFilled())
             {
                 var messageBoxResult = MessageBoxService.Show(
                    Resources.MessageBox_DrawIfNumbersArePresented,
@@ -60,22 +59,25 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     return;
                 }
             }
-            SudokuBoardSize sudokuBoardSize = (SudokuBoardSize)o;
-            var areDiagonalRulesAlreadyApplied = AreDiagonalRulesApplied;
+
+            SudokuBoardSize sudokuBoardSize = (SudokuBoardSize)o;      
             if (sudokuBoardSize.Height == 9 && sudokuBoardSize.Width == 9)
             {
                 SudokuBoardControl = new UcClassicSudoku9x9Table();
-                _actualSudokuBoard = CreateBoard(sudokuBoardSize);
+                _actualSudokuBoard = CreateBoard(sudokuBoardSize, (BaseSudokuTableViewModel)SudokuBoardControl.DataContext, false);
             }
             else if (sudokuBoardSize.Height == 6 && sudokuBoardSize.Width == 6)
             {
                 SudokuBoardControl = new UcClassicSudoku6x6Table();
+                _actualSudokuBoard = CreateBoard(sudokuBoardSize, (BaseSudokuTableViewModel)SudokuBoardControl.DataContext, false);
             }
             else
             {
                 SudokuBoardControl = new UcClassicSudoku4x4Table();
+                _actualSudokuBoard = CreateBoard(sudokuBoardSize, (BaseSudokuTableViewModel)SudokuBoardControl.DataContext, false);
             }
-            ((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).AreDiagonalRulesSet = areDiagonalRulesAlreadyApplied;
+
+            ((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).AreDiagonalRulesSet = AreDiagonalRulesApplied;
             SolutionCounter = string.Empty;
             IsSolutionCounterVisible = false;
             _solutions.Clear();
@@ -96,7 +98,8 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 {
                     _solutions.Clear();
                     SolutionCounter = string.Empty;
-                    var board = CreateBoard(((IClassicSudokuControl)SudokuBoardControl).BoardSize, AreDiagonalRulesApplied);
+                    _actualSudokuBoard = CreateBoard(_actualSudokuBoard.BoardSize, (BaseSudokuTableViewModel)SudokuBoardControl.DataContext, true, AreDiagonalRulesApplied);
+                    
                     if (msgBoxResult == MessageBoxResult.Yes)
                     {
                         BusyIndicatorContent = new UcSolvingBusyIndicatorContent();
@@ -105,7 +108,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                             int foundSolution = 0;
                             try
                             {
-                                foreach (var item in Sudoku_SolverThread(board, true))
+                                foreach (var item in Sudoku_SolverThread(_actualSudokuBoard, true))
                                 {
                                     if (item != null)
                                     {
@@ -132,9 +135,9 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     {
                         _sudokuSolverThread = new Thread(() =>
                         {
-                            if (Sudoku_SolverThread(board, false).First() != null)
+                            if (Sudoku_SolverThread(_actualSudokuBoard, false).First() != null)
                             {
-                                _solutions.Add(Sudoku_SolverThread(board, false).First());
+                                _solutions.Add(Sudoku_SolverThread(_actualSudokuBoard, false).First());
                             }
                             Action action = DisplaySolutionAndMessage;
                             Application.Current.Dispatcher.Invoke(action);
@@ -171,9 +174,11 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 try
                 {
                     BusyIndicatorContent = new UcSavingBusyIndicatorContent();
-
-                    var classicSudokuFile = new ClassicSudokuFile(CreateBoard(SelectedSudokuBoardSize, AreDiagonalRulesApplied),
-                        _solutions);
+                    var classicSudokuFile = new ClassicSudokuFile();
+                    classicSudokuFile.BoldCells = ((BaseSudokuTableViewModel)SudokuBoardControl.DataContext).BoldCells;
+                    classicSudokuFile.Solutions = _solutions;
+                    _actualSudokuBoard = CreateBoard(_actualSudokuBoard.BoardSize, (BaseSudokuTableViewModel)SudokuBoardControl.DataContext, false);
+                    classicSudokuFile.Board = _actualSudokuBoard;
 
                     _sudokuSavingThread = new Thread(() =>
                     {
@@ -254,26 +259,27 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         void DeserializeClassicSudokuFile(ClassicSudokuFile classicSudokuFile)
         {
             IsBusy = false;
+            Draw(SelectedSudokuBoardSize);
+            ((BaseSudokuTableViewModel)SudokuBoardControl.DataContext).BoldCells = classicSudokuFile.BoldCells;
             SelectedSudokuBoardSize = classicSudokuFile.Board.BoardSize;
             AreDiagonalRulesApplied = classicSudokuFile.Board.HasDiagonalRules;
-            Draw(SelectedSudokuBoardSize);
             DisplayMatrixBoard(classicSudokuFile.Board.OutputAsStringMatrix());
             SolutionCounter = string.Empty;
 
             _solutions = classicSudokuFile.Solutions;
             if (_solutions.Count > 1)
             {
-                MessageBoxService.Show($"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part1} {_solutions.Count}). " +
-                    $"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
-                    MessageBoxButton.OK, MessageBoxImage.Information);
                 _solutionIndex = 0;
                 SolutionCounter = $"{ _solutionIndex + 1 }/{ _solutions.Count }";
                 IsSolutionCounterVisible = true;
+                MessageBoxService.Show($"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part1} {_solutions.Count}). " +
+                   $"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
+                   MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else if (_solutions.Count == 1)
             {
-                MessageBoxService.Show(Resources.MessageBox_LoadedSudokuHasOneSolution, Resources.MessageBox_Information_Title, MessageBoxButton.OK, MessageBoxImage.Information);
                 SolutionCounter = string.Empty;
+                MessageBoxService.Show(Resources.MessageBox_LoadedSudokuHasOneSolution, Resources.MessageBox_Information_Title, MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 

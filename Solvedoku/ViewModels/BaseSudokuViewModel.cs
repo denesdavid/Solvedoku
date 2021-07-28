@@ -332,14 +332,14 @@ namespace Solvedoku.ViewModels
         /// </summary>
         /// <returns>BaseSudokuTableViewModel</returns>
         protected virtual BaseSudokuTableViewModel GetCurrentTableViewModel() =>
-            (BaseSudokuTableViewModel)SudokuBoardControl.DataContext;
+            (BaseSudokuTableViewModel)SudokuBoardControl?.DataContext;
 
         /// <summary>
         /// Creates a Sudoku board, according to the given board size.
         /// </summary>
         /// <param name="sudokuBoardSize">Size information about the board.</param>
         /// <returns>Sudoku board.</returns>
-        protected virtual SudokuBoard CreateBoard(SudokuBoardSize sudokuBoardSize, bool applyDiagonalRules = false)
+        protected virtual SudokuBoard CreateBoard(SudokuBoardSize sudokuBoardSize, BaseSudokuTableViewModel baseSudokuTableViewModel, bool filledCellsAreBold, bool applyDiagonalRules = false)
         {
             SudokuBoard sudokuBoard;
             var boardControlViewModel = (BaseSudokuTableViewModel)SudokuBoardControl.DataContext;
@@ -357,7 +357,7 @@ namespace Solvedoku.ViewModels
                         }
                         else
                         {
-                            boardControlViewModel.BoldCells[row][column] = true;
+                            boardControlViewModel.BoldCells[row][column] = filledCellsAreBold;
                             actRow += boardControlViewModel.Cells[row][column];
                         }
                     }
