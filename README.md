@@ -1,5 +1,5 @@
 # Solvedoku
-Solvedoku project made for my grandfather's birthday.
+Multilingual (hungarian, english) Solvedoku project made for my grandfather's birthday.
 
 With this small software you can solve:
 - Classic sudokus: 4x4, 6x6, 9x9, SudokuX
