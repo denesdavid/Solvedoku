@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Solvedoku</RootNamespace>
     <AssemblyName>Solvedoku</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -29,6 +29,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -53,8 +54,15 @@
     <ApplicationIcon>Main.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -67,8 +75,20 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Xceed.Wpf.Toolkit">
-      <HintPath>Resources\DLL\Xceed.Wpf.Toolkit.dll</HintPath>
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=4.1.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.1.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=4.1.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.1.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=4.1.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.1.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=4.1.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.1.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=4.1.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.4.1.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -76,15 +96,54 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Language.cs" />
+    <Compile Include="Classes\LocalizationHelper.cs" />
+    <Compile Include="Classes\SudokuBoardSize.cs" />
+    <Compile Include="Commands\ParameterizedCommand.cs" />
+    <Compile Include="Commands\ParameterlessCommand.cs" />
+    <Compile Include="Converters\BoolToBorderBrushConverter.cs" />
+    <Compile Include="Converters\BoolToFontWeightConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\IntegerToJigsawColorConverter.cs" />
+    <Compile Include="CustomControls\TabControlWithRightContentArea\TabControlWithRightContentArea.cs" />
+    <Compile Include="Properties\Resources.en.Designer.cs">
+      <DependentUpon>Resources.en.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Services\MessageBox\IMessageBoxService.cs" />
     <Compile Include="Services\MessageBox\MessageBoxService.cs" />
+    <Compile Include="ViewModels\AboutBoxWindow\AboutBoxViewModel.cs" />
+    <Compile Include="ViewModels\ClassicSudoku\BaseClassicSudokuTableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku6x6TableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku4x4TableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudoku9x9TableViewModel.cs" />
     <Compile Include="ViewModels\ClassicSudoku\ClassicSudokuViewModel.cs" />
+    <Compile Include="ViewModels\BaseSudokuTableViewModel.cs" />
+    <Compile Include="ViewModels\BaseSudokuViewModel.cs" />
+    <Compile Include="ViewModels\JigsawSudoku\BaseJigsawSudokuTableViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudoku9x9TableViewModel.cs" />
     <Compile Include="ViewModels\JigsawSudoku\JigsawSudokuViewModel.cs" />
+    <Compile Include="ViewModels\OptionsWindow\OptionsWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\AboutBox\AboutBox.xaml.cs">
+      <DependentUpon>AboutBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusyIndicatorContent\UcSavingBusyIndicatorContent.xaml.cs">
+      <DependentUpon>UcSavingBusyIndicatorContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusyIndicatorContent\UcLoadingBusyIndicatorContent.xaml.cs">
+      <DependentUpon>UcLoadingBusyIndicatorContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BusyIndicatorContent\UcSolvingBusyIndicatorContent.xaml.cs">
+      <DependentUpon>UcSolvingBusyIndicatorContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ClassicSudoku\IClassicSudokuControl.cs" />
     <Compile Include="Views\ClassicSudoku\UcClassicSudoku.xaml.cs">
       <DependentUpon>UcClassicSudoku.xaml</DependentUpon>
     </Compile>
@@ -97,11 +156,18 @@
     <Compile Include="Views\ClassicSudoku\UcClassicSudoku9x9Table.xaml.cs">
       <DependentUpon>UcClassicSudoku9x9Table.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\JigsawSudoku\IJigsawSudokuControl.cs" />
     <Compile Include="Views\JigsawSudoku\UcJigsawSudoku.xaml.cs">
       <DependentUpon>UcJigsawSudoku.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\JigsawSudoku\UcJigsawSudoku9x9Table.xaml.cs">
       <DependentUpon>UcJigsawSudoku9x9Table.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\OptionsWindow\OptionsWindow.xaml.cs">
+      <DependentUpon>OptionsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TabControlWithRightContentArea\UcTabControlWithRightContentArea.xaml.cs">
+      <DependentUpon>UcTabControlWithRightContentArea.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -113,15 +179,39 @@
     </Compile>
     <Compile Include="Classes\RatioConverter.cs" />
     <Compile Include="Classes\SudokuBoard.cs" />
-    <Compile Include="Classes\SudokuClassicHandler.cs" />
+    <Compile Include="Classes\ClassicSudokuFile.cs" />
     <Compile Include="Classes\SudokuFactory.cs" />
-    <Compile Include="Classes\SudokuPuzzleHandler.cs" />
+    <Compile Include="Classes\JigsawSudokuFile.cs" />
     <Compile Include="Classes\SudokuRule.cs" />
     <Compile Include="Classes\SudokuTile.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AboutBox\AboutBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusyIndicatorContent\BusyIndicatorResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BusyIndicatorContent\UcSavingBusyIndicatorContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BusyIndicatorContent\UcLoadingBusyIndicatorContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\BusyIndicatorContent\UcSolvingBusyIndicatorContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ClassicSudoku\UcClassicSudoku.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -146,25 +236,42 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\OptionsWindow\OptionsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TabControlWithRightContentArea\UcTabControlWithRightContentArea.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
+    <Compile Include="Properties\Resources.hu.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
+      <DependentUpon>Resources.hu.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.en.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.en.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.hu.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.hu.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -176,13 +283,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\DLL\Xceed.Wpf.Toolkit.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Main.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\LeftArrow.png" />
-    <Resource Include="Resources\Icons\RightArrow.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
@@ -197,10 +297,40 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Icons\main.ico" />
+    <Folder Include="Views\MainWindow\" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\DLL\cs-CZ\Xceed.Wpf.AvalonDock.resources.dll" />
+    <EmbeddedResource Include="Resources\DLL\de\Xceed.Wpf.AvalonDock.resources.dll" />
+    <EmbeddedResource Include="Resources\DLL\es\Xceed.Wpf.AvalonDock.resources.dll" />
+    <EmbeddedResource Include="Resources\DLL\fr\Xceed.Wpf.AvalonDock.resources.dll" />
+    <EmbeddedResource Include="Resources\DLL\hu\Xceed.Wpf.AvalonDock.resources.dll" />
+    <EmbeddedResource Include="Resources\DLL\it\Xceed.Wpf.AvalonDock.resources.dll" />
+    <EmbeddedResource Include="Resources\DLL\ja-JP\Xceed.Wpf.AvalonDock.resources.dll" />
+    <EmbeddedResource Include="Resources\DLL\pt-BR\Xceed.Wpf.AvalonDock.resources.dll" />
+    <EmbeddedResource Include="Resources\DLL\ro\Xceed.Wpf.AvalonDock.resources.dll" />
+    <EmbeddedResource Include="Resources\DLL\ru\Xceed.Wpf.AvalonDock.resources.dll" />
+    <EmbeddedResource Include="Resources\DLL\sv\Xceed.Wpf.AvalonDock.resources.dll" />
+    <EmbeddedResource Include="Resources\DLL\Xceed.Wpf.AvalonDock.dll" />
+    <EmbeddedResource Include="Resources\DLL\Xceed.Wpf.AvalonDock.Themes.Aero.dll" />
+    <EmbeddedResource Include="Resources\DLL\Xceed.Wpf.AvalonDock.Themes.Metro.dll" />
+    <EmbeddedResource Include="Resources\DLL\Xceed.Wpf.AvalonDock.Themes.VS2010.dll" />
+    <EmbeddedResource Include="Resources\DLL\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\About.png" />
+    <Resource Include="Resources\Icons\GearWheel.png" />
+    <Resource Include="Resources\Icons\LeftArrow.png" />
+    <Resource Include="Resources\Icons\Main.ico" />
     <Resource Include="Resources\Icons\Main.png" />
+    <Resource Include="Resources\Icons\RightArrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DLL\en\Solvedoku.resources.dll" />
+    <EmbeddedResource Include="Resources\DLL\hu\Solvedoku.resources.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Main.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

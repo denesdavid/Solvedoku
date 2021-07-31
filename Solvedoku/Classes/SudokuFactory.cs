@@ -7,11 +7,14 @@ namespace Solvedoku.Classes
     [Serializable]
     public class SudokuFactory
     {
-        private const int DefaultSize = 9;
-        private const int SamuraiAreas = 7;
-        private const int BoxSize = 3;
-        private const int HyperMargin = 1;
+        #region Constants
+        const int DefaultSize = 9;
+        const int SamuraiAreas = 7;
+        const int BoxSize = 3;
+        const int HyperMargin = 1;
+        #endregion
 
+        #region Functions
         public static IEnumerable<Tuple<int, int>> box(int sizeX, int sizeY)
         {
             foreach (int x in Enumerable.Range(0, sizeX))
@@ -67,16 +70,23 @@ namespace Solvedoku.Classes
             return board;
         }
 
-        public static SudokuBoard SizeAndBoxes(int width, int height, int boxCountX, int boxCountY)
+        public static SudokuBoard SizeAndBoxes(SudokuBoardSize sudokuBoardSize, bool applyDiagonalRules = false)
         {
-            SudokuBoard board = new SudokuBoard(width, height);
-            board.AddBoxesCount(boxCountX, boxCountY);
+            SudokuBoard board = new SudokuBoard(sudokuBoardSize.Width, sudokuBoardSize.Height, applyDiagonalRules);
+            board.AddBoxesCount(sudokuBoardSize.BoxCountX, sudokuBoardSize.BoxCountY);
             return board;
         }
 
-        public static SudokuBoard ClassicWith3x3Boxes()
+        public static SudokuBoard ClassicWith3x3Boxes(bool applyDiagonalRules = false)
         {
-            return SizeAndBoxes(DefaultSize, DefaultSize, DefaultSize / BoxSize, DefaultSize / BoxSize);
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize
+            {
+                Width = DefaultSize,
+                Height = DefaultSize,
+                BoxCountX = DefaultSize / BoxSize,
+                BoxCountY = DefaultSize / BoxSize
+            };
+            return SizeAndBoxes(sudokuBoardSize, applyDiagonalRules);
         }
 
         public static SudokuBoard ClassicWith3x3BoxesAndHyperRegions()
@@ -105,11 +115,12 @@ namespace Solvedoku.Classes
                 // Select the rule tiles based on the index of the character
                 var ruleTiles = from i in Enumerable.Range(0, joinedString.Length)
                                 where joinedString[i] == ch // filter out any non-matching characters
-                                select board.Tile(i % sizeX, i / sizeY);
+                                select board.Tile(i / sizeX, i % sizeY);
                 board.CreateRule("Area " + ch.ToString(), ruleTiles);
             }
 
             return board;
         }
+        #endregion
     }
 }

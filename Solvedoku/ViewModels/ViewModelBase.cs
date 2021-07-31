@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Solvedoku.Services.MessageBox;
 
 namespace Solvedoku.ViewModels
@@ -15,7 +10,7 @@ namespace Solvedoku.ViewModels
     class ViewModelBase : INotifyPropertyChanged
     {
         #region Fields
-        public IMessageBoxService MessageBoxService = new MessageBoxService();
+        public static IMessageBoxService MessageBoxService = new MessageBoxService();
         #endregion
 
         #region INotifyPropertyChanged
