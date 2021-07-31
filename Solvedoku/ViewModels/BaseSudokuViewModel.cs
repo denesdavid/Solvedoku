@@ -342,7 +342,7 @@ namespace Solvedoku.ViewModels
         protected virtual SudokuBoard CreateBoard(SudokuBoardSize sudokuBoardSize, BaseSudokuTableViewModel baseSudokuTableViewModel, bool filledCellsAreBold, bool applyDiagonalRules = false)
         {
             SudokuBoard sudokuBoard;
-            var boardControlViewModel = (BaseSudokuTableViewModel)SudokuBoardControl.DataContext;
+            //var boardControlViewModel = (BaseSudokuTableViewModel)SudokuBoardControl.DataContext;
             if (sudokuBoardSize.BoxCountX == 3 && sudokuBoardSize.BoxCountY == 3)
             {
                 sudokuBoard = SudokuFactory.ClassicWith3x3Boxes(applyDiagonalRules);
@@ -351,15 +351,15 @@ namespace Solvedoku.ViewModels
                     string actRow = "";
                     for (int column = 0; column < sudokuBoardSize.Width; column++)
                     {
-                        if (string.IsNullOrEmpty(boardControlViewModel.Cells[row][column]))
+                        if (string.IsNullOrEmpty(baseSudokuTableViewModel.Cells[row][column]))
                         {
                             actRow += ".";
-                            boardControlViewModel.BoldCells[row][column] = false;
+                            baseSudokuTableViewModel.BoldCells[row][column] = false;
                         }
                         else
                         {
-                            boardControlViewModel.BoldCells[row][column] = filledCellsAreBold;
-                            actRow += boardControlViewModel.Cells[row][column];
+                            baseSudokuTableViewModel.BoldCells[row][column] = filledCellsAreBold;
+                            actRow += baseSudokuTableViewModel.Cells[row][column];
                         }
                     }
                     sudokuBoard.AddRow(actRow);
@@ -373,15 +373,15 @@ namespace Solvedoku.ViewModels
                     string actRow = "";
                     for (int column = 0; column < sudokuBoardSize.Width; column++)
                     {
-                        if (string.IsNullOrEmpty(boardControlViewModel.Cells[row][column]))
+                        if (string.IsNullOrEmpty(baseSudokuTableViewModel.Cells[row][column]))
                         {
                             actRow += "0";
-                            boardControlViewModel.BoldCells[row][column] = false;
+                            baseSudokuTableViewModel.BoldCells[row][column] = false;
                         }
                         else
                         {
-                            boardControlViewModel.BoldCells[row][column] = true;
-                            actRow += boardControlViewModel.Cells[row][column];
+                            baseSudokuTableViewModel.BoldCells[row][column] = true;
+                            actRow += baseSudokuTableViewModel.Cells[row][column];
                         }
                     }
                     sudokuBoard.AddRow(actRow);
@@ -396,24 +396,23 @@ namespace Solvedoku.ViewModels
         /// <param name="sudokuBoardSize">Size information about the board.</param>
         /// <param name="areas">Special areas information about the board.</param>
         /// <returns>Sudoku board.</returns>
-        protected virtual SudokuBoard CreateBoard(SudokuBoardSize sudokuBoardSize, string[] areas)
+        protected virtual SudokuBoard CreateBoard(SudokuBoardSize sudokuBoardSize, string[] areas, BaseSudokuTableViewModel baseSudokuTableViewModel, bool filledCellsAreBold)
         {
             SudokuBoard board = SudokuFactory.ClassicWithSpecialBoxes(areas);
-            var boardControlViewModel = (BaseSudokuTableViewModel)SudokuBoardControl.DataContext;
             for (int row = 0; row < sudokuBoardSize.Height; row++)
             {
                 string actRow = "";
                 for (int column = 0; column < sudokuBoardSize.Width; column++)
                 {
-                    if (string.IsNullOrEmpty(boardControlViewModel.Cells[row][column]))
+                    if (string.IsNullOrEmpty(baseSudokuTableViewModel.Cells[row][column]))
                     {
-                        boardControlViewModel.BoldCells[row][column] = false;
+                        baseSudokuTableViewModel.BoldCells[row][column] = false;
                         actRow += ".";
                     }
                     else
                     {
-                        boardControlViewModel.BoldCells[row][column] = true;
-                        actRow += boardControlViewModel.Cells[row][column];
+                        baseSudokuTableViewModel.BoldCells[row][column] = filledCellsAreBold;
+                        actRow += baseSudokuTableViewModel.Cells[row][column];
                     }
                 }
                 board.AddRow(actRow);
