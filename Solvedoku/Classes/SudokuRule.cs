@@ -7,14 +7,24 @@ namespace Solvedoku.Classes
     [Serializable]
     public class SudokuRule : IEnumerable<SudokuTile>
     {
+        #region Fields
+        ISet<SudokuTile> _tiles;
+        string _description;
+        #endregion
+
+        #region Properties
+
+        public string Description => _description;
+
+        #endregion
+
+        #region Functions
+
         internal SudokuRule(IEnumerable<SudokuTile> tiles, string description)
         {
             _tiles = new HashSet<SudokuTile>(tiles);
             _description = description;
         }
-
-        private ISet<SudokuTile> _tiles;
-        private string _description;
 
         public bool CheckValid()
         {
@@ -22,6 +32,7 @@ namespace Solvedoku.Classes
             var groupedByValue = filtered.GroupBy(tile => tile.Value);
             return groupedByValue.All(group => group.Count() == 1);
         }
+
         public bool CheckComplete()
         {
             return _tiles.All(tile => tile.HasValue) && CheckValid();
@@ -40,9 +51,12 @@ namespace Solvedoku.Classes
 
             SudokuProgress result = SudokuProgress.NO_PROGRESS;
             foreach (SudokuTile tile in withoutNumber)
+            {
                 result = SudokuTile.CombineSolvedState(result, tile.RemovePossibles(existingNumbers));
+            }
             return result;
         }
+
         internal SudokuProgress CheckForOnlyOnePossibility()
         {
             // Check if there is only one number within this rule that can have a specific value
@@ -58,7 +72,7 @@ namespace Solvedoku.Classes
                     return SudokuProgress.FAILED;
                 if (possibles.Count == 1)
                 {
-                    possibles.First().Fix(value, "Only possible in rule " + ToString());
+                    possibles.First().Fix(value);
                     result = SudokuProgress.PROGRESS;
                 }
             }
@@ -73,21 +87,12 @@ namespace Solvedoku.Classes
             return SudokuTile.CombineSolvedState(result1, result2);
         }
 
-        public override string ToString()
-        {
-            return _description;
-        }
+        public override string ToString() => Description;
 
-        public IEnumerator<SudokuTile> GetEnumerator()
-        {
-            return _tiles.GetEnumerator();
-        }
+        public IEnumerator<SudokuTile> GetEnumerator() => _tiles.GetEnumerator();
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public string Description { get { return _description; } }
+        #endregion
     }
 }

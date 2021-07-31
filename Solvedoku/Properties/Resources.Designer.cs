@@ -19,10 +19,10 @@ namespace Solvedoku.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Solvedoku.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Solvedoku.Properties.Resources", typeof(Resources).Assembly);
@@ -51,12 +51,588 @@ namespace Solvedoku.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remélem elnyerte tetszésed ez a kis program, mellyel különböző Sudoku feladványokat (klasszikus: 4x4, 6x6, 9x9, puzzle: 9x9) oldhatsz meg. Habár módosítottam pár dolgot a megoldó logikán, illetve refaktoráltam a forráskódot, az alap verzió nem az én szellemi termékem. A szoftver ingyenes, viszont arra szeretnélek megkérni, hogy ha felhasználod az egészet, vagy egy részét, beleértve ebbe a forráskódot is, tüntesd fel a nevemet, illetve, egy, a GitHub repositoryra vezető linket..
+        /// </summary>
+        public static string AboutBox_Description {
+            get {
+                return ResourceManager.GetString("AboutBox_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fejlesztette: Dénes Dávid (Darius Davedane).
+        /// </summary>
+        public static string AboutBox_DevelopedByDD {
+            get {
+                return ResourceManager.GetString("AboutBox_DevelopedByDD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mégse.
+        /// </summary>
+        public static string Button_Cancel {
+            get {
+                return ResourceManager.GetString("Button_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mégse, de a megoldások megtartása.
+        /// </summary>
+        public static string Button_CancelAndKeepSolutions {
+            get {
+                return ResourceManager.GetString("Button_CancelAndKeepSolutions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Összes megoldás kiszámítása.
+        /// </summary>
+        public static string Button_GetAllSolutions {
+            get {
+                return ResourceManager.GetString("Button_GetAllSolutions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Egy lehetséges megoldás kiszámítása.
+        /// </summary>
+        public static string Button_GetOneSolution {
+            get {
+                return ResourceManager.GetString("Button_GetOneSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nem.
+        /// </summary>
+        public static string Button_No {
+            get {
+                return ResourceManager.GetString("Button_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Igen.
+        /// </summary>
+        public static string Button_Yes {
+            get {
+                return ResourceManager.GetString("Button_Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Égkék.
+        /// </summary>
+        public static string Color_CornflowerBlue {
+            get {
+                return ResourceManager.GetString("Color_CornflowerBlue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Zöld.
+        /// </summary>
+        public static string Color_Green {
+            get {
+                return ResourceManager.GetString("Color_Green", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Világoskék.
+        /// </summary>
+        public static string Color_LightBlue {
+            get {
+                return ResourceManager.GetString("Color_LightBlue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Szürke.
+        /// </summary>
+        public static string Color_LightGray {
+            get {
+                return ResourceManager.GetString("Color_LightGray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rózsaszín.
+        /// </summary>
+        public static string Color_Magenta {
+            get {
+                return ResourceManager.GetString("Color_Magenta", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lila.
+        /// </summary>
+        public static string Color_MediumPurple {
+            get {
+                return ResourceManager.GetString("Color_MediumPurple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Narancssárga.
+        /// </summary>
+        public static string Color_Orange {
+            get {
+                return ResourceManager.GetString("Color_Orange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Piros.
+        /// </summary>
+        public static string Color_Red {
+            get {
+                return ResourceManager.GetString("Color_Red", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Barna.
+        /// </summary>
+        public static string Color_RosyBrown {
+            get {
+                return ResourceManager.GetString("Color_RosyBrown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sárga.
+        /// </summary>
+        public static string Color_Yellow {
+            get {
+                return ResourceManager.GetString("Color_Yellow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Klasszikus Sudoku betöltése....
+        /// </summary>
+        public static string LoadDialog_Title_ClassicSudoku {
+            get {
+                return ResourceManager.GetString("LoadDialog_Title_ClassicSudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puzzle Sudoku betöltése....
+        /// </summary>
+        public static string LoadDialog_Title_JigsawSudoku {
+            get {
+                return ResourceManager.GetString("LoadDialog_Title_JigsawSudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Elérhető színek:.
+        /// </summary>
+        public static string Main_AvailableJigsawColors {
+            get {
+                return ResourceManager.GetString("Main_AvailableJigsawColors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Válassz méretet:.
+        /// </summary>
+        public static string Main_ChooseClassicSize {
+            get {
+                return ResourceManager.GetString("Main_ChooseClassicSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Klasszikus.
+        /// </summary>
+        public static string Main_ClassicPage {
+            get {
+                return ResourceManager.GetString("Main_ClassicPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Átló szabály (Sudoku X).
+        /// </summary>
+        public static string Main_DiagonalRules {
+            get {
+                return ResourceManager.GetString("Main_DiagonalRules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rajzol.
+        /// </summary>
+        public static string Main_Draw {
+            get {
+                return ResourceManager.GetString("Main_Draw", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Színezd ki a feladatnak megfelelően:.
+        /// </summary>
+        public static string Main_JigsawColor {
+            get {
+                return ResourceManager.GetString("Main_JigsawColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puzzle.
+        /// </summary>
+        public static string Main_JigsawPage {
+            get {
+                return ResourceManager.GetString("Main_JigsawPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Betöltés.
+        /// </summary>
+        public static string Main_Load {
+            get {
+                return ResourceManager.GetString("Main_Load", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mentés.
+        /// </summary>
+        public static string Main_Save {
+            get {
+                return ResourceManager.GetString("Main_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Megoldások:.
+        /// </summary>
+        public static string Main_SolutionsCounter {
+            get {
+                return ResourceManager.GetString("Main_SolutionsCounter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Megoldás.
+        /// </summary>
+        public static string Main_Solve {
+            get {
+                return ResourceManager.GetString("Main_Solve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Biztos, hogy megszakítod a betöltést?.
+        /// </summary>
+        public static string MessageBox_CancelLoading {
+            get {
+                return ResourceManager.GetString("MessageBox_CancelLoading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Biztos, hogy megszakítod a mentést?.
+        /// </summary>
+        public static string MessageBox_CancelSaving {
+            get {
+                return ResourceManager.GetString("MessageBox_CancelSaving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Biztos, hogy meg szeretnéd szakítani a megoldást?.
+        /// </summary>
+        public static string MessageBox_CancelSolving {
+            get {
+                return ResourceManager.GetString("MessageBox_CancelSolving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Már találhatóak számok a jelenlegi Sudokuban.\r\nBiztos vagy benne, hogy újat szeretnél rajzolni?.
+        /// </summary>
+        public static string MessageBox_DrawIfNumbersArePresented {
+            get {
+                return ResourceManager.GetString("MessageBox_DrawIfNumbersArePresented", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hiba.
+        /// </summary>
+        public static string MessageBox_Error_Title {
+            get {
+                return ResourceManager.GetString("MessageBox_Error_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Információ.
+        /// </summary>
+        public static string MessageBox_Information_Title {
+            get {
+                return ResourceManager.GetString("MessageBox_Information_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A Sudoku betöltése során hiba lépett fel..
+        /// </summary>
+        public static string MessageBox_Load_Error {
+            get {
+                return ResourceManager.GetString("MessageBox_Load_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A betöltött feladványnak már több megoldása is van (összesen.
+        /// </summary>
+        public static string MessageBox_LoadedSudokuHasMoreSolutions_Part1 {
+            get {
+                return ResourceManager.GetString("MessageBox_LoadedSudokuHasMoreSolutions_Part1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A táblázat alatt található nyilakkal tudsz köztük váltani..
+        /// </summary>
+        public static string MessageBox_LoadedSudokuHasMoreSolutions_Part2 {
+            get {
+                return ResourceManager.GetString("MessageBox_LoadedSudokuHasMoreSolutions_Part2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A betöltött feladványnak egy megoldása van..
+        /// </summary>
+        public static string MessageBox_LoadedSudokuHasOneSolution {
+            get {
+                return ResourceManager.GetString("MessageBox_LoadedSudokuHasOneSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sudoku betöltése....
+        /// </summary>
+        public static string MessageBox_LoadingInProgress {
+            get {
+                return ResourceManager.GetString("MessageBox_LoadingInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Csak egyjegyű számokat üthetsz be 1-től 4-ig..
+        /// </summary>
+        public static string MessageBox_OnlyNumbersFrom1To4 {
+            get {
+                return ResourceManager.GetString("MessageBox_OnlyNumbersFrom1To4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Csak egyjegyű számokat üthetsz be 1-től 6-ig..
+        /// </summary>
+        public static string MessageBox_OnlyNumbersFrom1To6 {
+            get {
+                return ResourceManager.GetString("MessageBox_OnlyNumbersFrom1To6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Csak egyjegyű számokat üthetsz be 1-től 9-ig..
+        /// </summary>
+        public static string MessageBox_OnlyNumbersFrom1To9 {
+            get {
+                return ResourceManager.GetString("MessageBox_OnlyNumbersFrom1To9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A memória, vagy a rendszer erőforrásai elfogytak..
+        /// </summary>
+        public static string MessageBox_OutOfMemory {
+            get {
+                return ResourceManager.GetString("MessageBox_OutOfMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kérdés.
+        /// </summary>
+        public static string MessageBox_Question_Title {
+            get {
+                return ResourceManager.GetString("MessageBox_Question_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A Sudoku mentése során hiba lépett fel..
+        /// </summary>
+        public static string MessageBox_Save_Error {
+            get {
+                return ResourceManager.GetString("MessageBox_Save_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sudoku mentése....
+        /// </summary>
+        public static string MessageBox_SavingInProgress {
+            get {
+                return ResourceManager.GetString("MessageBox_SavingInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Megoldás folyamatban....
+        /// </summary>
+        public static string MessageBox_SolutionInProgress {
+            get {
+                return ResourceManager.GetString("MessageBox_SolutionInProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kérlek válaszd ki, hogy az összes megoldást (feltéve ha van egynél több, illetve ez időigényes is lehet), vagy csak egy lehetségeset szeretnél megkapni..
+        /// </summary>
+        public static string MessageBox_SolveSudoku {
+            get {
+                return ResourceManager.GetString("MessageBox_SolveSudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot..
+        /// </summary>
+        public static string MessageBox_SolveSudokuError {
+            get {
+                return ResourceManager.GetString("MessageBox_SolveSudokuError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A feladványnak több megoldása is van (összesen.
+        /// </summary>
+        public static string MessageBox_SudokuHasMoreSolutions_Part1 {
+            get {
+                return ResourceManager.GetString("MessageBox_SudokuHasMoreSolutions_Part1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A táblázat alatt található nyilakkal tudsz köztük váltani..
+        /// </summary>
+        public static string MessageBox_SudokuHasMoreSolutions_Part2 {
+            get {
+                return ResourceManager.GetString("MessageBox_SudokuHasMoreSolutions_Part2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A feladványnak sajnos nincs megoldása..
+        /// </summary>
+        public static string MessageBox_SudokuHasNoSolution {
+            get {
+                return ResourceManager.GetString("MessageBox_SudokuHasNoSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A feladványnak egy megoldása van..
+        /// </summary>
+        public static string MessageBox_SudokuHasOneSolution {
+            get {
+                return ResourceManager.GetString("MessageBox_SudokuHasOneSolution", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Figyelmeztetés.
+        /// </summary>
+        public static string MessageBox_Warning_Title {
+            get {
+                return ResourceManager.GetString("MessageBox_Warning_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beállítások.
+        /// </summary>
+        public static string Options {
+            get {
+                return ResourceManager.GetString("Options", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nyelv beállítása:.
+        /// </summary>
+        public static string Options_SetLanguage {
+            get {
+                return ResourceManager.GetString("Options_SetLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Klasszikus Sudoku mentése....
+        /// </summary>
+        public static string SaveDialog_Title_ClassicSudoku {
+            get {
+                return ResourceManager.GetString("SaveDialog_Title_ClassicSudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puzzle Sudoku mentése....
+        /// </summary>
+        public static string SaveDialog_Title_JigsawSudoku {
+            get {
+                return ResourceManager.GetString("SaveDialog_Title_JigsawSudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Klasszikus SUDOKU fájlok (*.csu)|*.csu.
+        /// </summary>
+        public static string SaveLoadDialog_Filter_ClassicSudoku {
+            get {
+                return ResourceManager.GetString("SaveLoadDialog_Filter_ClassicSudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Puzzle SUDOKU fájlok (*.jsu)|*.jsu.
+        /// </summary>
+        public static string SaveLoadDialog_Filter_JigsawSudoku {
+            get {
+                return ResourceManager.GetString("SaveLoadDialog_Filter_JigsawSudoku", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Talált megoldások:.
+        /// </summary>
+        public static string TextBlock_FoundSolutions {
+            get {
+                return ResourceManager.GetString("TextBlock_FoundSolutions", resourceCulture);
             }
         }
     }

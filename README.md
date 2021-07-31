@@ -1,4 +1,5 @@
 # Solvedoku
+
 Multilingual (hungarian, english) Solvedoku project made for my grandfather's birthday.
 
 With this small software you can solve:

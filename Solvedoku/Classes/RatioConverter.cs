@@ -27,6 +27,5 @@ namespace Solvedoku.Classes
         {
             return _instance ?? (_instance = new RatioConverter());
         }
-
     }
 }

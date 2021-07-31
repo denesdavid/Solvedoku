@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="Solvedoku.Views.ClassicSudoku.UcClassicSudoku"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:wpfx="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:Converters="clr-namespace:Solvedoku.Converters"
+             xmlns:Classes="clr-namespace:Solvedoku.Classes"
+             xmlns:BusyContent="clr-namespace:Solvedoku.Views.BusyIndicatorContent"
+             xmlns:ClassicSudokuViewModels="clr-namespace:Solvedoku.ViewModels.ClassicSudoku"
+             mc:Ignorable="d"
+             VerticalAlignment="Stretch"
+             VerticalContentAlignment="Stretch"
+             d:DesignHeight="500" d:DesignWidth="800">
+    <UserControl.DataContext>
+        <ClassicSudokuViewModels:ClassicSudokuViewModel/>
+    </UserControl.DataContext>
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../BusyIndicatorContent/BusyIndicatorResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <wpfx:BusyIndicator 
+        BusyContent="{Binding BusyIndicatorContent, UpdateSourceTrigger=PropertyChanged}"
+        IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}">
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Right">
+                <Label Content="{Classes:Loc Main_ChooseClassicSize}" Margin="4,4,4,0"/>
+                    <ComboBox x:Name="CboxClassicSizes" 
+                          ItemsSource="{Binding SudokuBoardSizes, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedItem="{Binding SelectedSudokuBoardSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Margin="8" SelectedIndex="0" DockPanel.Dock="Right"/>
+                <CheckBox Content="{Classes:Loc Main_DiagonalRules}" IsEnabled="{Binding ElementName=buttonSolve, Path=IsEnabled}" IsChecked="{Binding AreDiagonalRulesApplied, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="8" HorizontalAlignment="Center"/>
+                <Button Content="{Classes:Loc Main_Draw}" Width="200" Command="{Binding DrawSudokuCommand}"
+                        CommandParameter="{Binding SelectedSudokuBoardSize}"/>
+                <Button x:Name="buttonSolve" Content="{Classes:Loc Main_Solve}" Command="{Binding SolveSudokuCommand}"/>
+                <Button Content="{Classes:Loc Main_Save}" Command="{Binding SaveSudokuCommand}"/>
+                <Button Content="{Classes:Loc Main_Load}" Command="{Binding LoadSudokuCommand}"/>
+
+                <Label FontSize="18" Foreground="AntiqueWhite" Margin="0"
+                       Content="{Binding Source={x:Static Classes:LocalizationHelper.Instance}, Path = [Main_SolutionsCounter] }"
+                       HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                       VerticalAlignment="Center" VerticalContentAlignment="Center"
+                       Visibility="{Binding IsSolutionCounterVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                <Label FontSize="18" Foreground="AntiqueWhite" Margin="0"
+                       Content="{Binding SolutionCounter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                       HorizontalAlignment="Center" HorizontalContentAlignment="Center"
+                       VerticalAlignment="Center" VerticalContentAlignment="Center"
+                       Visibility="{Binding IsSolutionCounterVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            </StackPanel>
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Width="50"
+                        Style="{StaticResource IconButtonStyle}"
+                        Command="{Binding LoadPreviousSolutionCommand}">
+                    <Image Source="../../Resources/Icons/LeftArrow.png"/>
+                </Button>
+                <Button Style="{StaticResource IconButtonStyle}"
+                        Width="50" Height="50"
+                        Command="{Binding LoadNextSolutionCommand}">
+                    <Image Source="../../Resources/Icons/RightArrow.png"/>
+                </Button>
+            </StackPanel>
+            <ContentControl Content="{Binding SudokuBoardControl, UpdateSourceTrigger=PropertyChanged}"/>
+        </DockPanel>
+    </wpfx:BusyIndicator>
+</UserControl>

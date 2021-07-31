@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AboutBox_Description" xml:space="preserve">
+    <value>Remélem elnyerte tetszésed ez a kis program, mellyel különböző Sudoku feladványokat (klasszikus: 4x4, 6x6, 9x9, puzzle: 9x9) oldhatsz meg. Habár módosítottam pár dolgot a megoldó logikán, illetve refaktoráltam a forráskódot, az alap verzió nem az én szellemi termékem. A szoftver ingyenes, viszont arra szeretnélek megkérni, hogy ha felhasználod az egészet, vagy egy részét, beleértve ebbe a forráskódot is, tüntesd fel a nevemet, illetve, egy, a GitHub repositoryra vezető linket.</value>
+  </data>
+  <data name="AboutBox_DevelopedByDD" xml:space="preserve">
+    <value>Fejlesztette: Dénes Dávid (Darius Davedane)</value>
+  </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Mégse</value>
+  </data>
+  <data name="Button_CancelAndKeepSolutions" xml:space="preserve">
+    <value>Mégse, de a megoldások megtartása</value>
+  </data>
+  <data name="Button_GetAllSolutions" xml:space="preserve">
+    <value>Összes megoldás kiszámítása</value>
+  </data>
+  <data name="Button_GetOneSolution" xml:space="preserve">
+    <value>Egy lehetséges megoldás kiszámítása</value>
+  </data>
+  <data name="Button_No" xml:space="preserve">
+    <value>Nem</value>
+  </data>
+  <data name="Button_Yes" xml:space="preserve">
+    <value>Igen</value>
+  </data>
+  <data name="Color_CornflowerBlue" xml:space="preserve">
+    <value>Égkék</value>
+  </data>
+  <data name="Color_Green" xml:space="preserve">
+    <value>Zöld</value>
+  </data>
+  <data name="Color_LightBlue" xml:space="preserve">
+    <value>Világoskék</value>
+  </data>
+  <data name="Color_LightGray" xml:space="preserve">
+    <value>Szürke</value>
+  </data>
+  <data name="Color_Magenta" xml:space="preserve">
+    <value>Rózsaszín</value>
+  </data>
+  <data name="Color_MediumPurple" xml:space="preserve">
+    <value>Lila</value>
+  </data>
+  <data name="Color_Orange" xml:space="preserve">
+    <value>Narancssárga</value>
+  </data>
+  <data name="Color_Red" xml:space="preserve">
+    <value>Piros</value>
+  </data>
+  <data name="Color_RosyBrown" xml:space="preserve">
+    <value>Barna</value>
+  </data>
+  <data name="Color_Yellow" xml:space="preserve">
+    <value>Sárga</value>
+  </data>
+  <data name="LoadDialog_Title_ClassicSudoku" xml:space="preserve">
+    <value>Klasszikus Sudoku betöltése...</value>
+  </data>
+  <data name="LoadDialog_Title_JigsawSudoku" xml:space="preserve">
+    <value>Puzzle Sudoku betöltése...</value>
+  </data>
+  <data name="Main_AvailableJigsawColors" xml:space="preserve">
+    <value>Elérhető színek:</value>
+  </data>
+  <data name="Main_ChooseClassicSize" xml:space="preserve">
+    <value>Válassz méretet:</value>
+  </data>
+  <data name="Main_ClassicPage" xml:space="preserve">
+    <value>Klasszikus</value>
+  </data>
+  <data name="Main_DiagonalRules" xml:space="preserve">
+    <value>Átló szabály (Sudoku X)</value>
+  </data>
+  <data name="Main_Draw" xml:space="preserve">
+    <value>Rajzol</value>
+  </data>
+  <data name="Main_JigsawColor" xml:space="preserve">
+    <value>Színezd ki a feladatot (jobb klikk):</value>
+  </data>
+  <data name="Main_JigsawPage" xml:space="preserve">
+    <value>Puzzle</value>
+  </data>
+  <data name="Main_Load" xml:space="preserve">
+    <value>Betöltés</value>
+  </data>
+  <data name="Main_Save" xml:space="preserve">
+    <value>Mentés</value>
+  </data>
+  <data name="Main_SolutionsCounter" xml:space="preserve">
+    <value>Megoldások:</value>
+  </data>
+  <data name="Main_Solve" xml:space="preserve">
+    <value>Megoldás</value>
+  </data>
+  <data name="MessageBox_CancelLoading" xml:space="preserve">
+    <value>Biztos, hogy megszakítod a betöltést?</value>
+  </data>
+  <data name="MessageBox_CancelSaving" xml:space="preserve">
+    <value>Biztos, hogy megszakítod a mentést?</value>
+  </data>
+  <data name="MessageBox_CancelSolving" xml:space="preserve">
+    <value>Biztos, hogy meg szeretnéd szakítani a megoldást?</value>
+  </data>
+  <data name="MessageBox_DrawIfNumbersArePresented" xml:space="preserve">
+    <value>Már találhatóak számok a jelenlegi Sudokuban.
+Biztos vagy benne, hogy újat szeretnél rajzolni?</value>
+  </data>
+  <data name="MessageBox_Error_Title" xml:space="preserve">
+    <value>Hiba</value>
+  </data>
+  <data name="MessageBox_Information_Title" xml:space="preserve">
+    <value>Információ</value>
+  </data>
+  <data name="MessageBox_LoadedSudokuHasMoreSolutions_Part1" xml:space="preserve">
+    <value>A betöltött feladványnak már több megoldása is van (összesen</value>
+  </data>
+  <data name="MessageBox_LoadedSudokuHasMoreSolutions_Part2" xml:space="preserve">
+    <value>A táblázat alatt található nyilakkal tudsz köztük váltani.</value>
+  </data>
+  <data name="MessageBox_LoadedSudokuHasOneSolution" xml:space="preserve">
+    <value>A betöltött feladványnak egy megoldása van.</value>
+  </data>
+  <data name="MessageBox_LoadingInProgress" xml:space="preserve">
+    <value>Sudoku betöltése...</value>
+  </data>
+  <data name="MessageBox_Load_Error" xml:space="preserve">
+    <value>A Sudoku betöltése során hiba lépett fel.</value>
+  </data>
+  <data name="MessageBox_OnlyNumbersFrom1To4" xml:space="preserve">
+    <value>Csak egyjegyű számokat üthetsz be 1-től 4-ig.</value>
+  </data>
+  <data name="MessageBox_OnlyNumbersFrom1To6" xml:space="preserve">
+    <value>Csak egyjegyű számokat üthetsz be 1-től 6-ig.</value>
+  </data>
+  <data name="MessageBox_OnlyNumbersFrom1To9" xml:space="preserve">
+    <value>Csak egyjegyű számokat üthetsz be 1-től 9-ig.</value>
+  </data>
+  <data name="MessageBox_OutOfMemory" xml:space="preserve">
+    <value>A memória, vagy a rendszer erőforrásai elfogytak.</value>
+  </data>
+  <data name="MessageBox_Question_Title" xml:space="preserve">
+    <value>Kérdés</value>
+  </data>
+  <data name="MessageBox_Save_Error" xml:space="preserve">
+    <value>A Sudoku mentése során hiba lépett fel.</value>
+  </data>
+  <data name="MessageBox_SavingInProgress" xml:space="preserve">
+    <value>Sudoku mentése...</value>
+  </data>
+  <data name="MessageBox_SolutionInProgress" xml:space="preserve">
+    <value>Megoldás folyamatban...</value>
+  </data>
+  <data name="MessageBox_SolveSudoku" xml:space="preserve">
+    <value>Kérlek válaszd ki, hogy az összes megoldást (feltéve ha van egynél több, illetve ez időigényes is lehet), vagy csak egy lehetségeset szeretnél megkapni.</value>
+  </data>
+  <data name="MessageBox_SolveSudokuError" xml:space="preserve">
+    <value>A feladvány megoldása során hiba lépett fel. Kérlek ellenőrizd, hogy helyesen adtad-e meg a feladatot.</value>
+  </data>
+  <data name="MessageBox_SudokuHasMoreSolutions_Part1" xml:space="preserve">
+    <value>A feladványnak több megoldása is van (összesen</value>
+  </data>
+  <data name="MessageBox_SudokuHasMoreSolutions_Part2" xml:space="preserve">
+    <value>A táblázat alatt található nyilakkal tudsz köztük váltani.</value>
+  </data>
+  <data name="MessageBox_SudokuHasNoSolution" xml:space="preserve">
+    <value>A feladványnak sajnos nincs megoldása.</value>
+  </data>
+  <data name="MessageBox_SudokuHasOneSolution" xml:space="preserve">
+    <value>A feladványnak egy megoldása van.</value>
+  </data>
+  <data name="MessageBox_Warning_Title" xml:space="preserve">
+    <value>Figyelmeztetés</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Beállítások</value>
+  </data>
+  <data name="Options_SetLanguage" xml:space="preserve">
+    <value>Nyelv beállítása:</value>
+  </data>
+  <data name="SaveDialog_Title_ClassicSudoku" xml:space="preserve">
+    <value>Klasszikus Sudoku mentése...</value>
+  </data>
+  <data name="SaveDialog_Title_JigsawSudoku" xml:space="preserve">
+    <value>Puzzle Sudoku mentése...</value>
+  </data>
+  <data name="SaveLoadDialog_Filter_ClassicSudoku" xml:space="preserve">
+    <value>Klasszikus SUDOKU fájlok (*.csu)|*.csu</value>
+  </data>
+  <data name="SaveLoadDialog_Filter_JigsawSudoku" xml:space="preserve">
+    <value>Puzzle SUDOKU fájlok (*.jsu)|*.jsu</value>
+  </data>
+  <data name="TextBlock_FoundSolutions" xml:space="preserve">
+    <value>Talált megoldások:</value>
+  </data>
+</root>
