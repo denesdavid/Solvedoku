@@ -10,6 +10,8 @@ using Xceed.Wpf.Toolkit;
 using Solvedoku.Classes;
 using Solvedoku.Views.JigsawSudoku;
 using Solvedoku.Properties;
+using System.Windows.Threading;
+using Solvedoku.Views.BusyIndicatorContent;
 
 namespace Solvedoku.ViewModels.JigsawSudoku
 {
@@ -57,18 +59,8 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         {
             LoadCommands();
             SelectedColor = Colors.LightBlue;
-            SudokuBoardControl = new UcJigsawSudoku9x9Table();
-            _selectedSudokuBoardSize = new SudokuBoardSize { BoxCountX = 3, BoxCountY = 3, Height = 9, Width = 9 };
-            _instance = this;
-        }
-
-        public JigsawSudokuViewModel(JigsawSudokuViewModel oldViewModel)
-        {
-            LoadCommands();
-            SelectedColor = oldViewModel.SelectedColor;
-            SudokuBoardControl = oldViewModel.SudokuBoardControl;
-            SolutionCounter = oldViewModel.SolutionCounter;
-            _selectedSudokuBoardSize = new SudokuBoardSize { BoxCountX = 3, BoxCountY = 3, Height = 9, Width = 9 };
+            Draw(SudokuBoard.SudokuBoardSizes[0]);
+            _selectedSudokuBoardSize = SudokuBoard.SudokuBoardSizes[0];
             _instance = this;
         }
 
@@ -81,7 +73,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         /// </summary>
         protected override void Draw(object o)
         {
-            if (GetCurrentTableViewModel().AreAnyCellsFilled())
+            if (GetCurrentTableViewModel() != null && GetCurrentTableViewModel().AreAnyCellsFilled())
             {
                 var messageBoxResult = MessageBoxService.Show(
                    Resources.MessageBox_DrawIfNumbersArePresented,
@@ -96,6 +88,18 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             if (sudokuBoardSize.Height == 9 && sudokuBoardSize.Width == 9)
             {
                 SudokuBoardControl = new UcJigsawSudoku9x9Table();
+                _actualSudokuBoard = CreateBoard(sudokuBoardSize, new string[9]
+                { 
+                    "-1-1-1-1-1-1-1-1-1",
+                    "-1-1-1-1-1-1-1-1-1",
+                    "-1-1-1-1-1-1-1-1-1",
+                    "-1-1-1-1-1-1-1-1-1",
+                    "-1-1-1-1-1-1-1-1-1",
+                    "-1-1-1-1-1-1-1-1-1",
+                    "-1-1-1-1-1-1-1-1-1",
+                    "-1-1-1-1-1-1-1-1-1", 
+                    "-1-1-1-1-1-1-1-1-1",
+                });
             }
             _solutions.Clear();
             SolutionCounter = string.Empty;
@@ -118,18 +122,19 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                     SolutionCounter = string.Empty;
 
                     string[] areas = ((BaseJigsawSudokuTableViewModel)GetCurrentTableViewModel()).GetJigsawAreasAsArray();
-                    var board = CreateBoard(((IJigsawSudokuControl)SudokuBoardControl).BoardSize, areas);
+                    _actualSudokuBoard = CreateBoard(((IJigsawSudokuControl)SudokuBoardControl).BoardSize, areas);
 
                     _solutionIndex = 0;
 
                     if (messageBoxResult == MessageBoxResult.Yes)
                     {
+                        BusyIndicatorContent = new UcSolvingBusyIndicatorContent();
                         _sudokuSolverThread = new Thread(() =>
                         {
                             int foundSolution = 0;
                             try
                             {
-                                foreach (var item in Sudoku_SolverThread(board, true))
+                                foreach (var item in Sudoku_SolverThread(_actualSudokuBoard, true))
                                 {
                                     if (item != null)
                                     {
@@ -156,9 +161,9 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                     {
                         _sudokuSolverThread = new Thread(() =>
                         {
-                            if (Sudoku_SolverThread(board, false).First() != null)
+                            if (Sudoku_SolverThread(_actualSudokuBoard, false).First() != null)
                             {
-                                _solutions.Add(Sudoku_SolverThread(board, false).First());
+                                _solutions.Add(Sudoku_SolverThread(_actualSudokuBoard, false).First());
                             }
                            
                             Action action = DisplaySolutionAndMessage;
@@ -194,17 +199,35 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             {
                 try
                 {
-                    var jigsawSudokuFile = new JigsawSudokuFile(CreateBoard(SelectedSudokuBoardSize,
-                        ((BaseJigsawSudokuTableViewModel)GetCurrentTableViewModel()).GetJigsawAreasAsArray()),
-                        ((IJigsawSudokuControl)SudokuBoardControl).BoardSize,
-                        ((BaseJigsawSudokuTableViewModel)GetCurrentTableViewModel()).GetJigsawAreasAsMatrix(),
-                        _solutions);
+                    BusyIndicatorContent = new UcSavingBusyIndicatorContent();
+                    var jigsawSudokuFile = new JigsawSudokuFile();
+                    jigsawSudokuFile.SelectedSudokuBoardSize = SelectedSudokuBoardSize;
+                    jigsawSudokuFile.Areas = ((BaseJigsawSudokuTableViewModel)SudokuBoardControl.DataContext).GetJigsawAreasAsMatrix();
+                    jigsawSudokuFile.Cells = new ObservableCollection<ObservableCollection<string>>(((BaseJigsawSudokuTableViewModel)SudokuBoardControl.DataContext).Cells);
+                    jigsawSudokuFile.BoldCells = new ObservableCollection<ObservableCollection<bool>>(((BaseJigsawSudokuTableViewModel)SudokuBoardControl.DataContext).BoldCells);
+                    jigsawSudokuFile.Solutions = _solutions;
+                    jigsawSudokuFile.SolutionIndex = _solutionIndex;
+                    jigsawSudokuFile.SolutionCounter = SolutionCounter;
+                    jigsawSudokuFile.IsSolutionCounterVisible = IsSolutionCounterVisible;
 
-                    using (Stream stream = File.Open(_saveFileDialog.FileName, FileMode.Create))
+                    _sudokuSavingThread = new Thread(() =>
                     {
-                        var bformatter = new BinaryFormatter();
-                        bformatter.Serialize(stream, jigsawSudokuFile);
-                    }
+                        try
+                        {
+                            Dispatcher.CurrentDispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                            new Action(() => SerializeJigsawSudokuFile(_saveFileDialog.FileName, jigsawSudokuFile)));
+                        }
+                        catch (OutOfMemoryException)
+                        {
+                            _solutions.Clear();
+                            Application.Current.Dispatcher.Invoke(new Action(() =>
+                            MessageBoxService.Show($"{Resources.MessageBox_OutOfMemory}", Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error)));
+                            IsBusy = false;
+                        }
+
+                    });
+                    _sudokuSavingThread.Start();
+                    IsBusy = true;
                 }
                 catch (Exception ex)
                 {
@@ -230,33 +253,30 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             {
                 try
                 {
-                    JigsawSudokuFile _jigsawSudokuFile = null;
-                    using (Stream stream = File.Open(_openFileDialog.FileName, FileMode.Open))
+                    BusyIndicatorContent = new UcLoadingBusyIndicatorContent();
+                    _sudokuLoadingThread = new Thread(() =>
                     {
-                        var bformatter = new BinaryFormatter();
-                        _jigsawSudokuFile = (JigsawSudokuFile)bformatter.Deserialize(stream);
-                    }
-                    SelectedSudokuBoardSize = _jigsawSudokuFile.Board.BoardSize;
-                    Draw(SelectedSudokuBoardSize);
-                    DisplayAreas(_jigsawSudokuFile.Areas);
-                    DisplayMatrixBoard(_jigsawSudokuFile.Board.OutputAsStringMatrix());
-                    SolutionCounter = string.Empty;
+                        try
+                        {
+                            JigsawSudokuFile jigsawSudokuFile = null;
+                            using (Stream stream = File.Open(_openFileDialog.FileName, FileMode.Open))
+                            {
+                                var bformatter = new BinaryFormatter();
+                                jigsawSudokuFile = (JigsawSudokuFile)bformatter.Deserialize(stream);
+                            }
+                            Application.Current.Dispatcher.Invoke(new Action(() => DeserializeJigsawSudokuFile(jigsawSudokuFile)));
+                        }
+                        catch (OutOfMemoryException)
+                        {
+                            _solutions.Clear();
+                            Application.Current.Dispatcher.Invoke(new Action(() =>
+                            MessageBoxService.Show($"{Resources.MessageBox_OutOfMemory}", Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error)));
+                            IsBusy = false;
+                        }
 
-                    _solutions = _jigsawSudokuFile.Solutions;
-                    if (_solutions.Count > 1)
-                    {
-                        MessageBoxService.Show($"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part1} {_solutions.Count}). " +
-                            $"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
-                            MessageBoxButton.OK, MessageBoxImage.Information);
-                        _solutionIndex = 0;
-                        SolutionCounter = $"{ _solutionIndex + 1 }/{ _solutions.Count }";
-                        IsSolutionCounterVisible = true;
-                    }
-                    else if (_solutions.Count == 1)
-                    {
-                        MessageBoxService.Show(Resources.MessageBox_LoadedSudokuHasOneSolution, Resources.MessageBox_Information_Title, MessageBoxButton.OK, MessageBoxImage.Information);
-                        SolutionCounter = string.Empty;
-                    }
+                    });
+                    _sudokuLoadingThread.Start();
+                    IsBusy = true;
                 }
                 catch (Exception ex)
                 {
@@ -269,6 +289,55 @@ namespace Solvedoku.ViewModels.JigsawSudoku
 
         #region Methods
 
+        /// <summary>
+        /// Serializes the given jigsaw sudoku file into the given file.
+        /// </summary>
+        /// <param name="filePath">File where the jigsaw sudoku file will be serialized.</param>
+        /// <param name="jigsawSudokuFile">Jigsaw sudoku file.</param>
+        void SerializeJigsawSudokuFile(string filePath, JigsawSudokuFile jigsawSudokuFile)
+        {
+            using (Stream stream = File.Open(filePath, FileMode.Create))
+            {
+                var bformatter = new BinaryFormatter();
+                bformatter.Serialize(stream, jigsawSudokuFile);
+            }
+            IsBusy = false;
+        }
+
+        /// <summary>
+        /// Loads the deserialized jigsaw sudoku file.
+        /// </summary>
+        /// <param name="jigsawSudokuFile">Jigsaw sudoku file</param>
+        void DeserializeJigsawSudokuFile(JigsawSudokuFile jigsawSudokuFile)
+        {
+            IsBusy = false;
+            SelectedSudokuBoardSize = jigsawSudokuFile.SelectedSudokuBoardSize;
+            Draw(SelectedSudokuBoardSize);
+            DisplayAreas(jigsawSudokuFile.Areas);
+            ((BaseJigsawSudokuTableViewModel)SudokuBoardControl.DataContext).Cells = jigsawSudokuFile.Cells;
+            ((BaseJigsawSudokuTableViewModel)SudokuBoardControl.DataContext).BoldCells = jigsawSudokuFile.BoldCells;
+            SolutionCounter = string.Empty;
+            _solutions = jigsawSudokuFile.Solutions;
+            _solutionIndex = jigsawSudokuFile.SolutionIndex;
+            SolutionCounter = jigsawSudokuFile.SolutionCounter;
+            IsSolutionCounterVisible = jigsawSudokuFile.IsSolutionCounterVisible;
+
+            if (_solutions.Count > 1)
+            {
+                MessageBoxService.Show($"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part1} {_solutions.Count}). " +
+                   $"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
+                   MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else if (_solutions.Count == 1)
+            {
+                MessageBoxService.Show(Resources.MessageBox_LoadedSudokuHasOneSolution, Resources.MessageBox_Information_Title, MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        /// <summary>
+        /// Loads the jigsaw areas into the curent sudoku board viewmodel.
+        /// </summary>
+        /// <param name="areas">Integer array of the jigsaw areas.</param>
         void DisplayAreas(int[,] areas)
         {
             var boardControlViewModel = (BaseJigsawSudokuTableViewModel)SudokuBoardControl.DataContext;
@@ -281,20 +350,6 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                     }
                 }
             }
-        }
-
-        public JigsawSudokuViewModel Clone()
-        {
-            MemoryStream ms = new MemoryStream();
-            BinaryFormatter bf = new BinaryFormatter();
-
-            bf.Serialize(ms, this);
-
-            ms.Position = 0;
-            object obj = bf.Deserialize(ms);
-            ms.Close();
-
-            return obj as JigsawSudokuViewModel;
         }
 
         #endregion

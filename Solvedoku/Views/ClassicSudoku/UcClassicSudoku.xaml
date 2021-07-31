@@ -35,10 +35,10 @@
                           ItemsSource="{Binding SudokuBoardSizes, UpdateSourceTrigger=PropertyChanged}"
                           SelectedItem="{Binding SelectedSudokuBoardSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                           Margin="8" SelectedIndex="0" DockPanel.Dock="Right"/>
-                <CheckBox Content="{Classes:Loc Main_DiagonalRules}" IsChecked="{Binding AreDiagonalRulesApplied, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="8" HorizontalAlignment="Center"/>
+                <CheckBox Content="{Classes:Loc Main_DiagonalRules}" IsEnabled="{Binding ElementName=buttonSolve, Path=IsEnabled}" IsChecked="{Binding AreDiagonalRulesApplied, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="8" HorizontalAlignment="Center"/>
                 <Button Content="{Classes:Loc Main_Draw}" Width="200" Command="{Binding DrawSudokuCommand}"
                         CommandParameter="{Binding SelectedSudokuBoardSize}"/>
-                <Button Content="{Classes:Loc Main_Solve}" Command="{Binding SolveSudokuCommand}"/>
+                <Button x:Name="buttonSolve" Content="{Classes:Loc Main_Solve}" Command="{Binding SolveSudokuCommand}"/>
                 <Button Content="{Classes:Loc Main_Save}" Command="{Binding SaveSudokuCommand}"/>
                 <Button Content="{Classes:Loc Main_Load}" Command="{Binding LoadSudokuCommand}"/>
 

@@ -12,7 +12,7 @@ using Solvedoku.Properties;
 
 namespace Solvedoku.ViewModels
 {
-    abstract class BaseSudokuViewModel: ViewModelBase
+    abstract class BaseSudokuViewModel : ViewModelBase
     {
         #region Fields
 
@@ -56,10 +56,10 @@ namespace Solvedoku.ViewModels
 
         public ICommand BusyIndicatorLoadedCommand { get; set; }
 
-        public Thread SudokuSolverThread 
-        { 
+        public Thread SudokuSolverThread
+        {
             get => _sudokuSolverThread;
-            set 
+            set
             {
                 _sudokuSolverThread = value;
             }
@@ -262,7 +262,7 @@ namespace Solvedoku.ViewModels
                 else
                 {
                     DisplaySolutionAndMessage();
-                }      
+                }
             }
         }
 
@@ -332,14 +332,14 @@ namespace Solvedoku.ViewModels
         /// </summary>
         /// <returns>BaseSudokuTableViewModel</returns>
         protected virtual BaseSudokuTableViewModel GetCurrentTableViewModel() =>
-            (BaseSudokuTableViewModel)SudokuBoardControl.DataContext;
+            (BaseSudokuTableViewModel)SudokuBoardControl?.DataContext;
 
         /// <summary>
         /// Creates a Sudoku board, according to the given board size.
         /// </summary>
         /// <param name="sudokuBoardSize">Size information about the board.</param>
         /// <returns>Sudoku board.</returns>
-        protected virtual SudokuBoard CreateBoard(SudokuBoardSize sudokuBoardSize, bool applyDiagonalRules = false)
+        protected virtual SudokuBoard CreateBoard(SudokuBoardSize sudokuBoardSize, BaseSudokuTableViewModel baseSudokuTableViewModel, bool filledCellsAreBold, bool applyDiagonalRules = false)
         {
             SudokuBoard sudokuBoard;
             var boardControlViewModel = (BaseSudokuTableViewModel)SudokuBoardControl.DataContext;
@@ -354,10 +354,11 @@ namespace Solvedoku.ViewModels
                         if (string.IsNullOrEmpty(boardControlViewModel.Cells[row][column]))
                         {
                             actRow += ".";
+                            boardControlViewModel.BoldCells[row][column] = false;
                         }
                         else
                         {
-                            boardControlViewModel.BoldCells[row][column] = true;
+                            boardControlViewModel.BoldCells[row][column] = filledCellsAreBold;
                             actRow += boardControlViewModel.Cells[row][column];
                         }
                     }
@@ -375,6 +376,7 @@ namespace Solvedoku.ViewModels
                         if (string.IsNullOrEmpty(boardControlViewModel.Cells[row][column]))
                         {
                             actRow += "0";
+                            boardControlViewModel.BoldCells[row][column] = false;
                         }
                         else
                         {
@@ -394,7 +396,7 @@ namespace Solvedoku.ViewModels
         /// <param name="sudokuBoardSize">Size information about the board.</param>
         /// <param name="areas">Special areas information about the board.</param>
         /// <returns>Sudoku board.</returns>
-        protected virtual SudokuBoard CreateBoard(SudokuBoardSize sudokuBoardSize, string[] areas) 
+        protected virtual SudokuBoard CreateBoard(SudokuBoardSize sudokuBoardSize, string[] areas)
         {
             SudokuBoard board = SudokuFactory.ClassicWithSpecialBoxes(areas);
             var boardControlViewModel = (BaseSudokuTableViewModel)SudokuBoardControl.DataContext;
@@ -405,6 +407,7 @@ namespace Solvedoku.ViewModels
                 {
                     if (string.IsNullOrEmpty(boardControlViewModel.Cells[row][column]))
                     {
+                        boardControlViewModel.BoldCells[row][column] = false;
                         actRow += ".";
                     }
                     else
@@ -435,7 +438,7 @@ namespace Solvedoku.ViewModels
             }
             else
             {
-                SudokuBoard solvedBoard = null;
+                SudokuBoard solvedBoard;
                 try
                 {
                     solvedBoard = sudokuBoard.Solve().First();
@@ -455,34 +458,33 @@ namespace Solvedoku.ViewModels
         protected void DisplaySolutionAndMessage()
         {
             IsBusy = false;
-            if (SudokuSolverThread.ThreadState != ThreadState.Aborted)
+            if (_solutions.Count > 0 && _solutions[0] != null)
             {
-                if (_solutions.Count > 0 && _solutions[0] != null)
+                _solutionIndex = 0;
+                if (_solutions.Count > 1)
                 {
-                    _solutionIndex = 0;
-                    if (_solutions.Count > 1)
-                    {
-                        MessageBoxService.Show($"{Resources.MessageBox_SudokuHasMoreSolutions_Part1} { _solutions.Count}). {Resources.MessageBox_SudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
-                             MessageBoxButton.OK, MessageBoxImage.Information);
-
-                        SolutionCounter = $"{ _solutionIndex + 1 }/{ _solutions.Count }";
-                        IsSolutionCounterVisible = true;
-                    }
-                    else
-                    {
-                        MessageBoxService.Show(Resources.MessageBox_SudokuHasOneSolution, Resources.MessageBox_Information_Title,
-                            MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-
-                    string[,] solution = _solutions[_solutionIndex].OutputAsStringMatrix();
-                    DisplayMatrixBoard(solution);
-
+                    SolutionCounter = $"{ _solutionIndex + 1 }/{ _solutions.Count }";
+                    IsSolutionCounterVisible = true;
+                    MessageBoxService.Show($"{Resources.MessageBox_SudokuHasMoreSolutions_Part1} { _solutions.Count}). {Resources.MessageBox_SudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
+                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }
                 else
                 {
-                    MessageBoxService.Show(Resources.MessageBox_SudokuHasNoSolution, Resources.MessageBox_Information_Title,
+                    SolutionCounter = string.Empty;
+                    IsSolutionCounterVisible = false;
+                    MessageBoxService.Show(Resources.MessageBox_SudokuHasOneSolution, Resources.MessageBox_Information_Title,
                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }
+
+                string[,] solution = _solutions[_solutionIndex].OutputAsStringMatrix();
+                DisplayMatrixBoard(solution);
+            }
+            else
+            {
+                SolutionCounter = string.Empty;
+                IsSolutionCounterVisible = false;
+                MessageBoxService.Show(Resources.MessageBox_SudokuHasNoSolution, Resources.MessageBox_Information_Title,
+                    MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
