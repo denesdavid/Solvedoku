@@ -21,10 +21,8 @@
             <Converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <wpfx:BusyIndicator IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}">
-        <wpfx:BusyIndicator.BusyContent>
-            <BusyContent:UcSolvingBusyIndicatorContent/>
-        </wpfx:BusyIndicator.BusyContent>
+    <wpfx:BusyIndicator IsBusy="{Binding IsBusy, UpdateSourceTrigger=PropertyChanged}"
+                        BusyContent="{Binding BusyIndicatorContent, UpdateSourceTrigger=PropertyChanged}">
         <DockPanel>
             <StackPanel DockPanel.Dock="Right">
                 <Label Content="{Classes:Loc Main_JigsawColor}" Margin="4,4,4,0"/>

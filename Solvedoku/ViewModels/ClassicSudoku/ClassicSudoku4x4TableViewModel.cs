@@ -46,7 +46,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             }
         }
 
-        public override bool AreDiagonalRulesSet
+        public override bool AreDiagonalRulesApplied
         {
             get => _areDiagonalRulesSet;
             set

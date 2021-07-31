@@ -19,11 +19,21 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 
         public bool AreDiagonalRulesApplied
         {
-            get => ((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).AreDiagonalRulesSet;
+            get
+            {
+                if ((BaseClassicSudokuTableViewModel)SudokuBoardControl?.DataContext != null)
+                {
+                    return ((BaseClassicSudokuTableViewModel)SudokuBoardControl?.DataContext).AreDiagonalRulesApplied;
+                }
+                return false;
+            }
             set
             {
-                ((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).AreDiagonalRulesSet = value;
-                OnPropertyChanged();
+                if ((BaseClassicSudokuTableViewModel)SudokuBoardControl?.DataContext != null)
+                {
+                    ((BaseClassicSudokuTableViewModel)SudokuBoardControl?.DataContext).AreDiagonalRulesApplied = value;
+                    OnPropertyChanged();
+                }
             }
         }
 
@@ -60,7 +70,12 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 }
             }
 
-            SudokuBoardSize sudokuBoardSize = (SudokuBoardSize)o;      
+            SudokuBoardSize sudokuBoardSize = (SudokuBoardSize)o;
+            if (true)
+            {
+
+            }
+            bool oldDiagonalRulesStatus = AreDiagonalRulesApplied;
             if (sudokuBoardSize.Height == 9 && sudokuBoardSize.Width == 9)
             {
                 SudokuBoardControl = new UcClassicSudoku9x9Table();
@@ -77,7 +92,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 _actualSudokuBoard = CreateBoard(sudokuBoardSize, (BaseSudokuTableViewModel)SudokuBoardControl.DataContext, false);
             }
 
-            ((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).AreDiagonalRulesSet = AreDiagonalRulesApplied;
+            ((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).AreDiagonalRulesApplied = oldDiagonalRulesStatus;
             SolutionCounter = string.Empty;
             IsSolutionCounterVisible = false;
             _solutions.Clear();
@@ -175,10 +190,14 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 {
                     BusyIndicatorContent = new UcSavingBusyIndicatorContent();
                     var classicSudokuFile = new ClassicSudokuFile();
-                    classicSudokuFile.BoldCells = ((BaseSudokuTableViewModel)SudokuBoardControl.DataContext).BoldCells;
+                    classicSudokuFile.SelectedSudokuBoardSize = SelectedSudokuBoardSize;
+                    classicSudokuFile.AreDiagonalRulesSet = ((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).AreDiagonalRulesApplied;
+                    classicSudokuFile.Cells = new ObservableCollection<ObservableCollection<string>>(((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).Cells);
+                    classicSudokuFile.BoldCells = new ObservableCollection<ObservableCollection<bool>>(((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).BoldCells);
                     classicSudokuFile.Solutions = _solutions;
-                    _actualSudokuBoard = CreateBoard(_actualSudokuBoard.BoardSize, (BaseSudokuTableViewModel)SudokuBoardControl.DataContext, false);
-                    classicSudokuFile.Board = _actualSudokuBoard;
+                    classicSudokuFile.SolutionIndex = _solutionIndex;
+                    classicSudokuFile.SolutionCounter = SolutionCounter;
+                    classicSudokuFile.IsSolutionCounterVisible = IsSolutionCounterVisible;
 
                     _sudokuSavingThread = new Thread(() =>
                     {
@@ -234,7 +253,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                                 var bformatter = new BinaryFormatter();
                                 classicSudokuFile = (ClassicSudokuFile)bformatter.Deserialize(stream);
                             }
-                            Application.Current.Dispatcher.Invoke(new Action(() => DeserializeClassicSudokuFile(classicSudokuFile)));
+                            Application.Current.Dispatcher.Invoke(new Action(() => LoadDeserializedClassicSudokuFile(classicSudokuFile)));
                         }
                         catch (OutOfMemoryException)
                         {
@@ -256,33 +275,15 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             }
         }
 
-        void DeserializeClassicSudokuFile(ClassicSudokuFile classicSudokuFile)
-        {
-            IsBusy = false;
-            Draw(SelectedSudokuBoardSize);
-            ((BaseSudokuTableViewModel)SudokuBoardControl.DataContext).BoldCells = classicSudokuFile.BoldCells;
-            SelectedSudokuBoardSize = classicSudokuFile.Board.BoardSize;
-            AreDiagonalRulesApplied = classicSudokuFile.Board.HasDiagonalRules;
-            DisplayMatrixBoard(classicSudokuFile.Board.OutputAsStringMatrix());
-            SolutionCounter = string.Empty;
+        #endregion
 
-            _solutions = classicSudokuFile.Solutions;
-            if (_solutions.Count > 1)
-            {
-                _solutionIndex = 0;
-                SolutionCounter = $"{ _solutionIndex + 1 }/{ _solutions.Count }";
-                IsSolutionCounterVisible = true;
-                MessageBoxService.Show($"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part1} {_solutions.Count}). " +
-                   $"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
-                   MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else if (_solutions.Count == 1)
-            {
-                SolutionCounter = string.Empty;
-                MessageBoxService.Show(Resources.MessageBox_LoadedSudokuHasOneSolution, Resources.MessageBox_Information_Title, MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-        }
+        #region Methods
 
+        /// <summary>
+        /// Serializes the given classic sudoku file into the given file.
+        /// </summary>
+        /// <param name="filePath">File where the classic sudoku file will be serialized.</param>
+        /// <param name="classicSudokuFile">Classic sudoku file.</param>
         void SerializeClassicSudokuFile(string filePath, ClassicSudokuFile classicSudokuFile)
         {
             using (Stream stream = File.Open(filePath, FileMode.Create))
@@ -291,6 +292,36 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 bformatter.Serialize(stream, classicSudokuFile);
             }
             IsBusy = false;
+        }
+
+        /// <summary>
+        /// Loads the deserialized classic sudoku file.
+        /// </summary>
+        /// <param name="classicSudokuFile">Classic sudoku file</param>
+        void LoadDeserializedClassicSudokuFile(ClassicSudokuFile classicSudokuFile)
+        {
+            IsBusy = false;
+            SelectedSudokuBoardSize = classicSudokuFile.SelectedSudokuBoardSize;
+            Draw(SelectedSudokuBoardSize);
+            AreDiagonalRulesApplied = classicSudokuFile.AreDiagonalRulesSet;
+            ((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).Cells = classicSudokuFile.Cells;
+            ((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).BoldCells = classicSudokuFile.BoldCells;
+            SolutionCounter = string.Empty;
+            _solutions = classicSudokuFile.Solutions;
+            _solutionIndex = classicSudokuFile.SolutionIndex;
+            SolutionCounter = classicSudokuFile.SolutionCounter;
+            IsSolutionCounterVisible = classicSudokuFile.IsSolutionCounterVisible;
+
+            if (_solutions.Count > 1)
+            {
+                MessageBoxService.Show($"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part1} {_solutions.Count}). " +
+                   $"{Resources.MessageBox_LoadedSudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
+                   MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else if (_solutions.Count == 1)
+            {
+                MessageBoxService.Show(Resources.MessageBox_LoadedSudokuHasOneSolution, Resources.MessageBox_Information_Title, MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         #endregion
