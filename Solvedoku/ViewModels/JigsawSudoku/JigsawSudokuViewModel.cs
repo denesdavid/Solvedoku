@@ -99,7 +99,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                     "-1-1-1-1-1-1-1-1-1",
                     "-1-1-1-1-1-1-1-1-1", 
                     "-1-1-1-1-1-1-1-1-1",
-                });
+                }, (BaseSudokuTableViewModel)SudokuBoardControl.DataContext, false);
             }
             _solutions.Clear();
             SolutionCounter = string.Empty;
@@ -119,11 +119,10 @@ namespace Solvedoku.ViewModels.JigsawSudoku
 
                 if (messageBoxResult != MessageBoxResult.Cancel)
                 {
+                    _solutions.Clear();
                     SolutionCounter = string.Empty;
-
                     string[] areas = ((BaseJigsawSudokuTableViewModel)GetCurrentTableViewModel()).GetJigsawAreasAsArray();
-                    _actualSudokuBoard = CreateBoard(((IJigsawSudokuControl)SudokuBoardControl).BoardSize, areas);
-
+                    _actualSudokuBoard = CreateBoard(((IJigsawSudokuControl)SudokuBoardControl).BoardSize, areas, (BaseSudokuTableViewModel)SudokuBoardControl.DataContext, true);
                     _solutionIndex = 0;
 
                     if (messageBoxResult == MessageBoxResult.Yes)
