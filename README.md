@@ -39,7 +39,7 @@ At the start of the program, this picture welcomes us:
 
 The gear icon shows the options window, which is very simple at the moment. Here you can change the software language.
 
-![gear_icon](./doc/solvedoku_gearicon.png)
+![gear_icon](./doc/solvedoku_newgearicon.png)
 
 ![options_window](./doc/solvedoku_optionswindow.png)
 
@@ -47,7 +47,7 @@ The question mark icon shows the about box, which contains my name, the version,
 
 ![about_box](./doc/solvedoku_abouticon.png)
 
-![about_box](./doc/solvedoku_aboutbox.png)
+![about_box](./doc/solvedoku_newaboutbox.png)
 
 ### Classic Sudoku
 
