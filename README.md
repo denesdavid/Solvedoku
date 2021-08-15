@@ -7,9 +7,9 @@
     - [Toolbar](#toolbar)  
     - [Classic Sudoku](#classic-sudoku)
     - [Jigsaw Sudoku](#jigsaw-sudoku)
-  - [Used resources](#resources)
-    -[Solver source](#solver-source)
-    -[Used icons](#used-icons)
+  - [Used resources](#used-resources)
+    - [Solver source](#solver-source)
+    - [Used icons](#used-icons)
 
 ## What is Solvedoku
 
