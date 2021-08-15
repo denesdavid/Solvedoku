@@ -6,7 +6,6 @@
              xmlns:wpfx="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:Converters="clr-namespace:Solvedoku.Converters"
              xmlns:Classes="clr-namespace:Solvedoku.Classes"
-             xmlns:BusyContent="clr-namespace:Solvedoku.Views.BusyIndicatorContent"
              xmlns:ClassicSudokuViewModels="clr-namespace:Solvedoku.ViewModels.ClassicSudoku"
              mc:Ignorable="d"
              VerticalAlignment="Stretch"

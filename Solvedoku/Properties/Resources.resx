@@ -309,4 +309,10 @@
   <data name="TextBlock_FoundSolutions" xml:space="preserve">
     <value>Talált megoldások:</value>
   </data>
+  <data name="ToolTip_About" xml:space="preserve">
+    <value>A programról</value>
+  </data>
+  <data name="ToolTip_Settings" xml:space="preserve">
+    <value>Beállítások:</value>
+  </data>
 </root>

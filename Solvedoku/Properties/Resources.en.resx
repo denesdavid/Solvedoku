@@ -310,4 +310,10 @@ Are you sure you want to draw a new one?</value>
   <data name="TextBlock_FoundSolutions" xml:space="preserve">
     <value>Found solutions:</value>
   </data>
+  <data name="ToolTip_About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="ToolTip_Settings" xml:space="preserve">
+    <value>Options</value>
+  </data>
 </root>

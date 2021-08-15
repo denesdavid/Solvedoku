@@ -635,5 +635,23 @@ namespace Solvedoku.Properties {
                 return ResourceManager.GetString("TextBlock_FoundSolutions", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A programról.
+        /// </summary>
+        public static string ToolTip_About {
+            get {
+                return ResourceManager.GetString("ToolTip_About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Beállítások:.
+        /// </summary>
+        public static string ToolTip_Settings {
+            get {
+                return ResourceManager.GetString("ToolTip_Settings", resourceCulture);
+            }
+        }
     }
 }

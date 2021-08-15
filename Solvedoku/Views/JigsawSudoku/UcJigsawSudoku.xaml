@@ -7,7 +7,6 @@
              xmlns:JigsawSudokuViewModels="clr-namespace:Solvedoku.ViewModels.JigsawSudoku"
              xmlns:Converters="clr-namespace:Solvedoku.Converters"
              xmlns:Classes="clr-namespace:Solvedoku.Classes"
-             xmlns:BusyContent="clr-namespace:Solvedoku.Views.BusyIndicatorContent"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="800">
     <UserControl.DataContext>

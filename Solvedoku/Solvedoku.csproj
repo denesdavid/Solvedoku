@@ -296,9 +296,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\MainWindow\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Resources\DLL\cs-CZ\Xceed.Wpf.AvalonDock.resources.dll" />
     <EmbeddedResource Include="Resources\DLL\de\Xceed.Wpf.AvalonDock.resources.dll" />
