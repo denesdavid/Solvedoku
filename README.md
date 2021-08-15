@@ -47,7 +47,7 @@ The question mark icon shows the about box, which contains my name, the version,
 
 ![about_box](./doc/solvedoku_abouticon.png)
 
-![about_box](./doc/solvedoku_newaboutbox.png)
+![about_box](./doc/solvedoku_aboutbox.png)
 
 ### Classic Sudoku
 
