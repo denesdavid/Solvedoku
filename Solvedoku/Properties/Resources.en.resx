@@ -314,6 +314,6 @@ Are you sure you want to draw a new one?</value>
     <value>About</value>
   </data>
   <data name="ToolTip_Settings" xml:space="preserve">
-    <value>Options</value>
+    <value>Settings</value>
   </data>
 </root>

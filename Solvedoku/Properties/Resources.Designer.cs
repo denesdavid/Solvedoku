@@ -646,7 +646,7 @@ namespace Solvedoku.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Beállítások:.
+        ///   Looks up a localized string similar to Beállítások.
         /// </summary>
         public static string ToolTip_Settings {
             get {
