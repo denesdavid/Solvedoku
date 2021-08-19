@@ -74,7 +74,7 @@ It is important, because you can do that for example if you have an already solv
 
 ![classic_sudoku_solving](./doc/solvedoku_classicsolutioninprogress.png)
 
-You can interrupt the solving process any tyme with two ways: simply cancel the solution, or you can cancel the process but keep the already found solutions.
+You can interrupt the solving process any time with two ways: simply cancel the solution, or you can cancel the process but keep the already found solutions.
 
 Solved table with predefined numbers:
 
