@@ -3,7 +3,7 @@
 - [Solvedoku](#solvedoku)
   - [What is Solvedoku](#what-is-solvedoku)
   - [Features](#features)
-  - [Screenshots and Usage Examples](#screenshot-and-usage-examples)
+  - [Screenshots and Usage Examples](#screenshots-and-usage-examples)
     - [Toolbar](#toolbar)  
     - [Classic Sudoku](#classic-sudoku)
     - [Jigsaw Sudoku](#jigsaw-sudoku)
