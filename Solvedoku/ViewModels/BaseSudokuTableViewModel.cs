@@ -2,7 +2,7 @@
 
 namespace Solvedoku.ViewModels
 {
-    abstract class BaseSudokuTableViewModel : ViewModelBase
+    public abstract class BaseSudokuTableViewModel : ViewModelBase
     {
         public abstract ObservableCollection<ObservableCollection<string>> Cells { get; set; }
 

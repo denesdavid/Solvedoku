@@ -12,7 +12,7 @@ using Solvedoku.Properties;
 
 namespace Solvedoku.ViewModels
 {
-    abstract class BaseSudokuViewModel : ViewModelBase
+    public abstract class BaseSudokuViewModel : ViewModelBase
     {
         #region Fields
 
@@ -331,7 +331,7 @@ namespace Solvedoku.ViewModels
         /// Returns the base viewmodel of the current sudoku board control.
         /// </summary>
         /// <returns>BaseSudokuTableViewModel</returns>
-        protected virtual BaseSudokuTableViewModel GetCurrentTableViewModel() =>
+        public virtual BaseSudokuTableViewModel GetCurrentTableViewModel() =>
             (BaseSudokuTableViewModel)SudokuBoardControl?.DataContext;
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace Solvedoku.ViewModels
         /// </summary>
         /// <param name="sudokuBoardSize">Size information about the board.</param>
         /// <returns>Sudoku board.</returns>
-        protected virtual SudokuBoard CreateBoard(SudokuBoardSize sudokuBoardSize, BaseSudokuTableViewModel baseSudokuTableViewModel, bool filledCellsAreBold, bool applyDiagonalRules = false)
+        public virtual SudokuBoard CreateBoard(SudokuBoardSize sudokuBoardSize, BaseSudokuTableViewModel baseSudokuTableViewModel, bool filledCellsAreBold, bool applyDiagonalRules = false)
         {
             SudokuBoard sudokuBoard;
             //var boardControlViewModel = (BaseSudokuTableViewModel)SudokuBoardControl.DataContext;
@@ -396,7 +396,7 @@ namespace Solvedoku.ViewModels
         /// <param name="sudokuBoardSize">Size information about the board.</param>
         /// <param name="areas">Special areas information about the board.</param>
         /// <returns>Sudoku board.</returns>
-        protected virtual SudokuBoard CreateBoard(SudokuBoardSize sudokuBoardSize, string[] areas, BaseSudokuTableViewModel baseSudokuTableViewModel, bool filledCellsAreBold)
+        public virtual SudokuBoard CreateBoard(SudokuBoardSize sudokuBoardSize, string[] areas, BaseSudokuTableViewModel baseSudokuTableViewModel, bool filledCellsAreBold)
         {
             SudokuBoard board = SudokuFactory.ClassicWithSpecialBoxes(areas);
             for (int row = 0; row < sudokuBoardSize.Height; row++)

@@ -13,7 +13,7 @@ using Solvedoku.Views.ClassicSudoku;
 
 namespace Solvedoku.ViewModels.ClassicSudoku
 {
-    class ClassicSudokuViewModel : BaseSudokuViewModel
+    public class ClassicSudokuViewModel : BaseSudokuViewModel
     {
         #region Properties
 
