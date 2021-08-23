@@ -1,9 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿using Solvedoku.Services.MessageBox;
+using System.Collections.ObjectModel;
 
 namespace Solvedoku.ViewModels
 {
     public abstract class BaseSudokuTableViewModel : ViewModelBase
     {
+        #region Properties
         public abstract ObservableCollection<ObservableCollection<string>> Cells { get; set; }
 
         public abstract ObservableCollection<ObservableCollection<bool>> BoldCells { get; set; }
@@ -45,5 +47,11 @@ namespace Solvedoku.ViewModels
             }
             return false;
         }
+        #endregion
+
+        #region Constructor
+        public BaseSudokuTableViewModel():base(new MessageBoxService()){}
+        #endregion
+
     }
 }

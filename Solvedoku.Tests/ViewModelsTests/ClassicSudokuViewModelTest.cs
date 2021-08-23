@@ -62,7 +62,45 @@ namespace Solvedoku.Tests.ViewModelsTests
         #endregion
 
         [TestMethod]
-        public void DrawTest()
+        public void Draw2x2TableTest()
+        {
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel();
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 4;
+            sudokuBoardSize.Width = 4;
+            sudokuBoardSize.BoxCountX = 2;
+            sudokuBoardSize.BoxCountY = 2;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+            object expectedBoard = classicSudokuViewModel.SudokuBoardControl;
+            Assert.AreEqual(typeof(UcClassicSudoku4x4Table), expectedBoard.GetType());
+            Assert.AreEqual(false, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreEqual(0, classicSudokuViewModel.Solutions.Count);
+        }
+
+        [TestMethod]
+        public void Draw6x6TableTest()
+        {
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel();
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 6;
+            sudokuBoardSize.Width = 6;
+            sudokuBoardSize.BoxCountX = 2;
+            sudokuBoardSize.BoxCountY = 3;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+            object expectedBoard = classicSudokuViewModel.SudokuBoardControl;
+            Assert.AreEqual(typeof(UcClassicSudoku6x6Table), expectedBoard.GetType());
+            Assert.AreEqual(false, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreEqual(0, classicSudokuViewModel.Solutions.Count);
+        }
+
+        [TestMethod]
+        public void Draw9x9TableTest()
         {
             ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel();
             SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
@@ -72,11 +110,13 @@ namespace Solvedoku.Tests.ViewModelsTests
             sudokuBoardSize.BoxCountY = 3;
 
             classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
-            Assert.AreEqual(typeof(UcClassicSudoku9x9Table), classicSudokuViewModel.SudokuBoardControl);
+            object expectedBoard = classicSudokuViewModel.SudokuBoardControl;
+            Assert.AreEqual(typeof(UcClassicSudoku9x9Table), expectedBoard.GetType());
+            Assert.AreEqual(false, classicSudokuViewModel.AreDiagonalRulesApplied);
             Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
-            //
-            // TODO: Add test logic here
-            //
+            Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreEqual(0, classicSudokuViewModel.Solutions.Count);
         }
+
     }
 }

@@ -13,6 +13,13 @@ namespace Solvedoku.ViewModels
         public static IMessageBoxService MessageBoxService = new MessageBoxService();
         #endregion
 
+        #region Constructor
+        public ViewModelBase(IMessageBoxService messageBoxService)
+        {
+            MessageBoxService = messageBoxService;
+        }
+        #endregion
+
         #region INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

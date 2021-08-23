@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Solvedoku.Classes;
 using Solvedoku.Properties;
+using Solvedoku.Services.MessageBox;
 using Solvedoku.Views.BusyIndicatorContent;
 using Solvedoku.Views.ClassicSudoku;
 
@@ -43,7 +44,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 
         #region Constructor
 
-        public ClassicSudokuViewModel()
+        public ClassicSudokuViewModel():base()
         {
             LoadCommands();
             Draw(SudokuBoard.SudokuBoardSizes[0]);
@@ -71,10 +72,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             }
 
             SudokuBoardSize sudokuBoardSize = (SudokuBoardSize)o;
-            if (true)
-            {
 
-            }
             bool oldDiagonalRulesStatus = AreDiagonalRulesApplied;
             if (sudokuBoardSize.Height == 9 && sudokuBoardSize.Width == 9)
             {

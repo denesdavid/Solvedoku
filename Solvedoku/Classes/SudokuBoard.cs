@@ -126,7 +126,7 @@ namespace Solvedoku.Classes
         #region Functions
         IEnumerable<SudokuTile> GetRow(int row)
         {
-            for (int i = 0; i < _tiles.GetLength(0); i++)
+            for (int i = 0; i < Width; i++)
             {
                 yield return _tiles[i, row];
             }
@@ -134,7 +134,7 @@ namespace Solvedoku.Classes
 
         IEnumerable<SudokuTile> GetCol(int col)
         {
-            for (int i = 0; i < _tiles.GetLength(1); i++)
+            for (int i = 0; i < Height; i++)
             {
                 yield return _tiles[col, i];
             }

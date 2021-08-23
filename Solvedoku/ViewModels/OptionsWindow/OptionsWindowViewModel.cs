@@ -1,6 +1,7 @@
 ﻿using Solvedoku.Classes;
 using Solvedoku.Commands;
 using Solvedoku.Properties;
+using Solvedoku.Services.MessageBox;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -39,7 +40,7 @@ namespace Solvedoku.ViewModels.OptionsWindow
         #endregion
 
         #region Constructor
-        public OptionsWindowViewModel()
+        public OptionsWindowViewModel():base(new MessageBoxService())
         {
             LoadCommands();
             foreach (var language in Localizations)

@@ -9,6 +9,7 @@ using Microsoft.Win32;
 using Solvedoku.Classes;
 using Solvedoku.Commands;
 using Solvedoku.Properties;
+using Solvedoku.Services.MessageBox;
 
 namespace Solvedoku.ViewModels
 {
@@ -113,6 +114,8 @@ namespace Solvedoku.ViewModels
             }
         }
 
+        public List<SudokuBoard> Solutions => _solutions;
+
         public bool IsBusy
         {
             get => _isBusy;
@@ -153,6 +156,10 @@ namespace Solvedoku.ViewModels
             }
         }
 
+        #endregion
+
+        #region Constructor
+        public BaseSudokuViewModel():base(new MessageBoxService()){}
         #endregion
 
         #region Commands

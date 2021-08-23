@@ -4,7 +4,7 @@ namespace Solvedoku.Services.MessageBox
 {
     class MessageBoxService : DependencyObject, IMessageBoxService
     {
-        private Style _messageBoxStyle = (Style)Application.Current.Resources["MessageBoxStyle"];
+        private Style _messageBoxStyle = (Style)Application.Current?.Resources["MessageBoxStyle"];
 
         /// <summary>
         /// Displays a messagebox with the given parameters.
