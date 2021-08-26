@@ -50,6 +50,12 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             Draw(SudokuBoard.SudokuBoardSizes[0]);
         }
 
+        public ClassicSudokuViewModel(IMessageBoxService messageBoxService) : base(messageBoxService)
+        {
+            LoadCommands();
+           Draw(SudokuBoard.SudokuBoardSizes[0]);
+        }
+
         #endregion
 
         #region Commands

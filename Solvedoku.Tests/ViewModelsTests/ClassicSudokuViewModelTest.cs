@@ -5,6 +5,10 @@ using System.Text;
 using Solvedoku.ViewModels.ClassicSudoku;
 using Solvedoku.Classes;
 using Solvedoku.Views.ClassicSudoku;
+using Solvedoku.ViewModels;
+using Moq;
+using Solvedoku.Services.MessageBox;
+using System.Windows;
 
 namespace Solvedoku.Tests.ViewModelsTests
 {
@@ -14,31 +18,6 @@ namespace Solvedoku.Tests.ViewModelsTests
     [TestClass]
     public class ClassicSudokuViewModelTest
     {
-        public ClassicSudokuViewModelTest()
-        {
-            //
-            // TODO: Add constructor logic here
-            //
-        }
-
-        private TestContext testContextInstance;
-
-        /// <summary>
-        ///Gets or sets the test context which provides
-        ///information about and functionality for the current test run.
-        ///</summary>
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
         #region Additional test attributes
         //
         // You can use the following additional attributes as you write your tests:
@@ -118,5 +97,34 @@ namespace Solvedoku.Tests.ViewModelsTests
             Assert.AreEqual(0, classicSudokuViewModel.Solutions.Count);
         }
 
+        [TestMethod]
+        public void Draw9x9TableWithAlreadyFilledCellsTest()
+        {
+            Mock<IMessageBoxService> messageBoxMock = new Mock<IMessageBoxService>();
+            messageBoxMock.Setup(m => m.Show(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<MessageBoxButton>(), It.IsAny<MessageBoxImage>()))
+                .Returns(MessageBoxResult.Yes);
+
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel(messageBoxMock.Object);
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 9;
+            sudokuBoardSize.Width = 9;
+            sudokuBoardSize.BoxCountX = 3;
+            sudokuBoardSize.BoxCountY = 3;
+
+            BaseSudokuTableViewModel tableViewModel = classicSudokuViewModel.GetCurrentTableViewModel();
+            tableViewModel.Cells[0][0] = "1";
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            object actualBoard = classicSudokuViewModel.SudokuBoardControl;
+            tableViewModel = classicSudokuViewModel.GetCurrentTableViewModel();
+
+            Assert.AreEqual(typeof(UcClassicSudoku9x9Table), actualBoard.GetType());
+            Assert.AreEqual(string.Empty, tableViewModel.Cells[0][0]);
+            Assert.AreEqual(false, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreEqual(0, classicSudokuViewModel.Solutions.Count);
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Solvedoku.ViewModels.ClassicSudoku
 {
-    abstract class BaseClassicSudokuTableViewModel : BaseSudokuTableViewModel
+    public abstract class BaseClassicSudokuTableViewModel : BaseSudokuTableViewModel
     {
         public override abstract ObservableCollection<ObservableCollection<string>> Cells { get; set; }
         public override abstract ObservableCollection<ObservableCollection<bool>> BoldCells { get; set; }

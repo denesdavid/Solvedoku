@@ -1,5 +1,4 @@
-﻿using Solvedoku.Services.MessageBox;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 
 namespace Solvedoku.ViewModels
 {
@@ -48,10 +47,5 @@ namespace Solvedoku.ViewModels
             return false;
         }
         #endregion
-
-        #region Constructor
-        public BaseSudokuTableViewModel():base(new MessageBoxService()){}
-        #endregion
-
     }
 }

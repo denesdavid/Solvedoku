@@ -160,6 +160,7 @@ namespace Solvedoku.ViewModels
 
         #region Constructor
         public BaseSudokuViewModel():base(new MessageBoxService()){}
+        public BaseSudokuViewModel(IMessageBoxService messageBoxService) : base(messageBoxService) { }
         #endregion
 
         #region Commands

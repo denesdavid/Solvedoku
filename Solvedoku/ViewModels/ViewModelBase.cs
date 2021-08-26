@@ -14,10 +14,14 @@ namespace Solvedoku.ViewModels
         #endregion
 
         #region Constructor
+
+        public ViewModelBase(){}
+
         public ViewModelBase(IMessageBoxService messageBoxService)
         {
             MessageBoxService = messageBoxService;
         }
+
         #endregion
 
         #region INotifyPropertyChanged
