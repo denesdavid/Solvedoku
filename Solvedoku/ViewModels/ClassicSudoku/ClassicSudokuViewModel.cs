@@ -44,7 +44,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 
         #region Constructor
 
-        public ClassicSudokuViewModel():base()
+        public ClassicSudokuViewModel() : base()
         {
             LoadCommands();
             Draw(SudokuBoard.SudokuBoardSizes[0]);
@@ -53,7 +53,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         public ClassicSudokuViewModel(IMessageBoxService messageBoxService) : base(messageBoxService)
         {
             LoadCommands();
-           Draw(SudokuBoard.SudokuBoardSizes[0]);
+            Draw(SudokuBoard.SudokuBoardSizes[0]);
         }
 
         #endregion
@@ -111,14 +111,14 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             {
                 var msgBoxResult = MessageBoxService.Show(
                     Resources.MessageBox_SolveSudoku,
-                    Resources.MessageBox_Question_Title, MessageBoxButton.YesNo, MessageBoxImage.Question, (Style)Application.Current.Resources["MessageBoxStyleForSudokuSolve"]);
+                    Resources.MessageBox_Question_Title, MessageBoxButton.YesNo, MessageBoxImage.Question, (Style)Application.Current?.Resources["MessageBoxStyleForSudokuSolve"]);
 
                 if (msgBoxResult != MessageBoxResult.Cancel)
                 {
-                    _solutions.Clear();
+                    Solutions.Clear();
                     SolutionCounter = string.Empty;
                     _actualSudokuBoard = CreateBoard(_actualSudokuBoard.BoardSize, (BaseSudokuTableViewModel)SudokuBoardControl.DataContext, true, AreDiagonalRulesApplied);
-                    
+
                     if (msgBoxResult == MessageBoxResult.Yes)
                     {
                         BusyIndicatorContent = new UcSolvingBusyIndicatorContent();
@@ -131,7 +131,10 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                                 {
                                     if (item != null)
                                     {
-                                        _solutions.Add(item);
+                                        lock(Solutions)
+                                        {
+                                            Solutions.Add(item);
+                                        }
                                         foundSolution++;
                                         FoundSolutionCounter = $"{Resources.TextBlock_FoundSolutions} {foundSolution}";
                                     }
@@ -141,7 +144,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                             }
                             catch (OutOfMemoryException)
                             {
-                                _solutions.Clear();
+                                Solutions.Clear();
                                 Application.Current.Dispatcher.Invoke(new Action(() =>
                                 MessageBoxService.Show($"{Resources.MessageBox_OutOfMemory}", Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error)));
                                 IsBusy = false;
@@ -156,7 +159,10 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                         {
                             if (Sudoku_SolverThread(_actualSudokuBoard, false).First() != null)
                             {
-                                _solutions.Add(Sudoku_SolverThread(_actualSudokuBoard, false).First());
+                                lock(Solutions)
+                                {
+                                    Solutions.Add(Sudoku_SolverThread(_actualSudokuBoard, false).First());
+                                }
                             }
                             Action action = DisplaySolutionAndMessage;
                             Application.Current.Dispatcher.Invoke(action);
@@ -269,7 +275,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 
                     });
                     _sudokuLoadingThread.Start();
-                   IsBusy = true;
+                    IsBusy = true;
                 }
                 catch (Exception ex)
                 {
