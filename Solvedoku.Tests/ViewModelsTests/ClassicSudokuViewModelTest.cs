@@ -462,5 +462,43 @@ namespace Solvedoku.Tests.ViewModelsTests
             Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
             Assert.AreEqual(1, classicSudokuViewModel.Solutions.Count);
         }
+
+        [TestMethod]
+        public void GetMoreSolutionsFor4x4TableWithPredefinedCells()
+        {
+            Mock<IMessageBoxService> messageBoxMock = new Mock<IMessageBoxService>();
+            messageBoxMock.Setup(m => m.Show(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<MessageBoxButton>(), It.IsAny<MessageBoxImage>()))
+                .Returns(MessageBoxResult.Yes);
+
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel(messageBoxMock.Object);
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 4;
+            sudokuBoardSize.Width = 4;
+            sudokuBoardSize.BoxCountX = 2;
+            sudokuBoardSize.BoxCountY = 2;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            BaseSudokuTableViewModel tableViewModel = classicSudokuViewModel.GetCurrentTableViewModel();
+            tableViewModel.Cells[0][0] = "1";
+            tableViewModel.Cells[0][1] = "2";
+            tableViewModel.Cells[0][2] = "3";
+            tableViewModel.Cells[0][3] = "4";
+
+            classicSudokuViewModel.ActualSudokuBoard = classicSudokuViewModel.CreateBoard(sudokuBoardSize, tableViewModel, true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Thread thread = new Thread(() => classicSudokuViewModel.CountAllSolutions());
+           
+            thread.Start();
+            Thread.Sleep(5000);
+            thread.Abort();
+            object actualBoard = classicSudokuViewModel.SudokuBoardControl;
+            tableViewModel = classicSudokuViewModel.GetCurrentTableViewModel();
+
+
+            Assert.AreEqual(typeof(UcClassicSudoku4x4Table), actualBoard.GetType());
+            Assert.AreEqual($"1/{classicSudokuViewModel.Solutions.Count}", classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(true, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreNotEqual(1, classicSudokuViewModel.Solutions.Count);
+        }
     }
 }
