@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -102,6 +104,12 @@ namespace Solvedoku.ViewModels
                 _busyIndicatorContent = value;
                 OnPropertyChanged();
             }
+        }
+
+        public SudokuBoard ActualSudokuBoard
+        {
+            get => _actualSudokuBoard;
+            set => _actualSudokuBoard = value;      
         }
 
         public SudokuBoardSize SelectedSudokuBoardSize
@@ -318,6 +326,54 @@ namespace Solvedoku.ViewModels
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Counts all possible solutions for the actual sudoku board.
+        /// </summary>
+        public void CountAllSolutions()
+        {
+            int foundSolution = 0;
+            try
+            {
+                foreach (var item in Sudoku_SolverThread(_actualSudokuBoard, true))
+                {
+                    if (item != null)
+                    {
+                        lock (Solutions)
+                        {
+                            Solutions.Add(item);
+                        }
+                        foundSolution++;
+                        FoundSolutionCounter = $"{Resources.TextBlock_FoundSolutions} {foundSolution}";
+                    }
+                }
+                Action action = DisplaySolutionAndMessage;
+                Application.Current.Dispatcher.Invoke(action);
+            }
+            catch (OutOfMemoryException)
+            {
+                Solutions.Clear();
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                MessageBoxService.Show($"{Resources.MessageBox_OutOfMemory}", Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error)));
+                IsBusy = false;
+            }
+        }
+
+        /// <summary>
+        /// Counts one possible solution for the actual sudoku board.
+        /// </summary>
+        public void CountOneSolution()
+        {
+            if (Sudoku_SolverThread(_actualSudokuBoard, false).First() != null)
+            {
+                lock (Solutions)
+                {
+                    Solutions.Add(Sudoku_SolverThread(_actualSudokuBoard, false).First());
+                }
+            }
+            Action action = DisplaySolutionAndMessage;
+            Application.Current?.Dispatcher.Invoke(action);
+        }
 
         /// <summary>
         /// Initializes the command properties in the viewmodel.

@@ -122,51 +122,12 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     if (msgBoxResult == MessageBoxResult.Yes)
                     {
                         BusyIndicatorContent = new UcSolvingBusyIndicatorContent();
-                        _sudokuSolverThread = new Thread(() =>
-                        {
-                            int foundSolution = 0;
-                            try
-                            {
-                                foreach (var item in Sudoku_SolverThread(_actualSudokuBoard, true))
-                                {
-                                    if (item != null)
-                                    {
-                                        lock(Solutions)
-                                        {
-                                            Solutions.Add(item);
-                                        }
-                                        foundSolution++;
-                                        FoundSolutionCounter = $"{Resources.TextBlock_FoundSolutions} {foundSolution}";
-                                    }
-                                }
-                                Action action = DisplaySolutionAndMessage;
-                                Application.Current.Dispatcher.Invoke(action);
-                            }
-                            catch (OutOfMemoryException)
-                            {
-                                Solutions.Clear();
-                                Application.Current.Dispatcher.Invoke(new Action(() =>
-                                MessageBoxService.Show($"{Resources.MessageBox_OutOfMemory}", Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error)));
-                                IsBusy = false;
-                            }
-
-                        });
+                        _sudokuSolverThread = new Thread(CountAllSolutions);
                         _sudokuSolverThread.Start();
                     }
                     else
                     {
-                        _sudokuSolverThread = new Thread(() =>
-                        {
-                            if (Sudoku_SolverThread(_actualSudokuBoard, false).First() != null)
-                            {
-                                lock(Solutions)
-                                {
-                                    Solutions.Add(Sudoku_SolverThread(_actualSudokuBoard, false).First());
-                                }
-                            }
-                            Action action = DisplaySolutionAndMessage;
-                            Application.Current.Dispatcher.Invoke(action);
-                        });
+                        _sudokuSolverThread = new Thread(CountOneSolution);
                         _sudokuSolverThread.Start();
                     }
                     IsBusy = true;

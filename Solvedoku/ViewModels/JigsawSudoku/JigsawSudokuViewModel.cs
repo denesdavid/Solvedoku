@@ -181,6 +181,48 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             }
         }
 
+        protected void CountAllSolutions()
+        {
+            int foundSolution = 0;
+            try
+            {
+                foreach (var item in Sudoku_SolverThread(_actualSudokuBoard, true))
+                {
+                    if (item != null)
+                    {
+                        lock (Solutions)
+                        {
+                            Solutions.Add(item);
+                        }
+                        foundSolution++;
+                        FoundSolutionCounter = $"{Resources.TextBlock_FoundSolutions} {foundSolution}";
+                    }
+                }
+                Action action = DisplaySolutionAndMessage;
+                Application.Current.Dispatcher.Invoke(action);
+            }
+            catch (OutOfMemoryException)
+            {
+                Solutions.Clear();
+                Application.Current.Dispatcher.Invoke(new Action(() =>
+                MessageBoxService.Show($"{Resources.MessageBox_OutOfMemory}", Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error)));
+                IsBusy = false;
+            }
+        }
+
+        protected void CountOneSolution()
+        {
+            if (Sudoku_SolverThread(_actualSudokuBoard, false).First() != null)
+            {
+                lock (Solutions)
+                {
+                    Solutions.Add(Sudoku_SolverThread(_actualSudokuBoard, false).First());
+                }
+            }
+            Action action = DisplaySolutionAndMessage;
+            Application.Current.Dispatcher.Invoke(action);
+        }
+
         /// <summary>
         /// Saves the jigsaw sudoku to a file.
         /// </summary>
