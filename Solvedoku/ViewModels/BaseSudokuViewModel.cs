@@ -347,8 +347,6 @@ namespace Solvedoku.ViewModels
                         FoundSolutionCounter = $"{Resources.TextBlock_FoundSolutions} {foundSolution}";
                     }
                 }
-                Action action = DisplaySolutionAndMessage;
-                Application.Current.Dispatcher.Invoke(action);
             }
             catch (OutOfMemoryException)
             {
@@ -371,8 +369,6 @@ namespace Solvedoku.ViewModels
                     Solutions.Add(Sudoku_SolverThread(_actualSudokuBoard, false).First());
                 }
             }
-            Action action = DisplaySolutionAndMessage;
-            Application.Current?.Dispatcher.Invoke(action);
         }
 
         /// <summary>
@@ -518,7 +514,7 @@ namespace Solvedoku.ViewModels
         /// <summary>
         /// Configures the viewmodel to display the solution(s) and a message about the possible solutions count.
         /// </summary>
-        protected void DisplaySolutionAndMessage()
+        public void DisplaySolutionAndMessage()
         {
             IsBusy = false;
             if (_solutions.Count > 0 && _solutions[0] != null)
