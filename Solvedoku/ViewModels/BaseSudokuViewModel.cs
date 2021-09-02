@@ -551,9 +551,9 @@ namespace Solvedoku.ViewModels
         /// Loads the value from the given matrix into the selected table's viewmodel.
         /// </summary>
         /// <param name="board"></param>
-        protected void DisplayMatrixBoard(string[,] board)
+        public void DisplayMatrixBoard(string[,] board)
         {
-            var boardControlViewModel = (BaseSudokuTableViewModel)SudokuBoardControl.DataContext;
+            var boardControlViewModel = GetCurrentTableViewModel();
             for (int row = 0; row < board.GetLength(0); row++)
             {
                 for (int column = 0; column < board.GetLength(1); column++)

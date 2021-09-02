@@ -164,9 +164,9 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     BusyIndicatorContent = new UcSavingBusyIndicatorContent();
                     var classicSudokuFile = new ClassicSudokuFile();
                     classicSudokuFile.SelectedSudokuBoardSize = SelectedSudokuBoardSize;
-                    classicSudokuFile.AreDiagonalRulesSet = ((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).AreDiagonalRulesApplied;
-                    classicSudokuFile.Cells = new ObservableCollection<ObservableCollection<string>>(((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).Cells);
-                    classicSudokuFile.BoldCells = new ObservableCollection<ObservableCollection<bool>>(((BaseClassicSudokuTableViewModel)SudokuBoardControl.DataContext).BoldCells);
+                    classicSudokuFile.AreDiagonalRulesSet = ((BaseClassicSudokuTableViewModel)GetCurrentTableViewModel()).AreDiagonalRulesApplied;
+                    classicSudokuFile.Cells = new ObservableCollection<ObservableCollection<string>>(((BaseClassicSudokuTableViewModel)GetCurrentTableViewModel()).Cells);
+                    classicSudokuFile.BoldCells = new ObservableCollection<ObservableCollection<bool>>(((BaseClassicSudokuTableViewModel)GetCurrentTableViewModel()).BoldCells);
                     classicSudokuFile.Solutions = _solutions;
                     classicSudokuFile.SolutionIndex = _solutionIndex;
                     classicSudokuFile.SolutionCounter = SolutionCounter;
@@ -271,7 +271,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         /// Loads the deserialized classic sudoku file.
         /// </summary>
         /// <param name="classicSudokuFile">Classic sudoku file</param>
-        void LoadDeserializedClassicSudokuFile(ClassicSudokuFile classicSudokuFile)
+        public void LoadDeserializedClassicSudokuFile(ClassicSudokuFile classicSudokuFile)
         {
             IsBusy = false;
             SelectedSudokuBoardSize = classicSudokuFile.SelectedSudokuBoardSize;

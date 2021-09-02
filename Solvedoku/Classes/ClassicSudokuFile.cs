@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 namespace Solvedoku.Classes
 {
     [Serializable]
-    class ClassicSudokuFile
+    public class ClassicSudokuFile
     {
         #region Properties
 

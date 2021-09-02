@@ -12,6 +12,7 @@ using Solvedoku.Services.MessageBox;
 using System.Windows;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Collections.ObjectModel;
 
 namespace Solvedoku.Tests.ViewModelsTests
 {
@@ -50,6 +51,34 @@ namespace Solvedoku.Tests.ViewModelsTests
             {
                 new Application { ShutdownMode = ShutdownMode.OnExplicitShutdown };
             }
+        }
+
+        [TestMethod]
+        public void DisplayMatrixBoardTest()
+        {
+            string[,] testMatrix = new string[4, 4] { { "1", "2", "3", "4" },
+                                                      { "1", "2", "3", "4" },
+                                                      { "1", "2", "3", "4" },
+                                                      { "1", "2", "3", "4" } };
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel(null);
+            classicSudokuViewModel.DisplayMatrixBoard(testMatrix);
+            var tableViewModel = classicSudokuViewModel.GetCurrentTableViewModel();
+            Assert.AreEqual("1", tableViewModel.Cells[0][0]);
+            Assert.AreEqual("2", tableViewModel.Cells[0][1]);
+            Assert.AreEqual("3", tableViewModel.Cells[0][2]);
+            Assert.AreEqual("4", tableViewModel.Cells[0][3]);
+            Assert.AreEqual("1", tableViewModel.Cells[1][0]);
+            Assert.AreEqual("2", tableViewModel.Cells[1][1]);
+            Assert.AreEqual("3", tableViewModel.Cells[1][2]);
+            Assert.AreEqual("4", tableViewModel.Cells[1][3]);
+            Assert.AreEqual("1", tableViewModel.Cells[2][0]);
+            Assert.AreEqual("2", tableViewModel.Cells[2][1]);
+            Assert.AreEqual("3", tableViewModel.Cells[2][2]);
+            Assert.AreEqual("4", tableViewModel.Cells[2][3]);
+            Assert.AreEqual("1", tableViewModel.Cells[3][0]);
+            Assert.AreEqual("2", tableViewModel.Cells[3][1]);
+            Assert.AreEqual("3", tableViewModel.Cells[3][2]);
+            Assert.AreEqual("4", tableViewModel.Cells[3][3]);
         }
 
         [TestMethod]
@@ -104,6 +133,78 @@ namespace Solvedoku.Tests.ViewModelsTests
             object expectedBoard = classicSudokuViewModel.SudokuBoardControl;
             Assert.AreEqual(typeof(UcClassicSudoku9x9Table), expectedBoard.GetType());
             Assert.AreEqual(false, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreEqual(0, classicSudokuViewModel.Solutions.Count);
+        }
+
+        [TestMethod]
+        public void Draw2x2SudokuXTableTest()
+        {
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel();
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 4;
+            sudokuBoardSize.Width = 4;
+            sudokuBoardSize.BoxCountX = 2;
+            sudokuBoardSize.BoxCountY = 2;
+            classicSudokuViewModel.AreDiagonalRulesApplied = true;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            object expectedBoard = classicSudokuViewModel.SudokuBoardControl;
+            var tableViewModel = (BaseClassicSudokuTableViewModel)classicSudokuViewModel.GetCurrentTableViewModel();
+
+            Assert.AreEqual(typeof(UcClassicSudoku4x4Table), expectedBoard.GetType());
+            Assert.AreEqual(true, tableViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreEqual(0, classicSudokuViewModel.Solutions.Count);
+        }
+
+        [TestMethod]
+        public void Draw6x6SudokuXTableTest()
+        {
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel();
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 6;
+            sudokuBoardSize.Width = 6;
+            sudokuBoardSize.BoxCountX = 2;
+            sudokuBoardSize.BoxCountY = 3;
+            classicSudokuViewModel.AreDiagonalRulesApplied = true;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            object expectedBoard = classicSudokuViewModel.SudokuBoardControl;
+            var tableViewModel = (BaseClassicSudokuTableViewModel)classicSudokuViewModel.GetCurrentTableViewModel();
+
+            Assert.AreEqual(typeof(UcClassicSudoku6x6Table), expectedBoard.GetType());
+            Assert.AreEqual(true, tableViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreEqual(0, classicSudokuViewModel.Solutions.Count);
+        }
+
+        [TestMethod]
+        public void Draw9x9TableSudokuXTest()
+        {
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel();
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 9;
+            sudokuBoardSize.Width = 9;
+            sudokuBoardSize.BoxCountX = 3;
+            sudokuBoardSize.BoxCountY = 3;
+            classicSudokuViewModel.AreDiagonalRulesApplied = true;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            object expectedBoard = classicSudokuViewModel.SudokuBoardControl;
+            var tableViewModel = (BaseClassicSudokuTableViewModel)classicSudokuViewModel.GetCurrentTableViewModel();
+
+            Assert.AreEqual(typeof(UcClassicSudoku9x9Table), expectedBoard.GetType());
+            Assert.AreEqual(true, tableViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(true, classicSudokuViewModel.AreDiagonalRulesApplied);
             Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
             Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
             Assert.AreEqual(0, classicSudokuViewModel.Solutions.Count);
@@ -231,7 +332,6 @@ namespace Solvedoku.Tests.ViewModelsTests
             classicSudokuViewModel.CountOneSolution();
 
             object actualBoard = classicSudokuViewModel.SudokuBoardControl;
-            tableViewModel = classicSudokuViewModel.GetCurrentTableViewModel();
             var solvedBoard = classicSudokuViewModel.Solutions[0];
                    
             Assert.AreEqual(typeof(UcClassicSudoku4x4Table), actualBoard.GetType());
@@ -254,7 +354,12 @@ namespace Solvedoku.Tests.ViewModelsTests
             Assert.AreEqual(4, solvedBoard.Tile(3,0).Value);
             Assert.AreEqual(3, solvedBoard.Tile(3,1).Value);
             Assert.AreEqual(2, solvedBoard.Tile(3,2).Value);
-            Assert.AreEqual(1, solvedBoard.Tile(3,3).Value);         
+            Assert.AreEqual(1, solvedBoard.Tile(3,3).Value);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
         }
 
         [TestMethod]
@@ -304,9 +409,134 @@ namespace Solvedoku.Tests.ViewModelsTests
             Assert.AreEqual("3", tableViewModel.Cells[3][1]);
             Assert.AreEqual("2", tableViewModel.Cells[3][2]);
             Assert.AreEqual("1", tableViewModel.Cells[3][3]);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+
             Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
             Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
             Assert.AreEqual(1, classicSudokuViewModel.Solutions.Count);
+        }
+
+        [TestMethod]
+        public void GetOneSolutionFor4x4SudokuXTableWithPredefinedCells_NoDisplay()
+        {
+            Mock<IMessageBoxService> messageBoxMock = new Mock<IMessageBoxService>();
+            messageBoxMock.Setup(m => m.Show(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<MessageBoxButton>(), It.IsAny<MessageBoxImage>()))
+                .Returns(MessageBoxResult.Yes);
+
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel(messageBoxMock.Object);
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 4;
+            sudokuBoardSize.Width = 4;
+            sudokuBoardSize.BoxCountX = 2;
+            sudokuBoardSize.BoxCountY = 2;
+            classicSudokuViewModel.AreDiagonalRulesApplied = true;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            var tableViewModel = (BaseClassicSudokuTableViewModel)classicSudokuViewModel.GetCurrentTableViewModel();
+            tableViewModel.Cells[0][0] = "1";
+            tableViewModel.Cells[0][1] = "2";
+            tableViewModel.Cells[0][2] = "3";
+            tableViewModel.Cells[0][3] = "4";
+
+            classicSudokuViewModel.ActualSudokuBoard = classicSudokuViewModel.CreateBoard(sudokuBoardSize, tableViewModel, true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            classicSudokuViewModel.CountOneSolution();
+
+            object actualBoard = classicSudokuViewModel.SudokuBoardControl;
+            var solvedBoard = classicSudokuViewModel.Solutions[0];
+
+            Assert.AreEqual(typeof(UcClassicSudoku4x4Table), actualBoard.GetType());
+            Assert.AreEqual(true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(true, tableViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreEqual(1, classicSudokuViewModel.Solutions.Count);
+
+            Assert.AreEqual(1, solvedBoard.Tile(0, 0).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(0, 1).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(0, 2).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(0, 3).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(1, 0).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(1, 1).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(1, 2).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(1, 3).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(2, 0).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(2, 1).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(2, 2).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(2, 3).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(3, 0).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(3, 1).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(3, 2).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(3, 3).Value);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+        }
+
+        [TestMethod]
+        public void GetOneSolutionFor4x4SudokuXTableWithPredefinedCells_Display()
+        {
+            Mock<IMessageBoxService> messageBoxMock = new Mock<IMessageBoxService>();
+            messageBoxMock.Setup(m => m.Show(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<MessageBoxButton>(), It.IsAny<MessageBoxImage>()))
+                .Returns(MessageBoxResult.Yes);
+
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel(messageBoxMock.Object);
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 4;
+            sudokuBoardSize.Width = 4;
+            sudokuBoardSize.BoxCountX = 2;
+            sudokuBoardSize.BoxCountY = 2;
+            classicSudokuViewModel.AreDiagonalRulesApplied = true;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            var tableViewModel = (BaseClassicSudokuTableViewModel)classicSudokuViewModel.GetCurrentTableViewModel();
+            tableViewModel.Cells[0][0] = "1";
+            tableViewModel.Cells[0][1] = "2";
+            tableViewModel.Cells[0][2] = "3";
+            tableViewModel.Cells[0][3] = "4";
+
+            classicSudokuViewModel.ActualSudokuBoard = classicSudokuViewModel.CreateBoard(sudokuBoardSize, tableViewModel, true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            classicSudokuViewModel.CountOneSolution();
+            classicSudokuViewModel.DisplaySolutionAndMessage();
+
+            object actualBoard = classicSudokuViewModel.SudokuBoardControl;
+            tableViewModel = (BaseClassicSudokuTableViewModel)classicSudokuViewModel.GetCurrentTableViewModel();
+
+            Assert.AreEqual(typeof(UcClassicSudoku4x4Table), actualBoard.GetType());
+            Assert.AreEqual(true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(true, tableViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreEqual(1, classicSudokuViewModel.Solutions.Count);
+
+            Assert.AreEqual("1", tableViewModel.Cells[0][0]);
+            Assert.AreEqual("2", tableViewModel.Cells[0][1]);
+            Assert.AreEqual("3", tableViewModel.Cells[0][2]);
+            Assert.AreEqual("4", tableViewModel.Cells[0][3]);
+            Assert.AreEqual("3", tableViewModel.Cells[1][0]);
+            Assert.AreEqual("4", tableViewModel.Cells[1][1]);
+            Assert.AreEqual("1", tableViewModel.Cells[1][2]);
+            Assert.AreEqual("2", tableViewModel.Cells[1][3]);
+            Assert.AreEqual("4", tableViewModel.Cells[2][0]);
+            Assert.AreEqual("3", tableViewModel.Cells[2][1]);
+            Assert.AreEqual("2", tableViewModel.Cells[2][2]);
+            Assert.AreEqual("1", tableViewModel.Cells[2][3]);
+            Assert.AreEqual("2", tableViewModel.Cells[3][0]);
+            Assert.AreEqual("1", tableViewModel.Cells[3][1]);
+            Assert.AreEqual("4", tableViewModel.Cells[3][2]);
+            Assert.AreEqual("3", tableViewModel.Cells[3][3]);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
         }
 
         [TestMethod]
@@ -337,7 +567,6 @@ namespace Solvedoku.Tests.ViewModelsTests
             classicSudokuViewModel.CountOneSolution();
 
             object actualBoard = classicSudokuViewModel.SudokuBoardControl;
-            tableViewModel = classicSudokuViewModel.GetCurrentTableViewModel();
             var solvedBoard = classicSudokuViewModel.Solutions[0];
 
             Assert.AreEqual(typeof(UcClassicSudoku6x6Table), actualBoard.GetType());
@@ -382,6 +611,14 @@ namespace Solvedoku.Tests.ViewModelsTests
             Assert.AreEqual(1, solvedBoard.Tile(5,3).Value);
             Assert.AreEqual(4, solvedBoard.Tile(5,4).Value);
             Assert.AreEqual(3, solvedBoard.Tile(5,5).Value);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][4]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][5]);
+
             Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
             Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
             Assert.AreEqual(1, classicSudokuViewModel.Solutions.Count);
@@ -461,9 +698,196 @@ namespace Solvedoku.Tests.ViewModelsTests
             Assert.AreEqual("1", tableViewModel.Cells[5][3]);
             Assert.AreEqual("4", tableViewModel.Cells[5][4]);
             Assert.AreEqual("3", tableViewModel.Cells[5][5]);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][4]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][5]);
+
             Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
             Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
             Assert.AreEqual(1, classicSudokuViewModel.Solutions.Count);
+        }
+
+        [TestMethod]
+        public void GetOneSolutionFor6x6SudokuXTableWithPredefinedCells_NoDisplay()
+        {
+            Mock<IMessageBoxService> messageBoxMock = new Mock<IMessageBoxService>();
+            messageBoxMock.Setup(m => m.Show(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<MessageBoxButton>(), It.IsAny<MessageBoxImage>()))
+                .Returns(MessageBoxResult.Yes);
+
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel(messageBoxMock.Object);
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 6;
+            sudokuBoardSize.Width = 6;
+            sudokuBoardSize.BoxCountX = 3;
+            sudokuBoardSize.BoxCountY = 2;
+            classicSudokuViewModel.AreDiagonalRulesApplied = true;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            var tableViewModel = (BaseClassicSudokuTableViewModel)classicSudokuViewModel.GetCurrentTableViewModel();
+            tableViewModel.Cells[0][0] = "1";
+            tableViewModel.Cells[0][1] = "2";
+            tableViewModel.Cells[0][2] = "3";
+            tableViewModel.Cells[0][3] = "4";
+            tableViewModel.Cells[0][4] = "5";
+            tableViewModel.Cells[0][5] = "6";
+
+            classicSudokuViewModel.ActualSudokuBoard = classicSudokuViewModel.CreateBoard(sudokuBoardSize, tableViewModel, true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            classicSudokuViewModel.CountOneSolution();
+
+            object actualBoard = classicSudokuViewModel.SudokuBoardControl;
+            var solvedBoard = classicSudokuViewModel.Solutions[0];
+
+            Assert.AreEqual(typeof(UcClassicSudoku6x6Table), actualBoard.GetType());
+            Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreEqual(true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(true, tableViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(1, classicSudokuViewModel.Solutions.Count);
+
+            Assert.AreEqual(1, solvedBoard.Tile(0, 0).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(0, 1).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(0, 2).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(0, 3).Value);
+            Assert.AreEqual(5, solvedBoard.Tile(0, 4).Value);
+            Assert.AreEqual(6, solvedBoard.Tile(0, 5).Value);
+
+            Assert.AreEqual(5, solvedBoard.Tile(1, 0).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(1, 1).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(1, 2).Value);
+            Assert.AreEqual(6, solvedBoard.Tile(1, 3).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(1, 4).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(1, 5).Value);
+
+            Assert.AreEqual(3, solvedBoard.Tile(2, 0).Value);
+            Assert.AreEqual(6, solvedBoard.Tile(2, 1).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(2, 2).Value);
+            Assert.AreEqual(5, solvedBoard.Tile(2, 3).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(2, 4).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(2, 5).Value);
+
+            Assert.AreEqual(6, solvedBoard.Tile(3, 0).Value);
+            Assert.AreEqual(5, solvedBoard.Tile(3, 1).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(3, 2).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(3, 3).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(3, 4).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(3, 5).Value);
+
+            Assert.AreEqual(4, solvedBoard.Tile(4, 0).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(4, 1).Value);
+            Assert.AreEqual(5, solvedBoard.Tile(4, 2).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(4, 3).Value);
+            Assert.AreEqual(6, solvedBoard.Tile(4, 4).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(4, 5).Value);
+
+            Assert.AreEqual(2, solvedBoard.Tile(5, 0).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(5, 1).Value);
+            Assert.AreEqual(6, solvedBoard.Tile(5, 2).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(5, 3).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(5, 4).Value);
+            Assert.AreEqual(5, solvedBoard.Tile(5, 5).Value);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][4]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][5]);
+        }
+
+        [TestMethod]
+        public void GetOneSolutionFor6x6SudokuXTableWithPredefinedCells_Display()
+        {
+            Mock<IMessageBoxService> messageBoxMock = new Mock<IMessageBoxService>();
+            messageBoxMock.Setup(m => m.Show(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<MessageBoxButton>(), It.IsAny<MessageBoxImage>()))
+                .Returns(MessageBoxResult.Yes);
+
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel(messageBoxMock.Object);
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 6;
+            sudokuBoardSize.Width = 6;
+            sudokuBoardSize.BoxCountX = 3;
+            sudokuBoardSize.BoxCountY = 2;
+            classicSudokuViewModel.AreDiagonalRulesApplied = true;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            var tableViewModel = (BaseClassicSudokuTableViewModel)classicSudokuViewModel.GetCurrentTableViewModel();
+            tableViewModel.Cells[0][0] = "1";
+            tableViewModel.Cells[0][1] = "2";
+            tableViewModel.Cells[0][2] = "3";
+            tableViewModel.Cells[0][3] = "4";
+            tableViewModel.Cells[0][4] = "5";
+            tableViewModel.Cells[0][5] = "6";
+
+            classicSudokuViewModel.ActualSudokuBoard = classicSudokuViewModel.CreateBoard(sudokuBoardSize, tableViewModel, true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            classicSudokuViewModel.CountOneSolution();
+            classicSudokuViewModel.DisplaySolutionAndMessage();
+
+            object actualBoard = classicSudokuViewModel.SudokuBoardControl;
+            tableViewModel = (BaseClassicSudokuTableViewModel)classicSudokuViewModel.GetCurrentTableViewModel();
+
+
+            Assert.AreEqual(typeof(UcClassicSudoku6x6Table), actualBoard.GetType());
+            Assert.AreEqual(typeof(UcClassicSudoku6x6Table), actualBoard.GetType());
+            Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreEqual(true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(true, tableViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(1, classicSudokuViewModel.Solutions.Count);
+
+            Assert.AreEqual("1", tableViewModel.Cells[0][0]);
+            Assert.AreEqual("2", tableViewModel.Cells[0][1]);
+            Assert.AreEqual("3", tableViewModel.Cells[0][2]);
+            Assert.AreEqual("4", tableViewModel.Cells[0][3]);
+            Assert.AreEqual("5", tableViewModel.Cells[0][4]);
+            Assert.AreEqual("6", tableViewModel.Cells[0][5]);
+
+            Assert.AreEqual("5", tableViewModel.Cells[1][0]);
+            Assert.AreEqual("4", tableViewModel.Cells[1][1]);
+            Assert.AreEqual("1", tableViewModel.Cells[1][2]);
+            Assert.AreEqual("6", tableViewModel.Cells[1][3]);
+            Assert.AreEqual("3", tableViewModel.Cells[1][4]);
+            Assert.AreEqual("2", tableViewModel.Cells[1][5]);
+
+            Assert.AreEqual("3", tableViewModel.Cells[2][0]);
+            Assert.AreEqual("6", tableViewModel.Cells[2][1]);
+            Assert.AreEqual("2", tableViewModel.Cells[2][2]);
+            Assert.AreEqual("5", tableViewModel.Cells[2][3]);
+            Assert.AreEqual("1", tableViewModel.Cells[2][4]);
+            Assert.AreEqual("4", tableViewModel.Cells[2][5]);
+
+            Assert.AreEqual("6", tableViewModel.Cells[3][0]);
+            Assert.AreEqual("5", tableViewModel.Cells[3][1]);
+            Assert.AreEqual("4", tableViewModel.Cells[3][2]);
+            Assert.AreEqual("3", tableViewModel.Cells[3][3]);
+            Assert.AreEqual("2", tableViewModel.Cells[3][4]);
+            Assert.AreEqual("1", tableViewModel.Cells[3][5]);
+
+            Assert.AreEqual("4", tableViewModel.Cells[4][0]);
+            Assert.AreEqual("1", tableViewModel.Cells[4][1]);
+            Assert.AreEqual("5", tableViewModel.Cells[4][2]);
+            Assert.AreEqual("2", tableViewModel.Cells[4][3]);
+            Assert.AreEqual("6", tableViewModel.Cells[4][4]);
+            Assert.AreEqual("3", tableViewModel.Cells[4][5]);
+
+            Assert.AreEqual("2", tableViewModel.Cells[5][0]);
+            Assert.AreEqual("3", tableViewModel.Cells[5][1]);
+            Assert.AreEqual("6", tableViewModel.Cells[5][2]);
+            Assert.AreEqual("1", tableViewModel.Cells[5][3]);
+            Assert.AreEqual("4", tableViewModel.Cells[5][4]);
+            Assert.AreEqual("5", tableViewModel.Cells[5][5]);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][4]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][5]);
         }
 
         [TestMethod]
@@ -497,7 +921,6 @@ namespace Solvedoku.Tests.ViewModelsTests
             classicSudokuViewModel.CountOneSolution();
 
             object actualBoard = classicSudokuViewModel.SudokuBoardControl;
-            tableViewModel = classicSudokuViewModel.GetCurrentTableViewModel();
             var solvedBoard = classicSudokuViewModel.Solutions[0];
 
             Assert.AreEqual(typeof(UcClassicSudoku9x9Table), actualBoard.GetType());
@@ -590,6 +1013,17 @@ namespace Solvedoku.Tests.ViewModelsTests
             Assert.AreEqual(5, solvedBoard.Tile(8,6).Value);
             Assert.AreEqual(7, solvedBoard.Tile(8,7).Value);
             Assert.AreEqual(2, solvedBoard.Tile(8,8).Value);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][4]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][5]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][6]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][7]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][8]);
+
             Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
             Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
             Assert.AreEqual(1, classicSudokuViewModel.Solutions.Count);
@@ -720,9 +1154,306 @@ namespace Solvedoku.Tests.ViewModelsTests
             Assert.AreEqual("5", tableViewModel.Cells[8][6]);
             Assert.AreEqual("7", tableViewModel.Cells[8][7]);
             Assert.AreEqual("2", tableViewModel.Cells[8][8]);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][4]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][5]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][6]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][7]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][8]);
+
             Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
             Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
             Assert.AreEqual(1, classicSudokuViewModel.Solutions.Count);
+        }
+
+        [TestMethod]
+        public void GetOneSolutionForSudokuX9x9TableWithPredefinedCells_NoDisplay()
+        {
+            Mock<IMessageBoxService> messageBoxMock = new Mock<IMessageBoxService>();
+            messageBoxMock.Setup(m => m.Show(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<MessageBoxButton>(), It.IsAny<MessageBoxImage>()))
+                .Returns(MessageBoxResult.Yes);
+
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel(messageBoxMock.Object);
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 9;
+            sudokuBoardSize.Width = 9;
+            sudokuBoardSize.BoxCountX = 3;
+            sudokuBoardSize.BoxCountY = 3;
+            classicSudokuViewModel.AreDiagonalRulesApplied = true;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            var tableViewModel = (BaseClassicSudokuTableViewModel)classicSudokuViewModel.GetCurrentTableViewModel();
+            tableViewModel.Cells[0][0] = "1";
+            tableViewModel.Cells[0][1] = "2";
+            tableViewModel.Cells[0][2] = "3";
+            tableViewModel.Cells[0][3] = "4";
+            tableViewModel.Cells[0][4] = "5";
+            tableViewModel.Cells[0][5] = "6";
+            tableViewModel.Cells[0][6] = "7";
+            tableViewModel.Cells[0][7] = "8";
+            tableViewModel.Cells[0][8] = "9";
+
+            classicSudokuViewModel.ActualSudokuBoard = classicSudokuViewModel.CreateBoard(sudokuBoardSize, tableViewModel, true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            classicSudokuViewModel.CountOneSolution();
+
+            object actualBoard = classicSudokuViewModel.SudokuBoardControl;
+            var solvedBoard = classicSudokuViewModel.Solutions[0];
+
+            Assert.AreEqual(typeof(UcClassicSudoku9x9Table), actualBoard.GetType());
+            Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreEqual(true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(true, tableViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(1, classicSudokuViewModel.Solutions.Count);
+
+            Assert.AreEqual(1, solvedBoard.Tile(0, 0).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(0, 1).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(0, 2).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(0, 3).Value);
+            Assert.AreEqual(5, solvedBoard.Tile(0, 4).Value);
+            Assert.AreEqual(6, solvedBoard.Tile(0, 5).Value);
+            Assert.AreEqual(7, solvedBoard.Tile(0, 6).Value);
+            Assert.AreEqual(8, solvedBoard.Tile(0, 7).Value);
+            Assert.AreEqual(9, solvedBoard.Tile(0, 8).Value);
+
+            Assert.AreEqual(4, solvedBoard.Tile(1, 0).Value);
+            Assert.AreEqual(5, solvedBoard.Tile(1, 1).Value);
+            Assert.AreEqual(6, solvedBoard.Tile(1, 2).Value);
+            Assert.AreEqual(7, solvedBoard.Tile(1, 3).Value);
+            Assert.AreEqual(8, solvedBoard.Tile(1, 4).Value);
+            Assert.AreEqual(9, solvedBoard.Tile(1, 5).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(1, 6).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(1, 7).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(1, 8).Value);
+
+            Assert.AreEqual(7, solvedBoard.Tile(2, 0).Value);
+            Assert.AreEqual(8, solvedBoard.Tile(2, 1).Value);
+            Assert.AreEqual(9, solvedBoard.Tile(2, 2).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(2, 3).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(2, 4).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(2, 5).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(2, 6).Value);
+            Assert.AreEqual(5, solvedBoard.Tile(2, 7).Value);
+            Assert.AreEqual(6, solvedBoard.Tile(2, 8).Value);
+
+            Assert.AreEqual(9, solvedBoard.Tile(3, 0).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(3, 1).Value);
+            Assert.AreEqual(5, solvedBoard.Tile(3, 2).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(3, 3).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(3, 4).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(3, 5).Value);
+            Assert.AreEqual(8, solvedBoard.Tile(3, 6).Value);
+            Assert.AreEqual(6, solvedBoard.Tile(3, 7).Value);
+            Assert.AreEqual(7, solvedBoard.Tile(3, 8).Value);
+
+            Assert.AreEqual(6, solvedBoard.Tile(4, 0).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(4, 1).Value);
+            Assert.AreEqual(7, solvedBoard.Tile(4, 2).Value);
+            Assert.AreEqual(5, solvedBoard.Tile(4, 3).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(4, 4).Value);
+            Assert.AreEqual(8, solvedBoard.Tile(4, 5).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(4, 6).Value);
+            Assert.AreEqual(9, solvedBoard.Tile(4, 7).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(4, 8).Value);
+
+            Assert.AreEqual(8, solvedBoard.Tile(5, 0).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(5, 1).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(5, 2).Value);
+            Assert.AreEqual(6, solvedBoard.Tile(5, 3).Value);
+            Assert.AreEqual(9, solvedBoard.Tile(5, 4).Value);
+            Assert.AreEqual(7, solvedBoard.Tile(5, 5).Value);
+            Assert.AreEqual(5, solvedBoard.Tile(5, 6).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(5, 7).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(5, 8).Value);
+
+            Assert.AreEqual(2, solvedBoard.Tile(6, 0).Value);
+            Assert.AreEqual(9, solvedBoard.Tile(6, 1).Value);
+            Assert.AreEqual(8, solvedBoard.Tile(6, 2).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(6, 3).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(6, 4).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(6, 5).Value);
+            Assert.AreEqual(6, solvedBoard.Tile(6, 6).Value);
+            Assert.AreEqual(7, solvedBoard.Tile(6, 7).Value);
+            Assert.AreEqual(5, solvedBoard.Tile(6, 8).Value);
+
+            Assert.AreEqual(3, solvedBoard.Tile(7, 0).Value);
+            Assert.AreEqual(7, solvedBoard.Tile(7, 1).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(7, 2).Value);
+            Assert.AreEqual(8, solvedBoard.Tile(7, 3).Value);
+            Assert.AreEqual(6, solvedBoard.Tile(7, 4).Value);
+            Assert.AreEqual(5, solvedBoard.Tile(7, 5).Value);
+            Assert.AreEqual(9, solvedBoard.Tile(7, 6).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(7, 7).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(7, 8).Value);
+
+            Assert.AreEqual(5, solvedBoard.Tile(8, 0).Value);
+            Assert.AreEqual(6, solvedBoard.Tile(8, 1).Value);
+            Assert.AreEqual(4, solvedBoard.Tile(8, 2).Value);
+            Assert.AreEqual(9, solvedBoard.Tile(8, 3).Value);
+            Assert.AreEqual(7, solvedBoard.Tile(8, 4).Value);
+            Assert.AreEqual(2, solvedBoard.Tile(8, 5).Value);
+            Assert.AreEqual(3, solvedBoard.Tile(8, 6).Value);
+            Assert.AreEqual(1, solvedBoard.Tile(8, 7).Value);
+            Assert.AreEqual(8, solvedBoard.Tile(8, 8).Value);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][4]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][5]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][6]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][7]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][8]);
+        }
+
+        [TestMethod]
+        public void GetOneSolutionFor9x9SudokuXTableWithPredefinedCells_Display()
+        {
+            Mock<IMessageBoxService> messageBoxMock = new Mock<IMessageBoxService>();
+            messageBoxMock.Setup(m => m.Show(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<MessageBoxButton>(), It.IsAny<MessageBoxImage>()))
+                .Returns(MessageBoxResult.Yes);
+
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel(messageBoxMock.Object);
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 9;
+            sudokuBoardSize.Width = 9;
+            sudokuBoardSize.BoxCountX = 3;
+            sudokuBoardSize.BoxCountY = 3;
+            classicSudokuViewModel.AreDiagonalRulesApplied = true;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            var tableViewModel = (BaseClassicSudokuTableViewModel)classicSudokuViewModel.GetCurrentTableViewModel();
+            tableViewModel.Cells[0][0] = "1";
+            tableViewModel.Cells[0][1] = "2";
+            tableViewModel.Cells[0][2] = "3";
+            tableViewModel.Cells[0][3] = "4";
+            tableViewModel.Cells[0][4] = "5";
+            tableViewModel.Cells[0][5] = "6";
+            tableViewModel.Cells[0][6] = "7";
+            tableViewModel.Cells[0][7] = "8";
+            tableViewModel.Cells[0][8] = "9";
+
+            classicSudokuViewModel.ActualSudokuBoard = classicSudokuViewModel.CreateBoard(sudokuBoardSize, tableViewModel, true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            classicSudokuViewModel.CountOneSolution();
+            classicSudokuViewModel.DisplaySolutionAndMessage();
+
+            object actualBoard = classicSudokuViewModel.SudokuBoardControl;
+            tableViewModel = (BaseClassicSudokuTableViewModel)classicSudokuViewModel.GetCurrentTableViewModel();
+
+
+            Assert.AreEqual(typeof(UcClassicSudoku9x9Table), actualBoard.GetType());
+            Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreEqual(true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(true, tableViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(1, classicSudokuViewModel.Solutions.Count);
+
+            Assert.AreEqual("1", tableViewModel.Cells[0][0]);
+            Assert.AreEqual("2", tableViewModel.Cells[0][1]);
+            Assert.AreEqual("3", tableViewModel.Cells[0][2]);
+            Assert.AreEqual("4", tableViewModel.Cells[0][3]);
+            Assert.AreEqual("5", tableViewModel.Cells[0][4]);
+            Assert.AreEqual("6", tableViewModel.Cells[0][5]);
+            Assert.AreEqual("7", tableViewModel.Cells[0][6]);
+            Assert.AreEqual("8", tableViewModel.Cells[0][7]);
+            Assert.AreEqual("9", tableViewModel.Cells[0][8]);
+
+            Assert.AreEqual("4", tableViewModel.Cells[1][0]);
+            Assert.AreEqual("5", tableViewModel.Cells[1][1]);
+            Assert.AreEqual("6", tableViewModel.Cells[1][2]);
+            Assert.AreEqual("7", tableViewModel.Cells[1][3]);
+            Assert.AreEqual("8", tableViewModel.Cells[1][4]);
+            Assert.AreEqual("9", tableViewModel.Cells[1][5]);
+            Assert.AreEqual("1", tableViewModel.Cells[1][6]);
+            Assert.AreEqual("2", tableViewModel.Cells[1][7]);
+            Assert.AreEqual("3", tableViewModel.Cells[1][8]);
+
+            Assert.AreEqual("7", tableViewModel.Cells[2][0]);
+            Assert.AreEqual("8", tableViewModel.Cells[2][1]);
+            Assert.AreEqual("9", tableViewModel.Cells[2][2]);
+            Assert.AreEqual("1", tableViewModel.Cells[2][3]);
+            Assert.AreEqual("2", tableViewModel.Cells[2][4]);
+            Assert.AreEqual("3", tableViewModel.Cells[2][5]);
+            Assert.AreEqual("4", tableViewModel.Cells[2][6]);
+            Assert.AreEqual("5", tableViewModel.Cells[2][7]);
+            Assert.AreEqual("6", tableViewModel.Cells[2][8]);
+
+            Assert.AreEqual("9", tableViewModel.Cells[3][0]);
+            Assert.AreEqual("3", tableViewModel.Cells[3][1]);
+            Assert.AreEqual("5", tableViewModel.Cells[3][2]);
+            Assert.AreEqual("2", tableViewModel.Cells[3][3]);
+            Assert.AreEqual("4", tableViewModel.Cells[3][4]);
+            Assert.AreEqual("1", tableViewModel.Cells[3][5]);
+            Assert.AreEqual("8", tableViewModel.Cells[3][6]);
+            Assert.AreEqual("6", tableViewModel.Cells[3][7]);
+            Assert.AreEqual("7", tableViewModel.Cells[3][8]);
+
+            Assert.AreEqual("6", tableViewModel.Cells[4][0]);
+            Assert.AreEqual("1", tableViewModel.Cells[4][1]);
+            Assert.AreEqual("7", tableViewModel.Cells[4][2]);
+            Assert.AreEqual("5", tableViewModel.Cells[4][3]);
+            Assert.AreEqual("3", tableViewModel.Cells[4][4]);
+            Assert.AreEqual("8", tableViewModel.Cells[4][5]);
+            Assert.AreEqual("2", tableViewModel.Cells[4][6]);
+            Assert.AreEqual("9", tableViewModel.Cells[4][7]);
+            Assert.AreEqual("4", tableViewModel.Cells[4][8]);
+
+            Assert.AreEqual("8", tableViewModel.Cells[5][0]);
+            Assert.AreEqual("4", tableViewModel.Cells[5][1]);
+            Assert.AreEqual("2", tableViewModel.Cells[5][2]);
+            Assert.AreEqual("6", tableViewModel.Cells[5][3]);
+            Assert.AreEqual("9", tableViewModel.Cells[5][4]);
+            Assert.AreEqual("7", tableViewModel.Cells[5][5]);
+            Assert.AreEqual("5", tableViewModel.Cells[5][6]);
+            Assert.AreEqual("3", tableViewModel.Cells[5][7]);
+            Assert.AreEqual("1", tableViewModel.Cells[5][8]);
+
+            Assert.AreEqual("2", tableViewModel.Cells[6][0]);
+            Assert.AreEqual("9", tableViewModel.Cells[6][1]);
+            Assert.AreEqual("8", tableViewModel.Cells[6][2]);
+            Assert.AreEqual("3", tableViewModel.Cells[6][3]);
+            Assert.AreEqual("1", tableViewModel.Cells[6][4]);
+            Assert.AreEqual("4", tableViewModel.Cells[6][5]);
+            Assert.AreEqual("6", tableViewModel.Cells[6][6]);
+            Assert.AreEqual("7", tableViewModel.Cells[6][7]);
+            Assert.AreEqual("5", tableViewModel.Cells[6][8]);
+
+            Assert.AreEqual("3", tableViewModel.Cells[7][0]);
+            Assert.AreEqual("7", tableViewModel.Cells[7][1]);
+            Assert.AreEqual("1", tableViewModel.Cells[7][2]);
+            Assert.AreEqual("8", tableViewModel.Cells[7][3]);
+            Assert.AreEqual("6", tableViewModel.Cells[7][4]);
+            Assert.AreEqual("5", tableViewModel.Cells[7][5]);
+            Assert.AreEqual("9", tableViewModel.Cells[7][6]);
+            Assert.AreEqual("4", tableViewModel.Cells[7][7]);
+            Assert.AreEqual("2", tableViewModel.Cells[7][8]);
+
+            Assert.AreEqual("5", tableViewModel.Cells[8][0]);
+            Assert.AreEqual("6", tableViewModel.Cells[8][1]);
+            Assert.AreEqual("4", tableViewModel.Cells[8][2]);
+            Assert.AreEqual("9", tableViewModel.Cells[8][3]);
+            Assert.AreEqual("7", tableViewModel.Cells[8][4]);
+            Assert.AreEqual("2", tableViewModel.Cells[8][5]);
+            Assert.AreEqual("3", tableViewModel.Cells[8][6]);
+            Assert.AreEqual("1", tableViewModel.Cells[8][7]);
+            Assert.AreEqual("8", tableViewModel.Cells[8][8]);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][4]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][5]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][6]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][7]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][8]);
         }
 
         [TestMethod]
@@ -748,16 +1479,20 @@ namespace Solvedoku.Tests.ViewModelsTests
             tableViewModel.Cells[0][3] = "4";
 
             classicSudokuViewModel.ActualSudokuBoard = classicSudokuViewModel.CreateBoard(sudokuBoardSize, tableViewModel, true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            object actualBoard = classicSudokuViewModel.SudokuBoardControl;
             Thread thread = new Thread(() => classicSudokuViewModel.CountAllSolutions());
 
             thread.Start();
             Thread.Sleep(5000);
             thread.Abort();
-            object actualBoard = classicSudokuViewModel.SudokuBoardControl;
-            tableViewModel = classicSudokuViewModel.GetCurrentTableViewModel();
-
+           
             Assert.AreEqual(typeof(UcClassicSudoku4x4Table), actualBoard.GetType());
             Assert.AreNotEqual(1, classicSudokuViewModel.Solutions.Count);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
         }
 
         [TestMethod]
@@ -796,6 +1531,279 @@ namespace Solvedoku.Tests.ViewModelsTests
             Assert.AreEqual($"1/{classicSudokuViewModel.Solutions.Count}", classicSudokuViewModel.SolutionCounter);
             Assert.AreEqual(true, classicSudokuViewModel.IsSolutionCounterVisible);
             Assert.AreNotEqual(1, classicSudokuViewModel.Solutions.Count);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+        }
+
+        [TestMethod]
+        public void GetMoreSolutionsFor6x6TableWithPredefinedCells_NoDisplay()
+        {
+            Mock<IMessageBoxService> messageBoxMock = new Mock<IMessageBoxService>();
+            messageBoxMock.Setup(m => m.Show(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<MessageBoxButton>(), It.IsAny<MessageBoxImage>()))
+                .Returns(MessageBoxResult.Yes);
+
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel(messageBoxMock.Object);
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 6;
+            sudokuBoardSize.Width = 6;
+            sudokuBoardSize.BoxCountX = 3;
+            sudokuBoardSize.BoxCountY = 2;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            BaseSudokuTableViewModel tableViewModel = classicSudokuViewModel.GetCurrentTableViewModel();
+            tableViewModel.Cells[0][0] = "1";
+            tableViewModel.Cells[0][1] = "2";
+            tableViewModel.Cells[0][2] = "3";
+            tableViewModel.Cells[0][3] = "4";
+            tableViewModel.Cells[0][4] = "5";
+            tableViewModel.Cells[0][5] = "6";
+
+            classicSudokuViewModel.ActualSudokuBoard = classicSudokuViewModel.CreateBoard(sudokuBoardSize, tableViewModel, true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Thread thread = new Thread(() => classicSudokuViewModel.CountAllSolutions());
+
+            object actualBoard = classicSudokuViewModel.SudokuBoardControl;
+
+            thread.Start();
+            Thread.Sleep(5000);
+            thread.Abort();
+
+            Assert.AreEqual(typeof(UcClassicSudoku6x6Table), actualBoard.GetType());
+            Assert.AreNotEqual(1, classicSudokuViewModel.Solutions.Count);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][4]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][5]);
+        }
+
+        [TestMethod]
+        public void GetMoreSolutionsFor6x6TableWithPredefinedCells_Display()
+        {
+            Mock<IMessageBoxService> messageBoxMock = new Mock<IMessageBoxService>();
+            messageBoxMock.Setup(m => m.Show(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<MessageBoxButton>(), It.IsAny<MessageBoxImage>()))
+                .Returns(MessageBoxResult.Yes);
+
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel(messageBoxMock.Object);
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 6;
+            sudokuBoardSize.Width = 6;
+            sudokuBoardSize.BoxCountX = 3;
+            sudokuBoardSize.BoxCountY = 2;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            BaseSudokuTableViewModel tableViewModel = classicSudokuViewModel.GetCurrentTableViewModel();
+            tableViewModel.Cells[0][0] = "1";
+            tableViewModel.Cells[0][1] = "2";
+            tableViewModel.Cells[0][2] = "3";
+            tableViewModel.Cells[0][3] = "4";
+            tableViewModel.Cells[0][4] = "5";
+            tableViewModel.Cells[0][5] = "6";
+
+            classicSudokuViewModel.ActualSudokuBoard = classicSudokuViewModel.CreateBoard(sudokuBoardSize, tableViewModel, true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Thread thread = new Thread(() => classicSudokuViewModel.CountAllSolutions());
+
+            thread.Start();
+            Thread.Sleep(5000);
+            thread.Abort();
+
+            object actualBoard = classicSudokuViewModel.SudokuBoardControl;
+            classicSudokuViewModel.DisplaySolutionAndMessage();
+
+            Assert.AreEqual(typeof(UcClassicSudoku6x6Table), actualBoard.GetType());
+            Assert.AreEqual($"1/{classicSudokuViewModel.Solutions.Count}", classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(true, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreNotEqual(1, classicSudokuViewModel.Solutions.Count);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][4]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][5]);
+        }
+
+        [TestMethod]
+        public void GetMoreSolutionsFor9x9TableWithPredefinedCells_NoDisplay()
+        {
+            Mock<IMessageBoxService> messageBoxMock = new Mock<IMessageBoxService>();
+            messageBoxMock.Setup(m => m.Show(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<MessageBoxButton>(), It.IsAny<MessageBoxImage>()))
+                .Returns(MessageBoxResult.Yes);
+
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel(messageBoxMock.Object);
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 9;
+            sudokuBoardSize.Width = 9;
+            sudokuBoardSize.BoxCountX = 3;
+            sudokuBoardSize.BoxCountY = 3;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            BaseSudokuTableViewModel tableViewModel = classicSudokuViewModel.GetCurrentTableViewModel();
+            tableViewModel.Cells[0][0] = "1";
+            tableViewModel.Cells[0][1] = "2";
+            tableViewModel.Cells[0][2] = "3";
+            tableViewModel.Cells[0][3] = "4";
+            tableViewModel.Cells[0][4] = "5";
+            tableViewModel.Cells[0][5] = "6";
+            tableViewModel.Cells[0][6] = "7";
+            tableViewModel.Cells[0][7] = "8";
+            tableViewModel.Cells[0][8] = "9";
+
+            classicSudokuViewModel.ActualSudokuBoard = classicSudokuViewModel.CreateBoard(sudokuBoardSize, tableViewModel, true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Thread thread = new Thread(() => classicSudokuViewModel.CountAllSolutions());
+
+            object actualBoard = classicSudokuViewModel.SudokuBoardControl;
+
+            thread.Start();
+            Thread.Sleep(5000);
+            thread.Abort();
+
+            Assert.AreEqual(typeof(UcClassicSudoku9x9Table), actualBoard.GetType());
+            Assert.AreNotEqual(1, classicSudokuViewModel.Solutions.Count);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][4]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][5]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][6]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][7]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][8]);
+        }
+
+        [TestMethod]
+        public void GetMoreSolutionsFor9x9TableWithPredefinedCells_Display()
+        {
+            Mock<IMessageBoxService> messageBoxMock = new Mock<IMessageBoxService>();
+            messageBoxMock.Setup(m => m.Show(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<MessageBoxButton>(), It.IsAny<MessageBoxImage>()))
+                .Returns(MessageBoxResult.Yes);
+
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel(messageBoxMock.Object);
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 9;
+            sudokuBoardSize.Width = 9;
+            sudokuBoardSize.BoxCountX = 3;
+            sudokuBoardSize.BoxCountY = 3;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            BaseSudokuTableViewModel tableViewModel = classicSudokuViewModel.GetCurrentTableViewModel();
+            tableViewModel.Cells[0][0] = "1";
+            tableViewModel.Cells[0][1] = "2";
+            tableViewModel.Cells[0][2] = "3";
+            tableViewModel.Cells[0][3] = "4";
+            tableViewModel.Cells[0][4] = "5";
+            tableViewModel.Cells[0][5] = "6";
+            tableViewModel.Cells[0][6] = "7";
+            tableViewModel.Cells[0][7] = "8";
+            tableViewModel.Cells[0][8] = "9";
+
+            classicSudokuViewModel.ActualSudokuBoard = classicSudokuViewModel.CreateBoard(sudokuBoardSize, tableViewModel, true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Thread thread = new Thread(() => classicSudokuViewModel.CountAllSolutions());
+
+            thread.Start();
+            Thread.Sleep(5000);
+            thread.Abort();
+
+            object actualBoard = classicSudokuViewModel.SudokuBoardControl;
+            classicSudokuViewModel.DisplaySolutionAndMessage();
+
+            Assert.AreEqual(typeof(UcClassicSudoku9x9Table), actualBoard.GetType());
+            Assert.AreEqual($"1/{classicSudokuViewModel.Solutions.Count}", classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(true, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreNotEqual(1, classicSudokuViewModel.Solutions.Count);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][4]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][5]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][6]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][7]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][8]);
+        }
+
+        [TestMethod]
+        public void LoadDeserializedClassicSudokuFileTest()
+        {
+            Mock<IMessageBoxService> messageBoxMock = new Mock<IMessageBoxService>();
+            messageBoxMock.Setup(m => m.Show(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<MessageBoxButton>(), It.IsAny<MessageBoxImage>()))
+                .Returns(MessageBoxResult.Yes);
+
+            ClassicSudokuViewModel classicSudokuViewModel = new ClassicSudokuViewModel(messageBoxMock.Object);
+
+            SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
+            sudokuBoardSize.Height = 4;
+            sudokuBoardSize.Width = 4;
+            sudokuBoardSize.BoxCountX = 2;
+            sudokuBoardSize.BoxCountY = 2;
+            classicSudokuViewModel.AreDiagonalRulesApplied = true;
+
+            classicSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
+
+            var tableViewModel = (BaseClassicSudokuTableViewModel)classicSudokuViewModel.GetCurrentTableViewModel();
+            tableViewModel.Cells[0][0] = "1";
+            tableViewModel.Cells[0][1] = "2";
+            tableViewModel.Cells[0][2] = "3";
+            tableViewModel.Cells[0][3] = "4";
+
+            classicSudokuViewModel.ActualSudokuBoard = classicSudokuViewModel.CreateBoard(sudokuBoardSize, tableViewModel, true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            classicSudokuViewModel.CountOneSolution();
+            classicSudokuViewModel.DisplaySolutionAndMessage();
+            object actualBoard = classicSudokuViewModel.SudokuBoardControl;
+            tableViewModel = (BaseClassicSudokuTableViewModel)classicSudokuViewModel.GetCurrentTableViewModel();
+
+            ClassicSudokuFile classicSudokuFile = new ClassicSudokuFile();
+            classicSudokuFile.SelectedSudokuBoardSize = sudokuBoardSize;
+            classicSudokuFile.AreDiagonalRulesSet = tableViewModel.AreDiagonalRulesApplied;
+            classicSudokuFile.Cells = new ObservableCollection<ObservableCollection<string>>(tableViewModel.Cells);
+            classicSudokuFile.BoldCells = new ObservableCollection<ObservableCollection<bool>>(tableViewModel.BoldCells);
+            classicSudokuFile.Solutions = new List<SudokuBoard>(classicSudokuViewModel.Solutions);
+            classicSudokuFile.SolutionIndex = 0;
+            classicSudokuFile.SolutionCounter = classicSudokuViewModel.SolutionCounter;
+            classicSudokuFile.IsSolutionCounterVisible = classicSudokuViewModel.IsSolutionCounterVisible;
+
+            classicSudokuViewModel.LoadDeserializedClassicSudokuFile(classicSudokuFile);
+
+            Assert.AreEqual(sudokuBoardSize, classicSudokuViewModel.SelectedSudokuBoardSize);
+            Assert.AreEqual(true, classicSudokuViewModel.AreDiagonalRulesApplied);
+            Assert.AreEqual(1, classicSudokuViewModel.Solutions.Count);
+            Assert.AreEqual(string.Empty, classicSudokuViewModel.SolutionCounter);
+            Assert.AreEqual(false, classicSudokuViewModel.IsSolutionCounterVisible);
+            Assert.AreEqual(typeof(UcClassicSudoku4x4Table), actualBoard.GetType());
+            Assert.AreEqual(true, tableViewModel.AreDiagonalRulesApplied);
+
+            Assert.AreEqual("1", tableViewModel.Cells[0][0]);
+            Assert.AreEqual("2", tableViewModel.Cells[0][1]);
+            Assert.AreEqual("3", tableViewModel.Cells[0][2]);
+            Assert.AreEqual("4", tableViewModel.Cells[0][3]);
+            Assert.AreEqual("3", tableViewModel.Cells[1][0]);
+            Assert.AreEqual("4", tableViewModel.Cells[1][1]);
+            Assert.AreEqual("1", tableViewModel.Cells[1][2]);
+            Assert.AreEqual("2", tableViewModel.Cells[1][3]);
+            Assert.AreEqual("4", tableViewModel.Cells[2][0]);
+            Assert.AreEqual("3", tableViewModel.Cells[2][1]);
+            Assert.AreEqual("2", tableViewModel.Cells[2][2]);
+            Assert.AreEqual("1", tableViewModel.Cells[2][3]);
+            Assert.AreEqual("2", tableViewModel.Cells[3][0]);
+            Assert.AreEqual("1", tableViewModel.Cells[3][1]);
+            Assert.AreEqual("4", tableViewModel.Cells[3][2]);
+            Assert.AreEqual("3", tableViewModel.Cells[3][3]);
+
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][0]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][1]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][2]);
+            Assert.AreEqual(true, tableViewModel.BoldCells[0][3]);
+
         }
     }
 }
