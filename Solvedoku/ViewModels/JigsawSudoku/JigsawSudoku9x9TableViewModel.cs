@@ -32,7 +32,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             new ObservableCollection<bool> {  false, false, false, false, false, false, false, false, false},
         };
 
-        ObservableCollection<ObservableCollection<int>> _puzzleAreas = new ObservableCollection<ObservableCollection<int>>()
+        ObservableCollection<ObservableCollection<int>> _jigsawAreas = new ObservableCollection<ObservableCollection<int>>()
         {
             new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
             new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
@@ -71,10 +71,10 @@ namespace Solvedoku.ViewModels.JigsawSudoku
 
         public override ObservableCollection<ObservableCollection<int>> JigsawAreas
         { 
-            get => _puzzleAreas;
+            get => _jigsawAreas;
             set
             {
-                _puzzleAreas = value;
+                _jigsawAreas = value;
                 OnPropertyChanged();
             }
         }

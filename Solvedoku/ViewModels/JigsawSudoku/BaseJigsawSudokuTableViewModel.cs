@@ -2,7 +2,7 @@
 
 namespace Solvedoku.ViewModels.JigsawSudoku
 {
-    abstract class BaseJigsawSudokuTableViewModel : BaseSudokuTableViewModel
+    public abstract class BaseJigsawSudokuTableViewModel : BaseSudokuTableViewModel
     {
         public abstract ObservableCollection<ObservableCollection<int>> JigsawAreas { get; set; }
 

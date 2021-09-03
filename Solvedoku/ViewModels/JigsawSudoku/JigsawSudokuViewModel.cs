@@ -16,7 +16,7 @@ using Solvedoku.Views.BusyIndicatorContent;
 namespace Solvedoku.ViewModels.JigsawSudoku
 {
     [Serializable]
-    class JigsawSudokuViewModel : BaseSudokuViewModel
+    public class JigsawSudokuViewModel : BaseSudokuViewModel
     {
         #region Fields
 
@@ -181,48 +181,6 @@ namespace Solvedoku.ViewModels.JigsawSudoku
             }
         }
 
-        protected void CountAllSolutions()
-        {
-            int foundSolution = 0;
-            try
-            {
-                foreach (var item in Sudoku_SolverThread(_actualSudokuBoard, true))
-                {
-                    if (item != null)
-                    {
-                        lock (Solutions)
-                        {
-                            Solutions.Add(item);
-                        }
-                        foundSolution++;
-                        FoundSolutionCounter = $"{Resources.TextBlock_FoundSolutions} {foundSolution}";
-                    }
-                }
-                Action action = DisplaySolutionAndMessage;
-                Application.Current.Dispatcher.Invoke(action);
-            }
-            catch (OutOfMemoryException)
-            {
-                Solutions.Clear();
-                Application.Current.Dispatcher.Invoke(new Action(() =>
-                MessageBoxService.Show($"{Resources.MessageBox_OutOfMemory}", Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error)));
-                IsBusy = false;
-            }
-        }
-
-        protected void CountOneSolution()
-        {
-            if (Sudoku_SolverThread(_actualSudokuBoard, false).First() != null)
-            {
-                lock (Solutions)
-                {
-                    Solutions.Add(Sudoku_SolverThread(_actualSudokuBoard, false).First());
-                }
-            }
-            Action action = DisplaySolutionAndMessage;
-            Application.Current.Dispatcher.Invoke(action);
-        }
-
         /// <summary>
         /// Saves the jigsaw sudoku to a file.
         /// </summary>
@@ -305,7 +263,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                                 var bformatter = new BinaryFormatter();
                                 jigsawSudokuFile = (JigsawSudokuFile)bformatter.Deserialize(stream);
                             }
-                            Application.Current.Dispatcher.Invoke(new Action(() => DeserializeJigsawSudokuFile(jigsawSudokuFile)));
+                            Application.Current.Dispatcher.Invoke(new Action(() => LoadDeserializedJigsawSudokuFile(jigsawSudokuFile)));
                         }
                         catch (OutOfMemoryException)
                         {
@@ -349,7 +307,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         /// Loads the deserialized jigsaw sudoku file.
         /// </summary>
         /// <param name="jigsawSudokuFile">Jigsaw sudoku file</param>
-        void DeserializeJigsawSudokuFile(JigsawSudokuFile jigsawSudokuFile)
+        void LoadDeserializedJigsawSudokuFile(JigsawSudokuFile jigsawSudokuFile)
         {
             IsBusy = false;
             SelectedSudokuBoardSize = jigsawSudokuFile.SelectedSudokuBoardSize;
@@ -379,7 +337,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         /// Loads the jigsaw areas into the curent sudoku board viewmodel.
         /// </summary>
         /// <param name="areas">Integer array of the jigsaw areas.</param>
-        void DisplayAreas(int[,] areas)
+        public void DisplayAreas(int[,] areas)
         {
             var boardControlViewModel = (BaseJigsawSudokuTableViewModel)SudokuBoardControl.DataContext;
             for (int column = 0; column < areas.GetLength(0); column++)

@@ -537,6 +537,7 @@ namespace Solvedoku.ViewModels
 
                 string[,] solution = _solutions[_solutionIndex].OutputAsStringMatrix();
                 DisplayMatrixBoard(solution);
+                string asd = "";
             }
             else
             {

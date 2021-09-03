@@ -1,16 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Solvedoku.ViewModels.ClassicSudoku;
 using Solvedoku.Classes;
-using Solvedoku.Commands;
 using Solvedoku.Views.ClassicSudoku;
 using Solvedoku.ViewModels;
 using Moq;
 using Solvedoku.Services.MessageBox;
 using System.Windows;
-using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.ObjectModel;
 
