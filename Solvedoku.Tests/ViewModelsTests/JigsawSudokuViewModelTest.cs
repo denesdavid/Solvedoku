@@ -71,6 +71,17 @@ namespace Solvedoku.Tests.ViewModelsTests
                                              "777776665" };
             jigsawSudokuViewModel.ActualSudokuBoard = jigsawSudokuViewModel.CreateBoard(sudokuBoardSize, areas, tableViewModel, true);
 
+            for (int i = 0; i < 9; i++)
+            {
+                for (int j = 0; j < 9; j++)
+                {
+                    tableViewModel.JigsawAreas[i][j] = int.Parse(areas[i][j].ToString());
+                }
+            }
+
+            jigsawSudokuViewModel.CountOneSolution();
+            jigsawSudokuViewModel.DisplaySolutionAndMessage();
+
             tableViewModel = (BaseJigsawSudokuTableViewModel)jigsawSudokuViewModel.GetCurrentTableViewModel();
             Assert.AreEqual(typeof(UcJigsawSudoku9x9Table), expectedBoard.GetType());
             Assert.AreEqual(0, tableViewModel.JigsawAreas[0][0]);
@@ -162,6 +173,96 @@ namespace Solvedoku.Tests.ViewModelsTests
             Assert.AreEqual(6, tableViewModel.JigsawAreas[8][6]);
             Assert.AreEqual(6, tableViewModel.JigsawAreas[8][7]);
             Assert.AreEqual(5, tableViewModel.JigsawAreas[8][8]);
+
+            Assert.AreEqual("5", tableViewModel.Cells[0][0]);
+            Assert.AreEqual("3", tableViewModel.Cells[0][1]);
+            Assert.AreEqual("8", tableViewModel.Cells[0][2]);
+            Assert.AreEqual("9", tableViewModel.Cells[0][3]);
+            Assert.AreEqual("4", tableViewModel.Cells[0][4]);
+            Assert.AreEqual("1", tableViewModel.Cells[0][5]);
+            Assert.AreEqual("6", tableViewModel.Cells[0][6]);
+            Assert.AreEqual("7", tableViewModel.Cells[0][7]);
+            Assert.AreEqual("2", tableViewModel.Cells[0][8]);
+
+            Assert.AreEqual("1", tableViewModel.Cells[1][0]);
+            Assert.AreEqual("8", tableViewModel.Cells[1][1]);
+            Assert.AreEqual("4", tableViewModel.Cells[1][2]);
+            Assert.AreEqual("2", tableViewModel.Cells[1][3]);
+            Assert.AreEqual("7", tableViewModel.Cells[1][4]);
+            Assert.AreEqual("3", tableViewModel.Cells[1][5]);
+            Assert.AreEqual("9", tableViewModel.Cells[1][6]);
+            Assert.AreEqual("6", tableViewModel.Cells[1][7]);
+            Assert.AreEqual("5", tableViewModel.Cells[1][8]);
+
+            Assert.AreEqual("3", tableViewModel.Cells[2][0]);
+            Assert.AreEqual("4", tableViewModel.Cells[2][1]);
+            Assert.AreEqual("6", tableViewModel.Cells[2][2]);
+            Assert.AreEqual("5", tableViewModel.Cells[2][3]);
+            Assert.AreEqual("1", tableViewModel.Cells[2][4]);
+            Assert.AreEqual("8", tableViewModel.Cells[2][5]);
+            Assert.AreEqual("7", tableViewModel.Cells[2][6]);
+            Assert.AreEqual("2", tableViewModel.Cells[2][7]);
+            Assert.AreEqual("9", tableViewModel.Cells[2][8]);
+
+            Assert.AreEqual("4", tableViewModel.Cells[3][0]);
+            Assert.AreEqual("7", tableViewModel.Cells[3][1]);
+            Assert.AreEqual("9", tableViewModel.Cells[3][2]);
+            Assert.AreEqual("8", tableViewModel.Cells[3][3]);
+            Assert.AreEqual("6", tableViewModel.Cells[3][4]);
+            Assert.AreEqual("2", tableViewModel.Cells[3][5]);
+            Assert.AreEqual("5", tableViewModel.Cells[3][6]);
+            Assert.AreEqual("3", tableViewModel.Cells[3][7]);
+            Assert.AreEqual("1", tableViewModel.Cells[3][8]);
+
+            Assert.AreEqual("6", tableViewModel.Cells[4][0]);
+            Assert.AreEqual("2", tableViewModel.Cells[4][1]);
+            Assert.AreEqual("7", tableViewModel.Cells[4][2]);
+            Assert.AreEqual("1", tableViewModel.Cells[4][3]);
+            Assert.AreEqual("9", tableViewModel.Cells[4][4]);
+            Assert.AreEqual("5", tableViewModel.Cells[4][5]);
+            Assert.AreEqual("3", tableViewModel.Cells[4][6]);
+            Assert.AreEqual("8", tableViewModel.Cells[4][7]);
+            Assert.AreEqual("4", tableViewModel.Cells[4][8]);
+
+            Assert.AreEqual("7", tableViewModel.Cells[5][0]);
+            Assert.AreEqual("9", tableViewModel.Cells[5][1]);
+            Assert.AreEqual("2", tableViewModel.Cells[5][2]);
+            Assert.AreEqual("6", tableViewModel.Cells[5][3]);
+            Assert.AreEqual("3", tableViewModel.Cells[5][4]);
+            Assert.AreEqual("4", tableViewModel.Cells[5][5]);
+            Assert.AreEqual("1", tableViewModel.Cells[5][6]);
+            Assert.AreEqual("5", tableViewModel.Cells[5][7]);
+            Assert.AreEqual("8", tableViewModel.Cells[5][8]);
+
+            Assert.AreEqual("8", tableViewModel.Cells[6][0]);
+            Assert.AreEqual("1", tableViewModel.Cells[6][1]);
+            Assert.AreEqual("3", tableViewModel.Cells[6][2]);
+            Assert.AreEqual("4", tableViewModel.Cells[6][3]);
+            Assert.AreEqual("5", tableViewModel.Cells[6][4]);
+            Assert.AreEqual("7", tableViewModel.Cells[6][5]);
+            Assert.AreEqual("2", tableViewModel.Cells[6][6]);
+            Assert.AreEqual("9", tableViewModel.Cells[6][7]);
+            Assert.AreEqual("6", tableViewModel.Cells[6][8]);
+
+            Assert.AreEqual("9", tableViewModel.Cells[7][0]);
+            Assert.AreEqual("5", tableViewModel.Cells[7][1]);
+            Assert.AreEqual("1", tableViewModel.Cells[7][2]);
+            Assert.AreEqual("7", tableViewModel.Cells[7][3]);
+            Assert.AreEqual("2", tableViewModel.Cells[7][4]);
+            Assert.AreEqual("6", tableViewModel.Cells[7][5]);
+            Assert.AreEqual("8", tableViewModel.Cells[7][6]);
+            Assert.AreEqual("4", tableViewModel.Cells[7][7]);
+            Assert.AreEqual("3", tableViewModel.Cells[7][8]);
+
+            Assert.AreEqual("2", tableViewModel.Cells[8][0]);
+            Assert.AreEqual("6", tableViewModel.Cells[8][1]);
+            Assert.AreEqual("5", tableViewModel.Cells[8][2]);
+            Assert.AreEqual("3", tableViewModel.Cells[8][3]);
+            Assert.AreEqual("8", tableViewModel.Cells[8][4]);
+            Assert.AreEqual("9", tableViewModel.Cells[8][5]);
+            Assert.AreEqual("4", tableViewModel.Cells[8][6]);
+            Assert.AreEqual("1", tableViewModel.Cells[8][7]);
+            Assert.AreEqual("7", tableViewModel.Cells[8][8]);
         }
 
         [TestMethod]
