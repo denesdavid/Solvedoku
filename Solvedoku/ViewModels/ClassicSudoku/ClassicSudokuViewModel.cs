@@ -44,13 +44,20 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 
         #region Constructor
 
-        public ClassicSudokuViewModel() : base()
+        public ClassicSudokuViewModel():base()
         {
-            LoadCommands();
-            Draw(SudokuBoard.SudokuBoardSizes[0]);
+            SetupInstance();
         }
 
         public ClassicSudokuViewModel(IMessageBoxService messageBoxService) : base(messageBoxService)
+        {
+            SetupInstance();
+        }
+
+        /// <summary>
+        /// Initializes default fields and properties for the current instance.
+        /// </summary>
+        void SetupInstance()
         {
             LoadCommands();
             Draw(SudokuBoard.SudokuBoardSizes[0]);

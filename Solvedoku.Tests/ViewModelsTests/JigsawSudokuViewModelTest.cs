@@ -1,8 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using Solvedoku.Classes;
+using Solvedoku.Services.MessageBox;
 using Solvedoku.ViewModels.JigsawSudoku;
 using Solvedoku.Views.JigsawSudoku;
 using System;
+using System.Windows;
 
 namespace Solvedoku.Tests.ViewModelsTests
 {
@@ -31,7 +34,11 @@ namespace Solvedoku.Tests.ViewModelsTests
         [TestMethod]
         public void Solve9x9TableWithPredefinedCellsTest()
         {
-            JigsawSudokuViewModel jigsawSudokuViewModel = new JigsawSudokuViewModel();
+            Mock<IMessageBoxService> messageBoxMock = new Mock<IMessageBoxService>();
+            messageBoxMock.Setup(m => m.Show(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<MessageBoxButton>(), It.IsAny<MessageBoxImage>()))
+                .Returns(MessageBoxResult.Yes);
+
+            JigsawSudokuViewModel jigsawSudokuViewModel = new JigsawSudokuViewModel(messageBoxMock.Object);
             SudokuBoardSize sudokuBoardSize = new SudokuBoardSize();
             sudokuBoardSize.Height = 9;
             sudokuBoardSize.Width = 9;
@@ -39,7 +46,6 @@ namespace Solvedoku.Tests.ViewModelsTests
             sudokuBoardSize.BoxCountY = 3;
 
             jigsawSudokuViewModel.DrawSudokuCommand.Execute(sudokuBoardSize);
-
 
             object expectedBoard = jigsawSudokuViewModel.SudokuBoardControl;
             var tableViewModel = (BaseJigsawSudokuTableViewModel)jigsawSudokuViewModel.GetCurrentTableViewModel();
