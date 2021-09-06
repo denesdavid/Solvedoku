@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Windows;
@@ -12,11 +11,12 @@ using Solvedoku.Views.JigsawSudoku;
 using Solvedoku.Properties;
 using System.Windows.Threading;
 using Solvedoku.Views.BusyIndicatorContent;
+using Solvedoku.Services.MessageBox;
 
 namespace Solvedoku.ViewModels.JigsawSudoku
 {
     [Serializable]
-    class JigsawSudokuViewModel : BaseSudokuViewModel
+    public class JigsawSudokuViewModel : BaseSudokuViewModel
     {
         #region Fields
 
@@ -55,7 +55,20 @@ namespace Solvedoku.ViewModels.JigsawSudoku
 
         #region Constructor
 
-        public JigsawSudokuViewModel()
+        public JigsawSudokuViewModel():base()
+        {
+            SetupInstance();
+        }
+
+        public JigsawSudokuViewModel(IMessageBoxService messageBoxService):base(messageBoxService)
+        {
+            SetupInstance();
+        }
+
+        /// <summary>
+        /// Initializes default fields and properties for the current instance.
+        /// </summary>
+        void SetupInstance()
         {
             LoadCommands();
             SelectedColor = Colors.LightBlue;
@@ -123,54 +136,21 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                     SolutionCounter = string.Empty;
                     string[] areas = ((BaseJigsawSudokuTableViewModel)GetCurrentTableViewModel()).GetJigsawAreasAsArray();
                     _actualSudokuBoard = CreateBoard(((IJigsawSudokuControl)SudokuBoardControl).BoardSize, areas, (BaseSudokuTableViewModel)SudokuBoardControl.DataContext, true);
-                    _solutionIndex = 0;
 
                     if (messageBoxResult == MessageBoxResult.Yes)
                     {
+                        IsBusy = true;
                         BusyIndicatorContent = new UcSolvingBusyIndicatorContent();
-                        _sudokuSolverThread = new Thread(() =>
-                        {
-                            int foundSolution = 0;
-                            try
-                            {
-                                foreach (var item in Sudoku_SolverThread(_actualSudokuBoard, true))
-                                {
-                                    if (item != null)
-                                    {
-                                        _solutions.Add(item);
-                                        foundSolution++;
-                                        FoundSolutionCounter = $"{Resources.TextBlock_FoundSolutions} {foundSolution}";
-                                    }
-                                }
-                                Action action = DisplaySolutionAndMessage;
-                                Application.Current.Dispatcher.Invoke(action);
-                            }
-                            catch (OutOfMemoryException)
-                            {
-                                _solutions.Clear();
-                                Application.Current.Dispatcher.Invoke(new Action(() =>
-                                MessageBoxService.Show($"{Resources.MessageBox_OutOfMemory}", Resources.MessageBox_Error_Title, MessageBoxButton.OK, MessageBoxImage.Error)));
-                                IsBusy = false;
-                            }
-
-                        });
+                        _sudokuSolverThread = new Thread(CountAllSolutions);
                         _sudokuSolverThread.Start();
                     }
                     else
                     {
-                        _sudokuSolverThread = new Thread(() =>
-                        {
-                            if (Sudoku_SolverThread(_actualSudokuBoard, false).First() != null)
-                            {
-                                _solutions.Add(Sudoku_SolverThread(_actualSudokuBoard, false).First());
-                            }
-                           
-                            Action action = DisplaySolutionAndMessage;
-                            Application.Current.Dispatcher.Invoke(action);
-                        });
+                        _sudokuSolverThread = new Thread(CountOneSolution);
                         _sudokuSolverThread.Start();
+                        _sudokuSolverThread.Join();
+                        DisplaySolutionAndMessage();
                     }
-                    IsBusy = true;
                 }
             }
             catch
@@ -263,7 +243,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                                 var bformatter = new BinaryFormatter();
                                 jigsawSudokuFile = (JigsawSudokuFile)bformatter.Deserialize(stream);
                             }
-                            Application.Current.Dispatcher.Invoke(new Action(() => DeserializeJigsawSudokuFile(jigsawSudokuFile)));
+                            Application.Current.Dispatcher.Invoke(new Action(() => LoadDeserializedJigsawSudokuFile(jigsawSudokuFile)));
                         }
                         catch (OutOfMemoryException)
                         {
@@ -307,7 +287,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         /// Loads the deserialized jigsaw sudoku file.
         /// </summary>
         /// <param name="jigsawSudokuFile">Jigsaw sudoku file</param>
-        void DeserializeJigsawSudokuFile(JigsawSudokuFile jigsawSudokuFile)
+        void LoadDeserializedJigsawSudokuFile(JigsawSudokuFile jigsawSudokuFile)
         {
             IsBusy = false;
             SelectedSudokuBoardSize = jigsawSudokuFile.SelectedSudokuBoardSize;
@@ -337,7 +317,7 @@ namespace Solvedoku.ViewModels.JigsawSudoku
         /// Loads the jigsaw areas into the curent sudoku board viewmodel.
         /// </summary>
         /// <param name="areas">Integer array of the jigsaw areas.</param>
-        void DisplayAreas(int[,] areas)
+        public void DisplayAreas(int[,] areas)
         {
             var boardControlViewModel = (BaseJigsawSudokuTableViewModel)SudokuBoardControl.DataContext;
             for (int column = 0; column < areas.GetLength(0); column++)

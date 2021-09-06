@@ -2,8 +2,9 @@
 
 namespace Solvedoku.ViewModels
 {
-    abstract class BaseSudokuTableViewModel : ViewModelBase
+    public abstract class BaseSudokuTableViewModel : ViewModelBase
     {
+        #region Properties
         public abstract ObservableCollection<ObservableCollection<string>> Cells { get; set; }
 
         public abstract ObservableCollection<ObservableCollection<bool>> BoldCells { get; set; }
@@ -45,5 +46,6 @@ namespace Solvedoku.ViewModels
             }
             return false;
         }
+        #endregion
     }
 }

@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace Solvedoku.Commands
 {
-    class ParameterlessCommand : ICommand
+    public class ParameterlessCommand : ICommand
     {
         Action _execute;
         Func<bool> _canExecute;

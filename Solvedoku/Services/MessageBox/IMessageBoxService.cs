@@ -2,7 +2,7 @@
 
 namespace Solvedoku.Services.MessageBox
 {
-    interface IMessageBoxService
+    public interface IMessageBoxService
     {
         /// <summary>
         /// Shows a MessageBox with the given text, title, button(s) and image.
