@@ -351,9 +351,12 @@ namespace Solvedoku.ViewModels
                         FoundSolutionCounter = $"{Resources.TextBlock_FoundSolutions} {foundSolution}";
                     }
                 }
-                if ((bool)SudokuSolverThread?.IsAlive)
+                if (SudokuSolverThread != null)
                 {
-                    SudokuSolverThread.Abort();
+                    if (SudokuSolverThread.IsAlive)
+                    {
+                        SudokuSolverThread.Abort();
+                    }
                 }
             }
             catch (OutOfMemoryException)
@@ -377,9 +380,12 @@ namespace Solvedoku.ViewModels
                     Solutions.Add(Sudoku_SolverThread(_actualSudokuBoard, false).First());
                 }
             }
-            if ((bool)SudokuSolverThread?.IsAlive)
+            if (SudokuSolverThread != null)
             {
-                SudokuSolverThread.Abort();
+                if (SudokuSolverThread.IsAlive)
+                {
+                    SudokuSolverThread.Abort();
+                }
             }
         }
 
