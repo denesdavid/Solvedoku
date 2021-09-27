@@ -125,6 +125,7 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     Solutions.Clear();
                     SolutionCounter = string.Empty;
                     _actualSudokuBoard = CreateBoard(_actualSudokuBoard.BoardSize, (BaseSudokuTableViewModel)SudokuBoardControl.DataContext, true, AreDiagonalRulesApplied);
+                    _sudokuSolverInspectorThread = new Thread(InspectSolverThread);
                     if (msgBoxResult == MessageBoxResult.Yes)
                     {
                         IsBusy = true;
@@ -136,10 +137,8 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     {
                         _sudokuSolverThread = new Thread(CountOneSolution);
                         _sudokuSolverThread.Start();
-                        _sudokuSolverThread.Join();
-                        DisplaySolutionAndMessage();
                     }
-                    
+                    _sudokuSolverInspectorThread.Start();
                 }
 
             }

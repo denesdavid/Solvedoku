@@ -21,10 +21,12 @@ namespace Solvedoku.ViewModels
 
         protected bool _isBusy;
         protected bool _isSolutionCounterVisible;
+        protected bool _isSolvingCancelled;
         protected int _solutionIndex = -1;
         protected string _solutionCounter = string.Empty;
         protected string _foundSolutionCounter = string.Empty;
         protected Thread _sudokuSolverThread;
+        protected Thread _sudokuSolverInspectorThread;
         protected Thread _sudokuSavingThread;
         protected Thread _sudokuLoadingThread;
         protected UserControl _sudokuBoardControl;
@@ -34,6 +36,7 @@ namespace Solvedoku.ViewModels
         protected SaveFileDialog _saveFileDialog = new SaveFileDialog();
         protected OpenFileDialog _openFileDialog = new OpenFileDialog();
         protected List<SudokuBoard> _solutions = new List<SudokuBoard>();
+        private static ManualResetEvent mre = new ManualResetEvent(false);
 
         #endregion
 
@@ -65,6 +68,15 @@ namespace Solvedoku.ViewModels
             set
             {
                 _sudokuSolverThread = value;
+            }
+        }
+
+        public Thread SudokuSolverInspectorThread 
+        {
+            get => _sudokuSolverInspectorThread;
+            set
+            {
+                _sudokuSolverInspectorThread = value;
             }
         }
 
@@ -253,13 +265,13 @@ namespace Solvedoku.ViewModels
         }
 
         /// <summary>
-        /// Determines if cancelling the busy task is possible.
+        /// Determines if cancelling the busy solving is possible.
         /// </summary>
         /// <returns>Bool (currently always true)</returns>
         protected bool CanCancelBusySolving(object o) => true;
 
         /// <summary>
-        /// Cancels the busy task.
+        /// Cancels the solving task.
         /// </summary>
         protected void CancelBusySolving(object o)
         {
@@ -268,17 +280,9 @@ namespace Solvedoku.ViewModels
 
             if (messageBoxResult == MessageBoxResult.Yes)
             {
+                _isSolvingCancelled = (bool)o;
                 SudokuSolverThread.Abort();
                 IsBusy = false;
-                bool deleteSolutions = (bool)o;
-                if (deleteSolutions)
-                {
-                    _solutions.Clear();
-                }
-                else
-                {
-                    DisplaySolutionAndMessage();
-                }
             }
         }
 
@@ -347,6 +351,10 @@ namespace Solvedoku.ViewModels
                         FoundSolutionCounter = $"{Resources.TextBlock_FoundSolutions} {foundSolution}";
                     }
                 }
+                if ((bool)SudokuSolverThread?.IsAlive)
+                {
+                    SudokuSolverThread.Abort();
+                }
             }
             catch (OutOfMemoryException)
             {
@@ -367,6 +375,33 @@ namespace Solvedoku.ViewModels
                 lock (Solutions)
                 {
                     Solutions.Add(Sudoku_SolverThread(_actualSudokuBoard, false).First());
+                }
+            }
+            if ((bool)SudokuSolverThread?.IsAlive)
+            {
+                SudokuSolverThread.Abort();
+            }
+        }
+
+        public void InspectSolverThread()
+        {
+            while (true)
+            {
+                if (_sudokuSolverThread.ThreadState == ThreadState.Aborted || _sudokuSolverThread.ThreadState == ThreadState.Stopped)
+                {
+                    bool isSolvingCancelled = _sudokuSolverThread.ThreadState == ThreadState.AbortRequested && _isSolvingCancelled;
+                    if (_isSolvingCancelled)
+                    {
+                        Solutions.Clear();
+                    }
+                    else
+                    {
+                        Application.Current.Dispatcher.BeginInvoke((Action)(() =>
+                        {
+                            DisplaySolutionAndMessage();
+                        }));
+                    }
+                    SudokuSolverInspectorThread.Abort();
                 }
             }
         }
@@ -517,33 +552,36 @@ namespace Solvedoku.ViewModels
         public void DisplaySolutionAndMessage()
         {
             IsBusy = false;
-            if (_solutions.Count > 0 && _solutions[0] != null)
+            //if (!isSolvingCancelled)
             {
-                _solutionIndex = 0;
-                if (_solutions.Count > 1)
+                if (_solutions.Count > 0 && _solutions[0] != null)
                 {
-                    SolutionCounter = $"{ _solutionIndex + 1 }/{ _solutions.Count }";
-                    IsSolutionCounterVisible = true;
-                    MessageBoxService.Show($"{Resources.MessageBox_SudokuHasMoreSolutions_Part1} { _solutions.Count}). {Resources.MessageBox_SudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
-                         MessageBoxButton.OK, MessageBoxImage.Information);
+                    _solutionIndex = 0;
+                    if (_solutions.Count > 1)
+                    {
+                        SolutionCounter = $"{ _solutionIndex + 1 }/{ _solutions.Count }";
+                        IsSolutionCounterVisible = true;
+                        MessageBoxService.Show($"{Resources.MessageBox_SudokuHasMoreSolutions_Part1} { _solutions.Count}). {Resources.MessageBox_SudokuHasMoreSolutions_Part2}", Resources.MessageBox_Information_Title,
+                             MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    else
+                    {
+                        SolutionCounter = string.Empty;
+                        IsSolutionCounterVisible = false;
+                        MessageBoxService.Show(Resources.MessageBox_SudokuHasOneSolution, Resources.MessageBox_Information_Title,
+                            MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+
+                    string[,] solution = _solutions[_solutionIndex].OutputAsStringMatrix();
+                    DisplayMatrixBoard(solution);
                 }
                 else
                 {
                     SolutionCounter = string.Empty;
                     IsSolutionCounterVisible = false;
-                    MessageBoxService.Show(Resources.MessageBox_SudokuHasOneSolution, Resources.MessageBox_Information_Title,
+                    MessageBoxService.Show(Resources.MessageBox_SudokuHasNoSolution, Resources.MessageBox_Information_Title,
                         MessageBoxButton.OK, MessageBoxImage.Information);
                 }
-
-                string[,] solution = _solutions[_solutionIndex].OutputAsStringMatrix();
-                DisplayMatrixBoard(solution);
-            }
-            else
-            {
-                SolutionCounter = string.Empty;
-                IsSolutionCounterVisible = false;
-                MessageBoxService.Show(Resources.MessageBox_SudokuHasNoSolution, Resources.MessageBox_Information_Title,
-                    MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
