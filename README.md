@@ -80,11 +80,11 @@ Solved table with predefined numbers:
 
 ![classic_sudoku_solved_with_predefined_numbers](./doc/solvedoku_classicsolutionwithpredefinednumbers.png)
 
--**Save:** With this button you can save the current state of the table and its solutions (if there are any) **into a CSU file**. I also saves the solution counter position, it is useful if there are a lot of and you only checked half of them, but you would like to continue at a later time. If you save a table with a ton of solutions you cancel the process easily.
+-**Save:** With this button you can save the current state of the table and its solutions (if there are any) **into a CSU file**. I also saves the solution counter position, it is useful if there are a lot of and you only checked half of them, but you would like to continue at a later time. If you save a table with a ton of solutions you can cancel the process easily.
 
 ![classic_sudoku_saving](./doc/solvedoku_savingprogress.png)
 
--**Load:** You can load previously saved CSU files. If you load a huge one you cancel the process easily.
+-**Load:** You can load previously saved CSU files. If you load a huge one you can cancel the process easily.
 
 ![classic_sudoku_loading](./doc/solvedoku_loadingprogress.png)
 
