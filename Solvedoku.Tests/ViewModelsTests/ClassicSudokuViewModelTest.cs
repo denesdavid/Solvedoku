@@ -1,14 +1,14 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using Solvedoku.ViewModels.ClassicSudoku;
-using Solvedoku.Classes;
-using Solvedoku.Views.ClassicSudoku;
-using Solvedoku.ViewModels;
-using Moq;
-using Solvedoku.Services.MessageBox;
-using System.Windows;
-using System.Threading;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading;
+using System.Windows;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using Solvedoku.Classes;
+using Solvedoku.Services.MessageBox;
+using Solvedoku.ViewModels;
+using Solvedoku.ViewModels.ClassicSudoku;
+using Solvedoku.Views.ClassicSudoku;
 
 namespace Solvedoku.Tests.ViewModelsTests
 {
