@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Solvedoku.Views.AboutBox;
+using Solvedoku.Views.OptionsWindow;
 
 namespace Solvedoku.Views.TabControlWithRightContentArea
 {
@@ -26,24 +16,19 @@ namespace Solvedoku.Views.TabControlWithRightContentArea
             DataContext = this;
         }
 
-        public static readonly DependencyProperty RightContent =
-
-DependencyProperty.Register("RightContentArea",
-
-typeof(Control),
-
-typeof(UcTabControlWithRightContentArea));
-
-        public Control RightContentArea
+        #region Events
+        private void Options_Click(object sender, RoutedEventArgs e)
         {
-            get
-            {
-                return GetValue(RightContent) as Control;
-            }
-            set
-            {
-                SetValue(RightContent, value);
-            }
+            /*OptionsWindow optionsWindow = new OptionsWindow();
+            optionsWindow.ShowDialog();*/
         }
+
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+           /*AboutBox aboutBox = new AboutBox();
+            aboutBox.ShowDialog();*/
+        }
+
+        #endregion
     }
 }

@@ -35,18 +35,18 @@ namespace Solvedoku.CustomControls.TabControlWithRightContentArea
     
     public class TabControlWithRightContentArea : TabControl
     {
-        public static DependencyProperty RightAreaContentProperty;
+        public static DependencyProperty RightContentAreaProperty;
 
         static TabControlWithRightContentArea()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TabControlWithRightContentArea), new FrameworkPropertyMetadata(typeof(TabControlWithRightContentArea)));
-            RightAreaContentProperty = DependencyProperty.Register("RightAreaContent", typeof(object), typeof(TabControlWithRightContentArea));
+            RightContentAreaProperty = DependencyProperty.Register("RightContentArea", typeof(object), typeof(TabControlWithRightContentArea));
         }
 
-        public object RightAreaContent
+        public object RightContentArea
         {
-            get => GetValue(RightAreaContentProperty);
-            set => SetValue(RightAreaContentProperty, value);
+            get => GetValue(RightContentAreaProperty);
+            set => SetValue(RightContentAreaProperty, value);
         }
     }
 }
