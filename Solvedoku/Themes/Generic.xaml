@@ -5,7 +5,7 @@
 
     <!--<SolidColorBrush x:Key="TabItem.Selected.Background" Color="Gray"/>
     <SolidColorBrush x:Key="TabItem.Selected.Border" Color="#ACACAC"/>
-    
+
     <Style TargetType="{x:Type local:TabControlWithRightContentArea}">
         <Setter Property="Padding" Value="2"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
