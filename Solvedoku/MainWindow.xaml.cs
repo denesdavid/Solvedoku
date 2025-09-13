@@ -1,6 +1,4 @@
 ﻿using System.Windows;
-using Solvedoku.Views.AboutBox;
-using Solvedoku.Views.OptionsWindow;
 
 namespace Solvedoku
 {
@@ -16,21 +14,6 @@ namespace Solvedoku
             InitializeComponent();
             MinHeight = Height;
             MinWidth = Width;
-        }
-
-        #endregion
-
-        #region Events
-        private void Options_Click(object sender, RoutedEventArgs e)
-        {
-            OptionsWindow optionsWindow = new OptionsWindow();
-            optionsWindow.ShowDialog();
-        }
-
-        private void About_Click(object sender, RoutedEventArgs e)
-        {
-            AboutBox aboutBox = new AboutBox();
-            aboutBox.ShowDialog();
         }
 
         #endregion

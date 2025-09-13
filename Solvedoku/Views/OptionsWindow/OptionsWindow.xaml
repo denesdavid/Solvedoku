@@ -1,5 +1,5 @@
 ﻿<Window
-    x:Class="Solvedoku.Views.OptionsWindow.OptionsWindow"
+    x:Class="Solvedoku.Views.Options.OptionsWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Classes="clr-namespace:Solvedoku.Classes"

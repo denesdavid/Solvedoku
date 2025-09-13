@@ -6,9 +6,9 @@ namespace Solvedoku.Views.AboutBox
     /// <summary>
     /// Interaction logic for AboutBox.xaml
     /// </summary>
-    public partial class AboutBox : Window
+    public partial class AboutBoxWindow : Window
     {
-        public AboutBox()
+        public AboutBoxWindow()
         {
             InitializeComponent();
             Owner = Application.Current.MainWindow;

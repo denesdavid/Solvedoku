@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Solvedoku.Views.OptionsWindow
+namespace Solvedoku.Views.Options
 {
     /// <summary>
     /// Interaction logic for OptionsWindow.xaml
