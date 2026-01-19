@@ -136,7 +136,6 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                     SolutionCounter = string.Empty;
                     string[] areas = ((BaseJigsawSudokuTableViewModel)GetCurrentTableViewModel()).GetJigsawAreasAsArray();
                     _actualSudokuBoard = CreateBoard(((IJigsawSudokuControl)SudokuBoardControl).BoardSize, areas, (BaseSudokuTableViewModel)SudokuBoardControl.DataContext, true);
-                    _sudokuSolverInspectorThread = new Thread(InspectSolverThread);
                     if (messageBoxResult == MessageBoxResult.Yes)
                     {
                         IsBusy = true;
@@ -149,7 +148,6 @@ namespace Solvedoku.ViewModels.JigsawSudoku
                         _sudokuSolverThread = new Thread(CountOneSolution);
                         _sudokuSolverThread.Start();
                     }
-                    _sudokuSolverInspectorThread.Start();
                 }
             }
             catch

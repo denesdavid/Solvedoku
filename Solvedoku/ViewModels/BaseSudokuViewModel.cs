@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -26,7 +24,6 @@ namespace Solvedoku.ViewModels
         protected string _solutionCounter = string.Empty;
         protected string _foundSolutionCounter = string.Empty;
         protected Thread _sudokuSolverThread;
-        protected Thread _sudokuSolverInspectorThread;
         protected Thread _sudokuSavingThread;
         protected Thread _sudokuLoadingThread;
         protected UserControl _sudokuBoardControl;
@@ -36,7 +33,17 @@ namespace Solvedoku.ViewModels
         protected SaveFileDialog _saveFileDialog = new SaveFileDialog();
         protected OpenFileDialog _openFileDialog = new OpenFileDialog();
         protected List<SudokuBoard> _solutions = new List<SudokuBoard>();
-        private static ManualResetEvent mre = new ManualResetEvent(false);
+
+        protected CancellationTokenSource _cancellationTokenSourceSaving;
+        protected CancellationTokenSource _cancellationTokenSourceLoading;
+        protected CancellationTokenSource _cancellationTokenSourceSolving;
+
+        public event Action SudokuSaved;
+        public event Action SudokuSaveCancelled;
+        public event EventHandler<ClassicSudokuFile> SudokuLoaded;
+        public event Action SudokuLoadCancelled;
+        public event EventHandler<bool> SolvingCancelled;
+        public event Action SolvingCompleted;
 
         #endregion
 
@@ -61,42 +68,6 @@ namespace Solvedoku.ViewModels
         public ICommand CancelBusyLoadingCommand { get; set; }
 
         public ICommand BusyIndicatorLoadedCommand { get; set; }
-
-        public Thread SudokuSolverThread
-        {
-            get => _sudokuSolverThread;
-            set
-            {
-                _sudokuSolverThread = value;
-            }
-        }
-
-        public Thread SudokuSolverInspectorThread 
-        {
-            get => _sudokuSolverInspectorThread;
-            set
-            {
-                _sudokuSolverInspectorThread = value;
-            }
-        }
-
-        public Thread SudokuSavingThread
-        {
-            get => _sudokuSavingThread;
-            set
-            {
-                _sudokuSavingThread = value;
-            }
-        }
-
-        public Thread SudokuLoadingThread
-        {
-            get => _sudokuLoadingThread;
-            set
-            {
-                _sudokuLoadingThread = value;
-            }
-        }
 
         public UserControl SudokuBoardControl
         {
@@ -281,7 +252,7 @@ namespace Solvedoku.ViewModels
             if (messageBoxResult == MessageBoxResult.Yes)
             {
                 _isSolvingCancelled = (bool)o;
-                SudokuSolverThread.Abort();
+                _cancellationTokenSourceSolving.Cancel();
                 IsBusy = false;
             }
         }
@@ -302,7 +273,7 @@ namespace Solvedoku.ViewModels
 
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                SudokuSavingThread.Abort();
+                _sudokuSavingThread.Abort();
                 IsBusy = false;
             }
         }
@@ -323,7 +294,7 @@ namespace Solvedoku.ViewModels
 
             if (messageBoxResult == MessageBoxResult.Yes)
             {
-                SudokuLoadingThread.Abort();
+                _sudokuLoadingThread.Abort();
                 IsBusy = false;
             }
         }
@@ -336,10 +307,11 @@ namespace Solvedoku.ViewModels
         /// </summary>
         public void CountAllSolutions()
         {
+            _cancellationTokenSourceSolving = new CancellationTokenSource();
             int foundSolution = 0;
             try
             {
-                foreach (var item in Sudoku_SolverThread(_actualSudokuBoard, true))
+                foreach (var item in Sudoku_SolverThread(_actualSudokuBoard, true, _cancellationTokenSourceSolving.Token))
                 {
                     if (item != null)
                     {
@@ -351,11 +323,11 @@ namespace Solvedoku.ViewModels
                         FoundSolutionCounter = $"{Resources.TextBlock_FoundSolutions} {foundSolution}";
                     }
                 }
-                if (SudokuSolverThread != null)
+                if (_sudokuSolverThread != null)
                 {
-                    if (SudokuSolverThread.IsAlive)
+                    if (_sudokuSolverThread.IsAlive)
                     {
-                        SudokuSolverThread.Abort();
+                        _cancellationTokenSourceSolving.Cancel();
                     }
                 }
             }
@@ -373,41 +345,19 @@ namespace Solvedoku.ViewModels
         /// </summary>
         public void CountOneSolution()
         {
-            if (Sudoku_SolverThread(_actualSudokuBoard, false).First() != null)
+            _cancellationTokenSourceSolving = new CancellationTokenSource();
+            if (Sudoku_SolverThread(_actualSudokuBoard, false, _cancellationTokenSourceSolving.Token).First() != null)
             {
                 lock (Solutions)
                 {
-                    Solutions.Add(Sudoku_SolverThread(_actualSudokuBoard, false).First());
+                    Solutions.Add(Sudoku_SolverThread(_actualSudokuBoard, false, _cancellationTokenSourceSolving.Token).First());
                 }
             }
-            if (SudokuSolverThread != null)
+            if (_sudokuSolverThread != null)
             {
-                if (SudokuSolverThread.IsAlive)
+                if (_sudokuSolverThread.IsAlive)
                 {
-                    SudokuSolverThread.Abort();
-                }
-            }
-        }
-
-        public void InspectSolverThread()
-        {
-            while (true)
-            {
-                if (_sudokuSolverThread.ThreadState == ThreadState.Aborted || _sudokuSolverThread.ThreadState == ThreadState.Stopped)
-                {
-                    bool isSolvingCancelled = _sudokuSolverThread.ThreadState == ThreadState.AbortRequested && _isSolvingCancelled;
-                    if (_isSolvingCancelled)
-                    {
-                        Solutions.Clear();
-                    }
-                    else
-                    {
-                        Application.Current.Dispatcher.BeginInvoke((Action)(() =>
-                        {
-                            DisplaySolutionAndMessage();
-                        }));
-                    }
-                    SudokuSolverInspectorThread.Abort();
+                    _cancellationTokenSourceSolving.Cancel();
                 }
             }
         }
@@ -527,14 +477,20 @@ namespace Solvedoku.ViewModels
         /// <param name="sudokuBoard">The Sudoku board what is need to be solved.</param>
         /// <param name="findAllSolutions">Determines if all possible solutions have to find or just one.</param>
         /// <returns>Enumerable of the solutions.</returns>
-        protected IEnumerable<SudokuBoard> Sudoku_SolverThread(SudokuBoard sudokuBoard, bool findAllSolutions)
+        protected IEnumerable<SudokuBoard> Sudoku_SolverThread(SudokuBoard sudokuBoard, bool findAllSolutions, CancellationToken cancellationToken)
         {
             if (findAllSolutions)
             {
                 foreach (var item in sudokuBoard.Solve())
                 {
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        OnSolvingCancelled(true);
+                        yield break;
+                    }
                     yield return item;
                 }
+                OnSolvingCompleted();
             }
             else
             {
@@ -608,6 +564,18 @@ namespace Solvedoku.ViewModels
                     }
                 }
             }
+        }
+
+        protected virtual void OnSolvingCancelled(bool keepSolutions)
+        {
+            // Check if there are any subscribers before invoking
+            SolvingCancelled?.Invoke(this, keepSolutions);
+        }
+
+        protected virtual void OnSolvingCompleted()
+        {
+            // Check if there are any subscribers before invoking
+            SolvingCompleted?.Invoke();
         }
         #endregion
     }

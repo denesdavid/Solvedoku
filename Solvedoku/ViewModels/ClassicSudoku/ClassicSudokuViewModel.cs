@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Windows;
@@ -61,6 +60,31 @@ namespace Solvedoku.ViewModels.ClassicSudoku
         {
             LoadCommands();
             Draw(SudokuBoard.SudokuBoardSizes[0]);
+            SolvingCompleted += ClassicSudokuViewModel_SolvingCompleted;
+            SolvingCancelled += ClassicSudokuViewModel_SolvingCancelled;
+        }
+
+        private void ClassicSudokuViewModel_SolvingCompleted()
+        {
+            Application.Current.Dispatcher.BeginInvoke(() =>
+            {
+                DisplaySolutionAndMessage();
+            });
+        }
+
+        private void ClassicSudokuViewModel_SolvingCancelled(object sender, bool keepSolutions)
+        {
+            if (keepSolutions)
+            {
+                Application.Current.Dispatcher.BeginInvoke(() =>
+                {
+                    DisplaySolutionAndMessage();
+                });
+            }
+            else
+            {
+               Solutions.Clear();
+            }
         }
 
         #endregion
@@ -125,7 +149,6 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     Solutions.Clear();
                     SolutionCounter = string.Empty;
                     _actualSudokuBoard = CreateBoard(_actualSudokuBoard.BoardSize, (BaseSudokuTableViewModel)SudokuBoardControl.DataContext, true, AreDiagonalRulesApplied);
-                    _sudokuSolverInspectorThread = new Thread(InspectSolverThread);
                     if (msgBoxResult == MessageBoxResult.Yes)
                     {
                         IsBusy = true;
@@ -138,7 +161,6 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                         _sudokuSolverThread = new Thread(CountOneSolution);
                         _sudokuSolverThread.Start();
                     }
-                    _sudokuSolverInspectorThread.Start();
                 }
 
             }
