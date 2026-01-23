@@ -1,5 +1,5 @@
-﻿using Solvedoku.Services.MessageBox;
-using System.Reflection;
+﻿using System.Reflection;
+using Solvedoku.Services.MessageBox;
 
 namespace Solvedoku.ViewModels.AboutBoxWindow
 {
@@ -14,8 +14,9 @@ namespace Solvedoku.ViewModels.AboutBoxWindow
         #endregion
 
         #region Constructor
-        public AboutBoxViewModel():base(new MessageBoxService())
-        {}
+
+        public AboutBoxViewModel():base(new MessageBoxService()){}
+
         #endregion
     }
 }

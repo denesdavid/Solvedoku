@@ -1,9 +1,9 @@
-﻿using Solvedoku.Classes;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
+using Solvedoku.Classes;
 using Solvedoku.Commands;
 using Solvedoku.Properties;
 using Solvedoku.Services.MessageBox;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace Solvedoku.ViewModels.OptionsWindow
 {
@@ -40,6 +40,7 @@ namespace Solvedoku.ViewModels.OptionsWindow
         #endregion
 
         #region Constructor
+
         public OptionsWindowViewModel():base(new MessageBoxService())
         {
             LoadCommands();
@@ -52,6 +53,7 @@ namespace Solvedoku.ViewModels.OptionsWindow
                 }
             }
         }
+
         #endregion
 
         #region Commands

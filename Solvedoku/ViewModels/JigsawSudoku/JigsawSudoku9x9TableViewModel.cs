@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Solvedoku.ViewModels.JigsawSudoku
 {
@@ -6,44 +7,23 @@ namespace Solvedoku.ViewModels.JigsawSudoku
     {
         #region Fields
 
-        ObservableCollection<ObservableCollection<string>> _cells = new ObservableCollection<ObservableCollection<string>>()
-        {
-            new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
-            new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
-            new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
-            new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
-            new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
-            new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
-            new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
-            new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
-            new ObservableCollection<string> {  string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
-        };
+        ObservableCollection<ObservableCollection<string>> _cells = new(
+           Enumerable.Range(0, 9).Select(_ =>
+               new ObservableCollection<string>(Enumerable.Repeat(string.Empty, 9))
+           )
+       );
 
-        ObservableCollection<ObservableCollection<bool>> _boldCells = new ObservableCollection<ObservableCollection<bool>>()
-        {
-            new ObservableCollection<bool> {  false, false, false, false, false, false, false, false, false},
-            new ObservableCollection<bool> {  false, false, false, false, false, false, false, false, false},
-            new ObservableCollection<bool> {  false, false, false, false, false, false, false, false, false},
-            new ObservableCollection<bool> {  false, false, false, false, false, false, false, false, false},
-            new ObservableCollection<bool> {  false, false, false, false, false, false, false, false, false},
-            new ObservableCollection<bool> {  false, false, false, false, false, false, false, false, false},
-            new ObservableCollection<bool> {  false, false, false, false, false, false, false, false, false},
-            new ObservableCollection<bool> {  false, false, false, false, false, false, false, false, false},
-            new ObservableCollection<bool> {  false, false, false, false, false, false, false, false, false},
-        };
+        ObservableCollection<ObservableCollection<bool>> _boldCells = new(
+            Enumerable.Range(0, 9).Select(_ =>
+                new ObservableCollection<bool>(Enumerable.Repeat(false, 9))
+            )
+        );
 
-        ObservableCollection<ObservableCollection<int>> _jigsawAreas = new ObservableCollection<ObservableCollection<int>>()
-        {
-            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
-            new ObservableCollection<int> {  -1, -1, -1, -1, -1, -1, -1, -1, -1},
-        };
+        ObservableCollection<ObservableCollection<int>> _jigsawAreas = new(
+            Enumerable.Range(0, 9).Select(_ =>
+                new ObservableCollection<int>(Enumerable.Repeat(-1, 9))
+            )
+        );
 
         #endregion
 

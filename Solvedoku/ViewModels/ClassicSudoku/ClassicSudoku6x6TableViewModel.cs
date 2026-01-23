@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Solvedoku.ViewModels.ClassicSudoku
 {
@@ -8,25 +9,18 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 
         bool _areDiagonalRulesSet = false;
 
-        ObservableCollection<ObservableCollection<string>> _cells = new ObservableCollection<ObservableCollection<string>>()
-        {
-            new ObservableCollection<string> { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
-            new ObservableCollection<string> { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
-            new ObservableCollection<string> { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
-            new ObservableCollection<string> { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
-            new ObservableCollection<string> { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
-            new ObservableCollection<string> { string.Empty, string.Empty, string.Empty, string.Empty, string.Empty, string.Empty},
-        };
+        ObservableCollection<ObservableCollection<string>> _cells = new(
+            Enumerable.Range(0, 6).Select(_ =>
+                new ObservableCollection<string>(Enumerable.Repeat(string.Empty, 6))
+            )
+        );
 
-        ObservableCollection<ObservableCollection<bool>> _boldCells = new ObservableCollection<ObservableCollection<bool>>()
-        {
-            new ObservableCollection<bool> {  false, false, false, false, false, false },
-            new ObservableCollection<bool> {  false, false, false, false, false, false },
-            new ObservableCollection<bool> {  false, false, false, false, false, false },
-            new ObservableCollection<bool> {  false, false, false, false, false, false },
-            new ObservableCollection<bool> {  false, false, false, false, false, false },
-            new ObservableCollection<bool> {  false, false, false, false, false, false },
-        };
+        ObservableCollection<ObservableCollection<bool>> _boldCells = new(
+           Enumerable.Range(0, 6).Select(_ =>
+               new ObservableCollection<bool>(Enumerable.Repeat(false, 6))
+           )
+        );
+
         #endregion
 
         #region Properties

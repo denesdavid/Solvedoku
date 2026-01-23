@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Classes="clr-namespace:Solvedoku.Classes"
+    xmlns:Converters="clr-namespace:Solvedoku.Converters"
     xmlns:ClassicSudokuControls="clr-namespace:Solvedoku.Views.ClassicSudoku"
     xmlns:CustomTabControls="clr-namespace:Solvedoku.Views.TabControlWithRightContentArea"
     xmlns:Customtab="clr-namespace:Solvedoku.CustomControls.TabControlWithRightContentArea"
@@ -11,8 +12,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="mainWindow"
     Title="Solvedoku"
-    Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={Classes:RatioConverter}, ConverterParameter='0.6'}"
-    Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={Classes:RatioConverter}, ConverterParameter='0.9'}"
+    Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}, Converter={Converters:RatioConverter}, ConverterParameter='0.6'}"
+    Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}, Converter={Converters:RatioConverter}, ConverterParameter='0.9'}"
     Background="Gray"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
