@@ -10,10 +10,11 @@ using Solvedoku.Classes;
 using Solvedoku.Commands;
 using Solvedoku.Properties;
 using Solvedoku.Services.MessageBox;
+using Solvedoku.ViewModels.SudokuTables;
 
-namespace Solvedoku.ViewModels
+namespace Solvedoku.ViewModels.SudokuPages
 {
-    public abstract class BaseSudokuViewModel : ViewModelBase
+    public abstract class BaseSudokuPageViewModel : ViewModelBase
     {
         #region Fields
 
@@ -150,8 +151,8 @@ namespace Solvedoku.ViewModels
         #endregion
 
         #region Constructor
-        public BaseSudokuViewModel():base(new MessageBoxService()){}
-        public BaseSudokuViewModel(IMessageBoxService messageBoxService) : base(messageBoxService) { }
+        public BaseSudokuPageViewModel():base(new MessageBoxService()){}
+        public BaseSudokuPageViewModel(IMessageBoxService messageBoxService) : base(messageBoxService) { }
         #endregion
 
         #region Commands

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Solvedoku.Classes
+namespace Solvedoku.Models.Domain
 {
     public enum SudokuProgress { FAILED, NO_PROGRESS, PROGRESS }
 

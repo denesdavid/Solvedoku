@@ -8,12 +8,14 @@ using System.Windows.Threading;
 using Solvedoku.Classes;
 using Solvedoku.Properties;
 using Solvedoku.Services.MessageBox;
+using Solvedoku.ViewModels.SudokuTables;
+using Solvedoku.ViewModels.SudokuTables.Classic;
 using Solvedoku.Views.BusyIndicatorContent;
 using Solvedoku.Views.ClassicSudoku;
 
-namespace Solvedoku.ViewModels.ClassicSudoku
+namespace Solvedoku.ViewModels.SudokuPages.Classic
 {
-    public class ClassicSudokuViewModel : BaseSudokuViewModel
+    public class ClassicSudokuPageViewModel : BaseSudokuPageViewModel
     {
         #region Properties
 
@@ -43,12 +45,12 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 
         #region Constructor
 
-        public ClassicSudokuViewModel():base()
+        public ClassicSudokuPageViewModel():base()
         {
             SetupInstance();
         }
 
-        public ClassicSudokuViewModel(IMessageBoxService messageBoxService) : base(messageBoxService)
+        public ClassicSudokuPageViewModel(IMessageBoxService messageBoxService) : base(messageBoxService)
         {
             SetupInstance();
         }

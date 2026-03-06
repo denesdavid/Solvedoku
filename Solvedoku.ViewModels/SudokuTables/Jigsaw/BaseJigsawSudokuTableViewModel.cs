@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
+using Solvedoku.ViewModels.SudokuTables;
 
-namespace Solvedoku.ViewModels.JigsawSudoku
+namespace Solvedoku.ViewModels.SudokuTables.Jigsaw
 {
     public abstract class BaseJigsawSudokuTableViewModel : BaseSudokuTableViewModel
     {

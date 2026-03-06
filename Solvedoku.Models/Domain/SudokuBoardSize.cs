@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Solvedoku.Classes
+namespace Solvedoku.Models.Domain
 {
     [Serializable]
     public class SudokuBoardSize

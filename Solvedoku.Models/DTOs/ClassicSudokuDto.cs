@@ -3,7 +3,7 @@
 namespace Solvedoku.Classes
 {
     [Serializable]
-    public class ClassicSudokuFile : BaseSudokuFile
+    public class ClassicSudokuDto : BaseSudokuFile
     {
         #region Properties
 

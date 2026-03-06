@@ -41,7 +41,7 @@ namespace Solvedoku.ViewModels.OptionsWindow
 
         #region Constructor
 
-        public OptionsWindowViewModel():base(new MessageBoxService())
+        public OptionsWindowViewModel(IMessageBoxService messageBoxService):base(messageBoxService)
         {
             LoadCommands();
             foreach (var language in Localizations)

@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31025.194
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11415.280
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solvedoku", "Solvedoku\Solvedoku.csproj", "{783024F4-F922-4DBA-B9D1-ECFD7C7B729B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solvedoku.Tests", "Solvedoku.Tests\Solvedoku.Tests.csproj", "{479EF2A1-C652-4F08-9785-12BE696C2F0A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solvedoku.ViewModels", "Solvedoku.ViewModels\Solvedoku.ViewModels.csproj", "{DFA682DF-7808-4500-AAD3-45BBD6EAC2F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solvedoku.Models", "Solvedoku.Models\Solvedoku.Models.csproj", "{CA7BDBBB-D1D3-4A96-A1E5-F47283D474AB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{479EF2A1-C652-4F08-9785-12BE696C2F0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{479EF2A1-C652-4F08-9785-12BE696C2F0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{479EF2A1-C652-4F08-9785-12BE696C2F0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFA682DF-7808-4500-AAD3-45BBD6EAC2F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFA682DF-7808-4500-AAD3-45BBD6EAC2F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFA682DF-7808-4500-AAD3-45BBD6EAC2F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFA682DF-7808-4500-AAD3-45BBD6EAC2F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA7BDBBB-D1D3-4A96-A1E5-F47283D474AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA7BDBBB-D1D3-4A96-A1E5-F47283D474AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA7BDBBB-D1D3-4A96-A1E5-F47283D474AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA7BDBBB-D1D3-4A96-A1E5-F47283D474AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

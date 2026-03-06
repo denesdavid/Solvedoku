@@ -5,29 +5,31 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media;
-using Xceed.Wpf.Toolkit;
-using Solvedoku.Classes;
-using Solvedoku.Views.JigsawSudoku;
-using Solvedoku.Properties;
 using System.Windows.Threading;
-using Solvedoku.Views.BusyIndicatorContent;
+using Solvedoku.Classes;
+using Solvedoku.Properties;
 using Solvedoku.Services.MessageBox;
+using Solvedoku.ViewModels.SudokuTables;
+using Solvedoku.ViewModels.SudokuTables.Jigsaw;
+using Solvedoku.Views.BusyIndicatorContent;
+using Solvedoku.Views.JigsawSudoku;
+using Xceed.Wpf.Toolkit;
 
-namespace Solvedoku.ViewModels.JigsawSudoku
+namespace Solvedoku.ViewModels.SudokuPages.Jigsaw
 {
     [Serializable]
-    public class JigsawSudokuViewModel : BaseSudokuViewModel
+    public class JigsawSudokuPageViewModel : BaseSudokuPageViewModel
     {
         #region Fields
 
-        static JigsawSudokuViewModel _instance;
+        static JigsawSudokuPageViewModel _instance;
         Color? _selectedColor;
         
         #endregion
 
         #region Properties
 
-        public static JigsawSudokuViewModel Instance { get => _instance; }
+        public static JigsawSudokuPageViewModel Instance { get => _instance; }
 
         public Color? SelectedColor
         {
@@ -55,12 +57,12 @@ namespace Solvedoku.ViewModels.JigsawSudoku
 
         #region Constructor
 
-        public JigsawSudokuViewModel():base()
+        public JigsawSudokuPageViewModel():base()
         {
             SetupInstance();
         }
 
-        public JigsawSudokuViewModel(IMessageBoxService messageBoxService):base(messageBoxService)
+        public JigsawSudokuPageViewModel(IMessageBoxService messageBoxService):base(messageBoxService)
         {
             SetupInstance();
         }

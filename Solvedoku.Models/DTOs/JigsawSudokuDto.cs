@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 namespace Solvedoku.Classes
 {
     [Serializable]
-    class JigsawSudokuFile : BaseSudokuFile
+    class JigsawSudokuDto : BaseSudokuFile
     {
         #region Properties
 

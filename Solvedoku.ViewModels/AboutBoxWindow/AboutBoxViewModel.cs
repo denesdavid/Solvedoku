@@ -15,7 +15,7 @@ namespace Solvedoku.ViewModels.AboutBoxWindow
 
         #region Constructor
 
-        public AboutBoxViewModel():base(new MessageBoxService()){}
+        public AboutBoxViewModel(IMessageBoxService messageBoxService):base(messageBoxService){}
 
         #endregion
     }

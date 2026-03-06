@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Solvedoku.ViewModels.ClassicSudoku
+namespace Solvedoku.ViewModels.SudokuTables.Classic
 {
     class ClassicSudoku4x4TableViewModel : BaseClassicSudokuTableViewModel
     {

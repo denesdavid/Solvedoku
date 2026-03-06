@@ -1,31 +1,30 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Solvedoku.ViewModels.ClassicSudoku
+namespace Solvedoku.ViewModels.SudokuTables.Classic
 {
-    class ClassicSudoku6x6TableViewModel : BaseClassicSudokuTableViewModel
+    class ClassicSudoku9x9TableViewModel : BaseClassicSudokuTableViewModel
     {
         #region Fields
 
         bool _areDiagonalRulesSet = false;
 
         ObservableCollection<ObservableCollection<string>> _cells = new(
-            Enumerable.Range(0, 6).Select(_ =>
-                new ObservableCollection<string>(Enumerable.Repeat(string.Empty, 6))
+            Enumerable.Range(0, 9).Select(_ =>
+                new ObservableCollection<string>(Enumerable.Repeat(string.Empty, 9))
             )
         );
 
         ObservableCollection<ObservableCollection<bool>> _boldCells = new(
-           Enumerable.Range(0, 6).Select(_ =>
-               new ObservableCollection<bool>(Enumerable.Repeat(false, 6))
+           Enumerable.Range(0, 9).Select(_ =>
+               new ObservableCollection<bool>(Enumerable.Repeat(false, 9))
            )
-        );
+       );
 
         #endregion
 
         #region Properties
-
-        public override ObservableCollection<ObservableCollection<string>> Cells
+        public override ObservableCollection<ObservableCollection<string>> Cells 
         {
             get => _cells;
             set
@@ -35,8 +34,8 @@ namespace Solvedoku.ViewModels.ClassicSudoku
             }
         }
 
-        public override ObservableCollection<ObservableCollection<bool>> BoldCells
-        {
+        public override ObservableCollection<ObservableCollection<bool>> BoldCells 
+        { 
             get => _boldCells;
             set
             {
@@ -54,7 +53,6 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                 OnPropertyChanged();
             }
         }
-
         #endregion
     }
 }

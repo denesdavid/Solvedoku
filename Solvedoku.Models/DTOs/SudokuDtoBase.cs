@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace Solvedoku.Classes
 {
-    public class BaseSudokuFile
+    public class SudokuDtoBase
     {
         public int SolutionIndex { get; set; }
 

@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Solvedoku.ViewModels
+namespace Solvedoku.ViewModels.SudokuTables
 {
     public abstract class BaseSudokuTableViewModel : ViewModelBase
     {

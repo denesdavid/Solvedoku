@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Solvedoku.ViewModels.JigsawSudoku
+namespace Solvedoku.ViewModels.SudokuTables.Jigsaw
 {
     class JigsawSudoku9x9TableViewModel : BaseJigsawSudokuTableViewModel
     {
