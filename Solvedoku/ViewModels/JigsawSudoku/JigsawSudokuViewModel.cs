@@ -12,6 +12,7 @@ using Solvedoku.Properties;
 using System.Windows.Threading;
 using Solvedoku.Views.BusyIndicatorContent;
 using Solvedoku.Services.MessageBox;
+using Solvedoku.Services.Repository;
 
 namespace Solvedoku.ViewModels.JigsawSudoku
 {
@@ -55,12 +56,8 @@ namespace Solvedoku.ViewModels.JigsawSudoku
 
         #region Constructor
 
-        public JigsawSudokuViewModel():base()
-        {
-            SetupInstance();
-        }
-
-        public JigsawSudokuViewModel(IMessageBoxService messageBoxService):base(messageBoxService)
+        public JigsawSudokuViewModel(IMessageBoxService messageBoxService, IRepositoryService<SudokuFile> repositoryService)
+            :base(messageBoxService, repositoryService)
         {
             SetupInstance();
         }

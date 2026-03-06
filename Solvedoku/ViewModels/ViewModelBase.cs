@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Solvedoku.Classes;
+using Solvedoku.Services.Repository;
 using Solvedoku.Services.MessageBox;
 
 namespace Solvedoku.ViewModels
@@ -11,6 +13,7 @@ namespace Solvedoku.ViewModels
     {
         #region Fields
         public static IMessageBoxService MessageBoxService = new MessageBoxService();
+        
         #endregion
 
         #region Constructor

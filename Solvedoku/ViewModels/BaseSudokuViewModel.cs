@@ -11,6 +11,7 @@ using Microsoft.Win32;
 using Solvedoku.Classes;
 using Solvedoku.Commands;
 using Solvedoku.Properties;
+using Solvedoku.Services.Repository;
 using Solvedoku.Services.MessageBox;
 
 namespace Solvedoku.ViewModels
@@ -41,6 +42,8 @@ namespace Solvedoku.ViewModels
         #endregion
 
         #region Properties
+
+        public IRepositoryService<SudokuFile> RepositoryService { get; set; }
 
         public ICommand DrawSudokuCommand { get; set; }
 
@@ -179,8 +182,14 @@ namespace Solvedoku.ViewModels
         #endregion
 
         #region Constructor
-        public BaseSudokuViewModel():base(new MessageBoxService()){}
-        public BaseSudokuViewModel(IMessageBoxService messageBoxService) : base(messageBoxService) { }
+
+        public BaseSudokuViewModel(IMessageBoxService messageBoxService , IRepositoryService<SudokuFile> repositoryService) 
+            : base(messageBoxService) 
+        {
+            RepositoryService = repositoryService;
+            LoadCommands();
+        }
+
         #endregion
 
         #region Commands

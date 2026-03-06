@@ -6,7 +6,7 @@
     xmlns:CustomTab="clr-namespace:Solvedoku.CustomControls.TabControlWithRightContentArea"
     xmlns:Themes="clr-namespace:Xceed.Wpf.Toolkit.Themes;assembly=Xceed.Wpf.Toolkit"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-    StartupUri="MainWindow.xaml">
+    >
     <Application.Resources>
 
         <!--#region ButtonStyle-->

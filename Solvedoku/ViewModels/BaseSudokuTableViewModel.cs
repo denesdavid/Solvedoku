@@ -1,10 +1,15 @@
 ﻿using System.Collections.ObjectModel;
+using Solvedoku.Classes;
+using Solvedoku.Services.Repository;
 
 namespace Solvedoku.ViewModels
 {
     public abstract class BaseSudokuTableViewModel : ViewModelBase
     {
         #region Properties
+
+        public IRepositoryService<SudokuFile> RepositoryService = new FileRepositoryService();
+
         public abstract ObservableCollection<ObservableCollection<string>> Cells { get; set; }
 
         public abstract ObservableCollection<ObservableCollection<bool>> BoldCells { get; set; }
@@ -47,5 +52,10 @@ namespace Solvedoku.ViewModels
             return false;
         }
         #endregion
+
+        protected BaseSudokuTableViewModel()
+        {
+            RepositoryService = new FileRepositoryService();
+        }
     }
 }

@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Threading;
 using Solvedoku.Classes;
 using Solvedoku.Properties;
+using Solvedoku.Services.Repository;
 using Solvedoku.Services.MessageBox;
 using Solvedoku.Views.BusyIndicatorContent;
 using Solvedoku.Views.ClassicSudoku;
@@ -44,12 +45,8 @@ namespace Solvedoku.ViewModels.ClassicSudoku
 
         #region Constructor
 
-        public ClassicSudokuViewModel():base()
-        {
-            SetupInstance();
-        }
-
-        public ClassicSudokuViewModel(IMessageBoxService messageBoxService) : base(messageBoxService)
+        public ClassicSudokuViewModel(IMessageBoxService messageBoxService, IRepositoryService<SudokuFile> repositoryService) 
+            : base(messageBoxService, repositoryService)
         {
             SetupInstance();
         }
@@ -182,8 +179,10 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     {
                         try
                         {
+                            /*Dispatcher.CurrentDispatcher.Invoke(DispatcherPriority.ApplicationIdle,
+                            new Action(() => SerializeClassicSudokuFile(_saveFileDialog.FileName, classicSudokuFile)));*/
                             Dispatcher.CurrentDispatcher.Invoke(DispatcherPriority.ApplicationIdle,
-                            new Action(() => SerializeClassicSudokuFile(_saveFileDialog.FileName, classicSudokuFile)));
+                           new Action(() => RepositoryService.Save(classicSudokuFile, _saveFileDialog.FileName)));
                         }
                         catch (OutOfMemoryException)
                         {
@@ -226,12 +225,12 @@ namespace Solvedoku.ViewModels.ClassicSudoku
                     {
                         try
                         {
-                            ClassicSudokuFile classicSudokuFile = null;
-                            using (Stream stream = File.Open(_openFileDialog.FileName, FileMode.Open))
+                            ClassicSudokuFile classicSudokuFile = (ClassicSudokuFile)RepositoryService.Load(_openFileDialog.FileName);
+                           /* using (Stream stream = File.Open(_openFileDialog.FileName, FileMode.Open))
                             {
                                 var bformatter = new BinaryFormatter();
                                 classicSudokuFile = (ClassicSudokuFile)bformatter.Deserialize(stream);
-                            }
+                            }*/
                             Application.Current.Dispatcher.Invoke(new Action(() => LoadDeserializedClassicSudokuFile(classicSudokuFile)));
                         }
                         catch (OutOfMemoryException)
