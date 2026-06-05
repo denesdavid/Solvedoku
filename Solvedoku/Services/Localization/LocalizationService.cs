@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace Solvedoku.Services.Localization
 {
-    public class LocalizationService : ILocalizationService
+    public class LocalizationHelper : INotifyPropertyChanged
     {
         #region Static fields
 
@@ -49,5 +49,14 @@ namespace Solvedoku.Services.Localization
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
+    }
+
+    public class LocExtension : Binding
+    {
+        public LocExtension(string name) : base("[" + name + "]")
+        {
+            Mode = BindingMode.OneWay;
+            Source = LocalizationHelper.Instance;
+        }
     }
 }
