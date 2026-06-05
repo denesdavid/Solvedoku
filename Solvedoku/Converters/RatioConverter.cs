@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace Solvedoku.Converters
+namespace Solvedoku.UI.Converters
 {
     [ValueConversion(typeof(string), typeof(string))]
     public class RatioConverter:MarkupExtension, IValueConverter

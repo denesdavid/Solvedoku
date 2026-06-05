@@ -4,9 +4,9 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using Solvedoku.Classes;
+using Solvedoku.Models.Domain;
 
-namespace Solvedoku.Converters
+namespace Solvedoku.UI.Converters
 {
     class IntegerToJigsawColorConverter : DependencyObject, IValueConverter
     {

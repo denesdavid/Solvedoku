@@ -2,7 +2,7 @@
     x:Class="Solvedoku.Views.BusyIndicatorContent.UcLoadingBusyIndicatorContent"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Classes="clr-namespace:Solvedoku.Classes"
+    xmlns:Extensions="clr-namespace:Solvedoku.UI.Extensions"
     xmlns:System="clr-namespace:System;assembly=mscorlib"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -32,7 +32,7 @@
             <TextBlock
                 HorizontalAlignment="Center"
                 FontWeight="Bold"
-                Text="{Classes:Loc MessageBox_LoadingInProgress}" />
+                Text="{Extensions:Localize MessageBox_LoadingInProgress}" />
             <StackPanel Margin="4">
                 <Border Grid.Row="1" CornerRadius="40">
                     <ProgressBar Style="{StaticResource ProgressBarStyle}" />
@@ -42,7 +42,7 @@
                         Margin="4"
                         HorizontalAlignment="Stretch"
                         Command="{Binding CancelBusyLoadingCommand}"
-                        Content="{Classes:Loc Button_Cancel}" />
+                        Content="{Extensions:Localize Button_Cancel}" />
                 </StackPanel>
             </StackPanel>
         </StackPanel>

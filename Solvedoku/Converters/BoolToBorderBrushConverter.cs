@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
-namespace Solvedoku.Converters
+namespace Solvedoku.UI.Converters
 {
     public class BoolToBorderBrushConverter : DependencyObject, IValueConverter
     {

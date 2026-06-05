@@ -3,14 +3,14 @@ using System.Globalization;
 using System.Resources;
 using System.Windows.Data;
 
-namespace Solvedoku.Classes
+namespace Solvedoku.Services.Localization
 {
-    public class LocalizationHelper : INotifyPropertyChanged
+    public class LocalizationService : ILocalizationService
     {
         #region Static fields
 
-        static readonly LocalizationHelper instance = new LocalizationHelper();
-        public static LocalizationHelper Instance => instance;
+        static readonly LocalizationService instance = new LocalizationService();
+        public static LocalizationService Instance => instance;
 
         #endregion
 
@@ -49,14 +49,5 @@ namespace Solvedoku.Classes
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
-    }
-
-    public class LocExtension : Binding
-    {
-        public LocExtension(string name) : base("[" + name + "]")
-        {
-            Mode = BindingMode.OneWay;
-            Source = LocalizationHelper.Instance;
-        }
     }
 }

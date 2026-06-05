@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace Solvedoku.CustomControls.TabControlWithRightContentArea
+namespace Solvedoku.UI.CustomControls.TabControlWithRightContentArea
 {
     /// <summary>
     /// Follow steps 1a or 1b and then 2 to use this custom control in a XAML file.

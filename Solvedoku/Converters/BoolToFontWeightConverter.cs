@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace Solvedoku.Converters
+namespace Solvedoku.UI.Converters
 {
     public class BoolToFontWeightConverter : DependencyObject, IValueConverter
     {

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Media;
 using Solvedoku.Properties;
 using Xceed.Wpf.Toolkit;
 

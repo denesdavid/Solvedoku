@@ -2,8 +2,8 @@
     x:Class="Solvedoku.Views.AboutBox.AboutBoxWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:AboutBoxViewModel="clr-namespace:Solvedoku.ViewModels.AboutBoxWindow"
-    xmlns:Classes="clr-namespace:Solvedoku.Classes"
+    xmlns:AboutBoxViewModel="clr-namespace:Solvedoku.ViewModels.AboutBoxWindow;assembly=Solvedoku.ViewModels"
+    xmlns:Extensions="clr-namespace:Solvedoku.UI.Extensions"
     Width="800"
     Height="450"
     AllowsTransparency="True"
@@ -42,13 +42,13 @@
         <Label
             Grid.Row="2"
             Margin="8"
-            Content="{Classes:Loc AboutBox_DevelopedByDD}"
+            Content="{Extensions:Localize AboutBox_DevelopedByDD}"
             FontSize="25" />
         <TextBlock
             Grid.Row="3"
             Margin="16"
             FontSize="18"
-            Text="{Classes:Loc AboutBox_Description}"
+            Text="{Extensions:Localize AboutBox_Description}"
             TextAlignment="Justify"
             TextWrapping="Wrap" />
         <Button

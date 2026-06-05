@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
 VisualStudioVersion = 18.2.11415.280
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solvedoku", "Solvedoku\Solvedoku.csproj", "{783024F4-F922-4DBA-B9D1-ECFD7C7B729B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solvedoku.UI", "Solvedoku\Solvedoku.UI.csproj", "{783024F4-F922-4DBA-B9D1-ECFD7C7B729B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solvedoku.Tests", "Solvedoku.Tests\Solvedoku.Tests.csproj", "{479EF2A1-C652-4F08-9785-12BE696C2F0A}"
 EndProject

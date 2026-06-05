@@ -1,4 +1,4 @@
-﻿namespace Solvedoku.Classes
+﻿namespace Solvedoku.Models.Infrastructure
 {
     class Language
     {

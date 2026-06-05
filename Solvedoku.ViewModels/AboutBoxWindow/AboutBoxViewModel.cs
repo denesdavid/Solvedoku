@@ -3,7 +3,7 @@ using Solvedoku.Services.MessageBox;
 
 namespace Solvedoku.ViewModels.AboutBoxWindow
 {
-    class AboutBoxViewModel : ViewModelBase
+    public class AboutBoxViewModel : ViewModelBase
     {
         #region Properties
 
